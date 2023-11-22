@@ -1,0 +1,76 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:vue/vue3-essential"
+    ],
+    "parser": "vue-eslint-parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "parser": "@typescript-eslint/parser",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "vue"
+    ],
+    "rules": {
+        "semi": ["error", "always"],
+        "quotes": ["error", "double", { "avoidEscape": true }],
+        "indent": ["warn", 4, { "SwitchCase": 1 }],
+        "max-len": ["warn", { "code": 100 }],
+        "no-trailing-spaces": "warn",
+        "no-return-assign": "off",
+        "space-before-function-paren": "off",
+        "space-before-blocks": "warn",
+        "no-console": ["warn", { "allow": ["warn", "error"] }],
+        "eqeqeq": ["warn", "smart"],
+        "comma-dangle": ["warn", "always-multiline"],
+        "object-shorthand": "warn",
+        "arrow-parens": "off",
+        "no-use-before-define": "off",
+        "eol-last": "warn",
+        "func-call-spacing": "off",
+
+        "vue/block-lang": ["error", { "script": { "lang": "ts" } }],
+        "vue/prop-name-casing": ["error", "camelCase"],
+        "vue/camelcase": "error",
+        "vue/attribute-hyphenation": ["warn", "always"],
+        "vue/max-attributes-per-line": ["warn", {
+            "singleline": {
+                "max": 5
+            },
+            "multiline": {
+                "max": 1
+            }
+        }],
+        "vue/singleline-html-element-content-newline": "off",
+        "vue/multi-word-component-names": "off",
+        "vue/no-v-text-v-html-on-component": "warn",
+
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/member-delimiter-style": ["error", {
+            "multiline": {
+                "delimiter": "comma",
+                "requireLast": true
+            },
+            "singleline": {
+                "delimiter": "comma",
+                "requireLast": false
+            },
+            "overrides": {
+                "interface": {
+                    "multiline": {
+                        "delimiter": "semi",
+                        "requireLast": true
+                    }
+                }
+            }
+        }]
+    }
+}

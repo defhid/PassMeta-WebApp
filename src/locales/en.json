@@ -1,0 +1,9 @@
+{
+  "Auth": {
+    "Title": "Authorization",
+    "SignInButton": "Sign In",
+    "SignUpButton": "Sign Up",
+    "LoginLabel": "Login",
+    "PasswordLabel": "Password"
+  }
+}

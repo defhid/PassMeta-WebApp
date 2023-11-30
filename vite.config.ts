@@ -9,9 +9,12 @@ export default defineConfig({
     resolve: {
         alias: {
             "@": fileURLToPath(new URL("./src", baseUrl)),
+            "@assets": fileURLToPath(new URL("./src/assets", baseUrl)),
+            "@models": fileURLToPath(new URL("./src/models", baseUrl)),
             "@pages": fileURLToPath(new URL("./src/pages", baseUrl)),
-            "@utils": fileURLToPath(new URL("./src/utils", baseUrl)),
             "@routing": fileURLToPath(new URL("./src/routing", baseUrl)),
+            "@stores": fileURLToPath(new URL("./src/stores", baseUrl)),
+            "@utils": fileURLToPath(new URL("./src/utils", baseUrl)),
         },
     },
 });

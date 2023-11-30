@@ -1,0 +1,9 @@
+{
+  "Auth": {
+    "Title": "Авторизация",
+    "SignInButton": "Войти",
+    "SignUpButton": "Зарегистрироваться",
+    "LoginLabel": "Логин",
+    "PasswordLabel": "Пароль"
+  }
+}

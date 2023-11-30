@@ -6,7 +6,7 @@
 PassMeta WebApp is a web client application of PassMeta System.
 
 ### Technologies
-*Vue.js 3, TypeScript, Vite.*
+*Vue.js 3, TypeScript, Tailwind, Vite.*
 
 ### Screenshots
 

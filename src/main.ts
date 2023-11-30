@@ -1,15 +1,15 @@
 import "./assets/base.css";
 
-import { createApp } from "vue";
-import { createRouter, createWebHashHistory } from "vue-router";
 import App from "./App.vue";
-import { buildRoutes } from "@routing/routes";
-
-const router = createRouter({
-    history: createWebHashHistory(),
-    routes: buildRoutes(),
-});
+import { createApp } from "vue";
+import LocalePlugin from "./plugins/localePlugin";
+import VuetifyPlugin from "./plugins/vuetifyPlugin";
+import RouterPlugin from "./plugins/routerPlugin";
 
 const app = createApp(App);
-app.use(router);
+
+app.use(VuetifyPlugin);
+app.use(RouterPlugin);
+app.use(LocalePlugin);
+
 app.mount("#app");

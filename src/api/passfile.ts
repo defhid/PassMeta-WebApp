@@ -4,37 +4,23 @@ import {
     createListDeserializer,
     dateTimeDeserializer,
 } from "./serialization";
+import type {
+    BodyCtrlPassfilesPassfileIdVersionsNewPost,
+    CtrlPassfilesGetParams,
+    PassfileDto,
+    PassfileListDto,
+    PassfilePatchDto, PassfileVersionDto,
+    PassfileVersionListDto,
+} from "@generated/api";
 
-export interface PassFilePostData {
-    typeId: number;
-    name: string;
-    color: string | null;
-    createdOn: Date;
-}
-
-export interface PassFileInfoDto
-{
-    id: number;
-    userId: number;
-    typeId: number;
-    name: string;
-    color: string | null;
-    version: number;
-    createdOn: Date;
-    infoChangedOn: Date;
-    versionChangedOn: Date;
-}
-
-export enum PassFileType
-{
-    Pwd = 1,
-    Txt = 2,
-}
-
-const PassFileInfoDtoDeserializer = createFieldsDeserializer<PassFileInfoDto>({
+const PassFileDtoDeserializer = createFieldsDeserializer<PassfileDto>({
     createdOn: dateTimeDeserializer,
     infoChangedOn: dateTimeDeserializer,
     versionChangedOn: dateTimeDeserializer,
+});
+
+const PassFileListDtoDeserializer = createFieldsDeserializer<PassfileListDto>({
+    list: createListDeserializer(PassFileDtoDeserializer),
 });
 
 
@@ -45,45 +31,76 @@ export const Passfile = {
     /**
      * Create a new passfile.
      */
-    Post: RestProtocolFactory.json("POST", () => "passfiles/new", {
-        body: (params: PassFilePostData) => params,
-        deserialize: PassFileInfoDtoDeserializer,
-    }),
+    post: RestProtocolFactory.fromGenerated<PassfileDto, PassfileDto>(
+        (api, params) => api.passfiles.ctrlPassfilesNewPost(params),
+        { deserialize: PassFileDtoDeserializer },
+    ),
 
     /**
      * Get passfile list.
      */
-    GetList: RestProtocolFactory.json(
-        "GET",
-        (params: { ofType: PassFileType }) => `passfiles?type_id=${params.ofType}`,
-        { deserialize: createListDeserializer(PassFileInfoDtoDeserializer) }),
+    getList: RestProtocolFactory.fromGenerated<CtrlPassfilesGetParams, PassfileListDto>(
+        (api, params) => api.passfiles.ctrlPassfilesGet(params),
+        { deserialize: PassFileListDtoDeserializer },
+    ),
 
     /**
      * Get passfile.
      */
-    Get: RestProtocolFactory.json(
-        "GET",
-        (params: { passFileId: number }) => `passfiles/${params.passFileId}`,
-        { deserialize: PassFileInfoDtoDeserializer }),
+    get: RestProtocolFactory.fromGenerated<{ id: number }, PassfileDto>(
+        (api, params) => api.passfiles.ctrlPassfilesPassfileIdGet(params.id),
+        { deserialize: PassFileDtoDeserializer },
+    ),
 
+    /**
+     * Edit passfile.
+     */
+    patch: RestProtocolFactory.fromGenerated<PassfilePatchDto & { id: number }, PassfileDto>(
+        (api, { id, ...params }) => api.passfiles.ctrlPassfilesPassfileIdPatch(id, params),
+        { deserialize: PassFileDtoDeserializer }),
 
-// /// Edit passfile.
-// ///
-// static IHttpRequestWithBodySupportBase Patch(long passFileId) => _Patch($"passfiles/{passFileId}");
-//
-// /// Delete passfile.
-// ///
-// static IHttpRequestWithBodySupportBase Delete(long passFileId) => _Delete($"passfiles/{passFileId}");
-//
-// /// Create a new passfile version content.
-// ///
-// static IHttpRequestWithBodySupportBase PostVersion(long passFileId) => _Post($"passfiles/{passFileId}/versions/new");
-//
-// /// Get passfile versions.
-// ///
-// static IHttpRequestBase GetVersionList(long passFileId) => _Get($"passfiles/{passFileId}/versions");
-//
-// /// Get passfile version content.
-// ///
-// static IHttpRequestBase GetVersion(long passFileId, int version) => _Get($"passfiles/{passFileId}/versions/{version}");
+    /**
+     * Delete passfile.
+     */
+    delete: RestProtocolFactory.fromGenerated<{ id: number }>(
+        (api, params) => api.passfiles.ctrlPassfilesPassfileIdDelete(params.id)),
+
+    /**
+     * Create a new passfile version content.
+     */
+    postVersion: RestProtocolFactory.fromGenerated<
+        BodyCtrlPassfilesPassfileIdVersionsNewPost & { passfileId: number },
+        PassfileDto
+    >(
+        (api, { passfileId, ...params }) =>
+            api.passfiles.ctrlPassfilesPassfileIdVersionsNewPost(passfileId, params),
+        { deserialize: PassFileDtoDeserializer },
+    ),
+
+    /**
+     * Get passfile versions.
+     */
+    getVersionList: RestProtocolFactory.fromGenerated<
+        { passfileId: number },
+        PassfileVersionListDto
+    >(
+        (api, params) => api.passfiles.ctrlPassfilesPassfileIdVersionsGet(params.passfileId),
+        {
+            deserialize: createFieldsDeserializer<PassfileVersionListDto>({
+                list: createListDeserializer(createFieldsDeserializer<PassfileVersionDto>({
+                    versionDate: dateTimeDeserializer,
+                })),
+            }),
+        },
+    ),
+
+    /**
+     * Get passfile version content.
+     */
+    getVersion: RestProtocolFactory.fromGenerated<{ passfileId: number, version: number }, File>(
+        (api, params) =>
+            api.passfiles.ctrlPassfilesPassfileIdVersionsVersionGet(
+                params.passfileId,
+                params.version),
+    ),
 };

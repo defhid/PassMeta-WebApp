@@ -13,7 +13,8 @@ const config = useAppConfig();
       <strong>Server API</strong>:
       <a
         class="italic"
-        :href="config.PASSMETA_API + '/info'" target="_blank"
+        :href="config.PASSMETA_API + '/info'"
+        target="_blank"
       >
         {{ config.PASSMETA_API }}/info
       </a>

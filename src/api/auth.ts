@@ -1,4 +1,5 @@
-import { RestProtocolFactory } from "@/api/base/restProtocolFactory";
+import { RestProtocolFactory } from "./base/restProtocolFactory";
+import { type SignInDto } from "@generated/api";
 
 /**
  * Auth controllers.
@@ -7,15 +8,18 @@ export const Auth = {
     /**
      * Sign in.
      */
-    LogIn: RestProtocolFactory.void("POST", () => "auth/sign-in"),
+    logIn: RestProtocolFactory.fromGenerated(
+        (api, params: SignInDto) => api.auth.ctrlAuthSignInPost(params)),
 
     /**
      * Reset all current user sessions.
      */
-    PostResetAll: RestProtocolFactory.void("POST", () => "auth/reset/all"),
+    resetAll: RestProtocolFactory.fromGenerated(
+        (api) => api.auth.ctrlAuthResetAllPost()),
 
     /**
      * Reset all current user sessions except this one.
      */
-    PostResetAllExceptMe: RestProtocolFactory.void("POST", () => "auth/reset/all-except-me"),
+    resetAllExceptMe: RestProtocolFactory.fromGenerated(
+        (api) => api.auth.ctrlAuthResetAllExceptMePost()),
 };

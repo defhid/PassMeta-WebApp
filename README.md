@@ -1,5 +1,5 @@
 # PassMeta Web App
-#### © 2023 Vladislav Mironov
+#### © 2024 Vladislav Mironov
 
 
 ### About the project
@@ -17,6 +17,7 @@ PassMeta WebApp is a web client application of PassMeta System.
 
 ```sh
 yarn install
+yarn run prepare
 ```
 
 ### Compile and Hot-Reload for Development

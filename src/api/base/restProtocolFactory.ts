@@ -1,12 +1,58 @@
 import type { ApiProtocol, ApiResponse } from "./apiProtocol";
 import type { Deserializer } from "../serialization";
 import { useAppConfig } from "@utils/appConfig";
+import { t } from "@plugins/localePlugin";
+import { Api, type FullResultDto, type HttpResponse } from "@generated/api";
 
 type RestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
-type RestFailureResponse = { message: string, more: string[] | null };
-
 export class RestProtocolFactory {
+    static onError: ((message: string, more?: string[]) => void) | null = null;
+
+    static fromGenerated<
+        TParams extends Record<string, any> | undefined = undefined,
+        TResponse = undefined
+    >(
+        call: ((api: Api<unknown>, params: TParams) =>
+            Promise<HttpResponse<TResponse, FullResultDto>>),
+        options?: {
+            deserialize?: TResponse extends undefined
+                ? undefined
+                : Deserializer<TResponse>,
+        },
+    ): ApiProtocol<TParams, TResponse> {
+        return this.build(async (params) => {
+            try {
+                const api = new Api({
+                    baseUrl: useAppConfig().PASSMETA_API,
+                });
+                const response = await call(api, params!);
+                return {
+                    ok: true,
+                    message: undefined,
+                    more: undefined,
+                    data: options?.deserialize
+                        ? options.deserialize(response.data)
+                        : response.data,
+                };
+            } catch (err) {
+                if (err instanceof Error) {
+                    throw err;
+                }
+
+                return {
+                    ok: false,
+                    message: (err as FullResultDto)?.msg as string ??
+                        t("Common.Api.UnknownError"),
+                    more: (err as FullResultDto)?.more as string[] ?? [],
+                    data: undefined,
+                };
+            }
+        });
+    }
+
+    // region Custom (TODO: need?)
+
     static void<
         TParams extends Record<string, any> | undefined,
         TMethod extends RestMethod,
@@ -35,10 +81,10 @@ export class RestProtocolFactory {
                 };
             }
 
-            const json = await this.decodeJson(response) as RestFailureResponse | null;
+            const json = await this.decodeJson(response) as FullResultDto | null;
             return {
                 ok: false,
-                message: json?.message ?? "Unknown error",
+                message: json?.msg ?? t("Common.Api.UnknownError"),
                 more: json?.more ?? [],
                 data: undefined,
             };
@@ -83,8 +129,9 @@ export class RestProtocolFactory {
 
             return {
                 ok: false,
-                message: (json as RestFailureResponse)?.message as string ?? "Unknown error",
-                more: (json as RestFailureResponse)?.more as string[] ?? [],
+                message: (json as FullResultDto)?.msg as string ??
+                    t("Common.Api.UnknownError"),
+                more: (json as FullResultDto)?.more as string[] ?? [],
                 data: undefined,
             };
         });
@@ -119,10 +166,10 @@ export class RestProtocolFactory {
                 };
             }
 
-            const json = await this.decodeJson(response) as RestFailureResponse | null;
+            const json = await this.decodeJson(response) as FullResultDto | null;
             return {
                 ok: false,
-                message: json?.message as string ?? "Unknown error",
+                message: json?.msg as string ?? t("Common.Api.UnknownError"),
                 more: json?.more as string[] ?? [],
                 data: undefined,
             };
@@ -137,10 +184,17 @@ export class RestProtocolFactory {
     ): ApiProtocol<TParams, TResponse> {
         return {
             execute: (async (params?: TParams): Promise<TResponse> => {
-                const result = await executor(params);
+                let result: ApiResponse<TResponse> | null = null;
+
+                try {
+                    result = await executor(params);
+                } catch (err) {
+                    this.onError?.(t("Common.Api.UnknownError"));
+                    throw err;
+                }
 
                 if (!result.ok) {
-                    alert(result.message + "\n" + result.more.join("\n")); // TODO
+                    this.onError?.(result.message, result.more);
                     throw new Error(result.message);
                 }
 
@@ -195,9 +249,10 @@ export class RestProtocolFactory {
             const body = options?.body ? JSON.stringify(options.body(params)) : undefined;
             return [query, body];
         } catch (err) {
-            const customErr = new Error("Failed to build request");
-            console.error(customErr.message, err);
-            throw customErr;
+            console.error("Failed to build request", err);
+            throw new Error(t("Common.Api.RequestBuildError"));
         }
     }
+
+    // endregion
 }

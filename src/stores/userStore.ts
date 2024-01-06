@@ -1,5 +1,5 @@
-import type { UserDto } from "@models/UserDto";
 import { reactive } from "vue";
+import type { UserDto } from "@generated/api";
 
 export interface IUserStore {
     get user(): Readonly<UserDto> | null;

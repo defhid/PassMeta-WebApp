@@ -8,10 +8,10 @@ const SupportedLocales = {
     ru: () => import("../locales/ru.json"),
 };
 
+const i18n = createI18n({});
+
 export default {
     install(app: App) {
-        const i18n = createI18n({});
-
         app.use(i18n);
 
         app.config.globalProperties.$router.beforeEach(async (to) => {
@@ -45,3 +45,5 @@ export default {
         });
     },
 };
+
+export const t = i18n.global.t;

@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prepare": "npm --prefix ./typegen run generate",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint ./src --ext .ts,.vue"
@@ -27,6 +28,6 @@
     "postcss": "8.4.31",
     "tailwindcss": "3.3.5",
     "typescript": "5.2.2",
-    "vite": "5.0.2"
+    "vite": "5.0.5"
   }
 }

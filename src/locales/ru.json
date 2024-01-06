@@ -1,4 +1,10 @@
 {
+  "Common": {
+    "Api": {
+      "UnknownError": "Произошла неизвестная ошибка",
+      "RequestBuildError": "Не удалось построить запрос"
+    }
+  },
   "Auth": {
     "Title": "Авторизация",
     "SignInButton": "Войти",

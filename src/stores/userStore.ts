@@ -2,15 +2,20 @@ import { reactive } from "vue";
 import type { UserDto } from "@generated/api";
 
 export interface IUserStore {
-    get user(): Readonly<UserDto> | null;
+    get user(): Readonly<UserDto>;
     get isAuthenticated(): boolean;
 
-    setUser(user: UserDto | null): void;
+    setUser(user: UserDto | null | undefined): void;
 }
 
 class UserStore implements IUserStore {
     private readonly state = reactive({
-        user: null as UserDto | null,
+        user: {
+            id: 0,
+            login: "?",
+            fullName: "Anonymous",
+            isActive: false,
+        },
     });
 
     get user() {
@@ -21,8 +26,14 @@ class UserStore implements IUserStore {
         return this.state.user?.id != null;
     }
 
-    setUser(user: UserDto | null): void {
-        this.state.user = { ...user } as UserDto;
+    setUser(user: UserDto | null | undefined): void {
+        this.state.user = {
+            id: 0,
+            login: "?",
+            fullName: "Anonymous",
+            isActive: false,
+            ...user,
+        };
     }
 }
 

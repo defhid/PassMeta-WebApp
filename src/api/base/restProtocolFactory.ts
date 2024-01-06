@@ -25,6 +25,8 @@ export class RestProtocolFactory {
             try {
                 const api = new Api({
                     baseUrl: useAppConfig().PASSMETA_API,
+                    customFetch: (input, init) =>
+                        fetch(input as string, { mode: "cors", credentials: "include", ...init }),
                 });
                 const response = await call(api, params!);
                 return {
@@ -42,9 +44,10 @@ export class RestProtocolFactory {
 
                 return {
                     ok: false,
-                    message: (err as FullResultDto)?.msg as string ??
+                    message: (err as HttpResponse<TResponse, FullResultDto>).error?.msg as string ??
                         t("Common.Api.UnknownError"),
-                    more: (err as FullResultDto)?.more as string[] ?? [],
+                    more: (err as HttpResponse<TResponse, FullResultDto>).error?.more as string[] ??
+                        [],
                     data: undefined,
                 };
             }

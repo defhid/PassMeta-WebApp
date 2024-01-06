@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import PassMetaIcon from "@assets/icons/PassMeta.png";
+import { useUserStore } from "@stores/userStore";
+
+const userStore = useUserStore();
 </script>
 
 <template>
-  <v-layout>
+  <v-layout :key="userStore.user.id">
     <v-app-bar>
       <template #prepend>
         <RouterLink class="grid h-full align-center" to="/">

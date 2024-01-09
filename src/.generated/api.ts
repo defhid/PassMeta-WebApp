@@ -15,7 +15,7 @@ export interface AppInfoDto {
   appId: string;
   /** Appversion */
   appVersion: string;
-  user: UserDto;
+  user: UserDto | null;
 }
 
 /** Body_ctrl_passfiles__passfile_id__versions_new_post */

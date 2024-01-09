@@ -1,10 +1,8 @@
 import type { ApiProtocol, ApiResponse } from "./apiProtocol";
 import type { Deserializer } from "../serialization";
-import { useAppConfig } from "@utils/appConfig";
+import { AppConfig } from "@stores/appConfig";
 import { t } from "@plugins/localePlugin";
 import { Api, type FullResultDto, type HttpResponse } from "@generated/api";
-
-type RestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export class RestProtocolFactory {
     static onError: ((message: string, more?: string[]) => void) | null = null;
@@ -24,9 +22,9 @@ export class RestProtocolFactory {
         return this.build(async (params) => {
             try {
                 const api = new Api({
-                    baseUrl: useAppConfig().PASSMETA_API,
+                    baseUrl: AppConfig.PASSMETA_API,
                     customFetch: (input, init) =>
-                        fetch(input as string, { mode: "cors", credentials: "include", ...init }),
+                        fetch(input as string, { ...init, mode: "cors", credentials: "include" }),
                 });
                 const response = await call(api, params!);
                 return {
@@ -51,131 +49,6 @@ export class RestProtocolFactory {
                     data: undefined,
                 };
             }
-        });
-    }
-
-    // region Custom (TODO: need?)
-
-    static void<
-        TParams extends Record<string, any> | undefined,
-        TMethod extends RestMethod,
-    >(
-        method: TMethod,
-        url: (params: TParams) => string,
-        options?: {
-            query?: (params: TParams) => Record<string, any>,
-            body?: TMethod extends "GET"
-                ? never
-                : (params: TParams) => Record<string, any>,
-        },
-    ): ApiProtocol<TParams> {
-        return this.build(async (params) => {
-            const [query, body] = this.getFetchOptions(params!, options);
-
-            const uri = useAppConfig().PASSMETA_API + "/" + url(params!) + query;
-
-            const response = await fetch(uri, { method, body });
-            if (response.ok) {
-                return {
-                    ok: true,
-                    message: undefined,
-                    more: undefined,
-                    data: undefined,
-                };
-            }
-
-            const json = await this.decodeJson(response) as FullResultDto | null;
-            return {
-                ok: false,
-                message: json?.msg ?? t("Common.Api.UnknownError"),
-                more: json?.more ?? [],
-                data: undefined,
-            };
-        });
-    }
-
-    static json<
-        TParams extends Record<string, any> | undefined,
-        TResponse,
-        TMethod extends RestMethod,
-    >(
-        method: TMethod,
-        url: (params: TParams) => string,
-        options?: {
-            query?: (params: TParams) => Record<string, any>,
-            body?: TMethod extends "GET"
-                ? never
-                : (params: TParams) => Record<string, any>,
-            deserialize?: Deserializer<TResponse>,
-        },
-    ): ApiProtocol<TParams, TResponse> {
-        return this.build(async (params) => {
-            const [query, body] = this.getFetchOptions(params!, options);
-
-            const uri = useAppConfig().PASSMETA_API + "/" + url(params!) + query;
-
-            const response = await fetch(uri, { method, body });
-            let json = await this.decodeJson(response);
-
-            if (response.ok) {
-                if (options?.deserialize) {
-                    json = options.deserialize(json);
-                }
-
-                return {
-                    ok: true,
-                    message: undefined,
-                    more: undefined,
-                    data: json as TResponse,
-                };
-            }
-
-            return {
-                ok: false,
-                message: (json as FullResultDto)?.msg as string ??
-                    t("Common.Api.UnknownError"),
-                more: (json as FullResultDto)?.more as string[] ?? [],
-                data: undefined,
-            };
-        });
-    }
-
-    static blob<
-        TParams extends Record<string, any> | undefined,
-        TMethod extends RestMethod,
-    >(
-        method: TMethod,
-        url: (params: TParams) => string,
-        options?: {
-            query?: (params: TParams) => Record<string, any>,
-            body?: TMethod extends "GET"
-                ? never
-                : (params: TParams) => Record<string, any>,
-        },
-    ): ApiProtocol<TParams, Blob> {
-        return this.build(async (params) => {
-            const [query, body] = this.getFetchOptions(params!, options);
-
-            const uri = useAppConfig().PASSMETA_API + "/" + url(params!) + query;
-
-            const response = await fetch(uri, { method, body });
-            if (response.ok) {
-                const blob = await this.decodeBlob(response);
-                return {
-                    ok: true,
-                    message: undefined,
-                    more: undefined,
-                    data: blob!,
-                };
-            }
-
-            const json = await this.decodeJson(response) as FullResultDto | null;
-            return {
-                ok: false,
-                message: json?.msg as string ?? t("Common.Api.UnknownError"),
-                more: json?.more as string[] ?? [],
-                data: undefined,
-            };
         });
     }
 
@@ -218,44 +91,4 @@ export class RestProtocolFactory {
             }) as ApiProtocol<TParams, TResponse>["executeSilent"],
         };
     }
-
-    private static async decodeJson(response: Response): Promise<unknown> {
-        try {
-            return await response.json();
-        } catch (err) {
-            console.error("Failed to decode json response", err);
-            return null;
-        }
-    }
-
-    private static async decodeBlob(response: Response): Promise<Blob | null> {
-        try {
-            return await response.blob();
-        } catch (err) {
-            console.error("Failed to decode blob response", err);
-            return null;
-        }
-    }
-
-    private static getFetchOptions<TParams>(
-        params: TParams,
-        options: {
-            query?: (params: TParams) => Record<string, any>,
-            body?: (params: TParams) => Record<string, any>,
-        } | undefined,
-    ): [
-        query: string,
-        body: string | undefined,
-    ] {
-        try {
-            const query = options?.query ? "?" + new URLSearchParams(options.query(params)) : "";
-            const body = options?.body ? JSON.stringify(options.body(params)) : undefined;
-            return [query, body];
-        } catch (err) {
-            console.error("Failed to build request", err);
-            throw new Error(t("Common.Api.RequestBuildError"));
-        }
-    }
-
-    // endregion
 }

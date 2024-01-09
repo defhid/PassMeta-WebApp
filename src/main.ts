@@ -6,14 +6,13 @@ import LocalePlugin from "./plugins/localePlugin";
 import VuetifyPlugin from "./plugins/vuetifyPlugin";
 import RouterPlugin from "./plugins/routerPlugin";
 import { RestProtocolFactory } from "@api/base/restProtocolFactory";
-import { PassMetaApi } from "@/api";
-import { useUserStore } from "@stores/userStore";
+import { AppContext } from "@stores/appContext";
+import { Notify } from "@utils/notify";
 
 RestProtocolFactory.onError = (message: string, more?: string[]) =>
-    alert(message + "\n" + more?.join("\n")); // TODO
+    Notify.error(message + "\n" + more?.join("\n"));
 
-PassMetaApi.general.getInfo.execute()
-    .then(({ user }) => useUserStore().setUser(user));
+AppContext.load().then();
 
 const app = createApp(App);
 

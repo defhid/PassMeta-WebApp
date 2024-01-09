@@ -12,6 +12,12 @@ export const Auth = {
         (api, params: SignInDto) => api.auth.ctrlAuthSignInPost(params)),
 
     /**
+     * Reset current user session.
+     */
+    resetMe: RestProtocolFactory.fromGenerated(
+        (api) => api.auth.ctrlAuthResetMePost()),
+
+    /**
      * Reset all current user sessions.
      */
     resetAll: RestProtocolFactory.fromGenerated(

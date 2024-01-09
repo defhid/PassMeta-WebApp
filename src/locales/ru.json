@@ -11,5 +11,12 @@
     "SignUpButton": "Зарегистрироваться",
     "LoginLabel": "Логин",
     "PasswordLabel": "Пароль"
+  },
+  "App": {
+    "NavigationBar": {
+      "Account": "Аккаунт",
+      "SignIn": "Войти",
+      "SignOut": "Выйти"
+    }
   }
 }

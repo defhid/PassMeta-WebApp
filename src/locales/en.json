@@ -11,5 +11,12 @@
     "SignUpButton": "Sign Up",
     "LoginLabel": "Login",
     "PasswordLabel": "Password"
+  },
+  "App": {
+    "NavigationBar": {
+      "Account": "Account",
+      "SignIn": "Sign in",
+      "SignOut": "Sign out"
+    }
   }
 }

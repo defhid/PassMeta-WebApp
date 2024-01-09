@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { PassMetaApi } from "@api";
-import { useUserStore } from "@stores/userStore";
+import { AppContext } from "@stores/appContext";
 import { useRouter } from "vue-router";
+import { Routes } from "@routing/routes";
 
 const login = ref("");
 const password = ref("");
 
 const router = useRouter();
-const userStore = useUserStore();
 
 async function signIn() {
     const user = await PassMetaApi.auth.logIn.execute({
@@ -16,8 +16,8 @@ async function signIn() {
         password: password.value,
     });
 
-    userStore.setUser(user);
-    await router.push({ name: "Storage" });
+    AppContext.setUser(user);
+    await router.push(Routes.Storage.to());
 }
 
 async function signUp() {
@@ -26,28 +26,32 @@ async function signUp() {
         password: password.value,
     });
 
-    userStore.setUser(user);
-    await router.push({ name: "Storage" });
+    AppContext.setUser(user);
+    await router.push(Routes.Storage.to());
 }
 </script>
 
 <template>
   <div class="grid h-full w-full justify-center align-center">
-    <v-card :title="$t('Auth.Title')" variant="tonal">
+    <v-card class="min-w-[300px]" :title="$t('Auth.Title')" variant="tonal">
       <v-card-item>
         <v-text-field
           v-model="login"
           :label="$t('Auth.LoginLabel')"
+          name="login"
           variant="underlined"
           clearable
+          @keydown.enter="signIn"
         />
 
         <v-text-field
           v-model="password"
           :label="$t('Auth.PasswordLabel')"
+          name="password"
           variant="underlined"
           type="password"
           clearable
+          @keydown.enter="signIn"
         />
       </v-card-item>
 

@@ -3,6 +3,8 @@ const path = require("path");
 
 const config = require("dotenv").config({ path: "../.env" });
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 generateApi({
     name: "api.ts",
     output: path.resolve(process.cwd(), "../src/.generated"),
@@ -16,4 +18,4 @@ generateApi({
             "date-time": "Date",
         },
     }),
-}).catch((e) => console.error(e));
+}).then();

@@ -12,11 +12,27 @@
     "LoginLabel": "Login",
     "PasswordLabel": "Password"
   },
+  "Account": {
+    "Title": "Account",
+    "LabelName": "Name",
+    "LabelLogin": "Login",
+    "BtnResetSessions": "Reset all sessions",
+    "ConfirmResetSessions": "Are you sure you want to reset all sessions except the current one?",
+    "SuccessResetSessions": "Sessions have been successfully reset!"
+  },
+  "Home": {
+    "TitleKnown": "Hello",
+    "TitleUnknown": "Welcome to PassMeta",
+    "LabelServerId": "Server ID",
+    "LabelServerVersion": "Server version",
+    "BtnAuthorize": "Log in to the system"
+  },
   "App": {
     "NavigationBar": {
       "Account": "Account",
       "SignIn": "Sign in",
-      "SignOut": "Sign out"
+      "SignOut": "Sign out",
+      "ConfirmSignOut": "Are you sure you want to sign out?"
     }
   }
 }

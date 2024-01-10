@@ -11,7 +11,7 @@ import type {
     PassfileListDto,
     PassfilePatchDto, PassfileVersionDto,
     PassfileVersionListDto,
-} from "@generated/api";
+} from "~generated/api";
 
 const PassFileDtoDeserializer = createFieldsDeserializer<PassfileDto>({
     createdOn: dateTimeDeserializer,

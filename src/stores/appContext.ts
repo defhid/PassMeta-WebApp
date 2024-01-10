@@ -1,7 +1,7 @@
 import { readonly, ref } from "vue";
-import type { UserDto } from "@generated/api";
-import { PassMetaApi } from "@/api";
-import { Notify } from "@utils/notify";
+import type { UserDto } from "~generated/api";
+import { PassMetaApi } from "~api";
+import { Notify } from "~utils/notify";
 
 const user = ref<UserDto>();
 const serverId = ref<string>();

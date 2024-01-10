@@ -1,8 +1,8 @@
 import type { ApiProtocol, ApiResponse } from "./apiProtocol";
 import type { Deserializer } from "../serialization";
-import { AppConfig } from "@stores/appConfig";
-import { t } from "@plugins/localePlugin";
-import { Api, type FullResultDto, type HttpResponse } from "@generated/api";
+import { AppConfig } from "~stores/appConfig";
+import { t } from "~plugins/localePlugin";
+import { Api, type FullResultDto, type HttpResponse } from "~generated/api";
 
 export class RestProtocolFactory {
     static onError: ((message: string, more?: string[]) => void) | null = null;
@@ -24,7 +24,7 @@ export class RestProtocolFactory {
                 const api = new Api({
                     baseUrl: AppConfig.PASSMETA_API,
                     customFetch: (input, init) =>
-                        fetch(input as string, { ...init, mode: "cors", credentials: "include" }),
+                        fetch(input as string, { ...init, credentials: "include" }),
                 });
                 const response = await call(api, params!);
                 return {

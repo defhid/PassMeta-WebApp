@@ -5,9 +5,9 @@ import { createApp } from "vue";
 import LocalePlugin from "./plugins/localePlugin";
 import VuetifyPlugin from "./plugins/vuetifyPlugin";
 import RouterPlugin from "./plugins/routerPlugin";
-import { RestProtocolFactory } from "@api/base/restProtocolFactory";
-import { AppContext } from "@stores/appContext";
-import { Notify } from "@utils/notify";
+import { RestProtocolFactory } from "~api/base/restProtocolFactory";
+import { AppContext } from "~stores/appContext";
+import { Notify } from "~utils/notify";
 
 RestProtocolFactory.onError = (message: string, more?: string[]) =>
     Notify.error(message + "\n" + more?.join("\n"));

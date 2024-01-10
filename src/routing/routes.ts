@@ -1,9 +1,11 @@
-import HomePage from "@pages/HomePage.vue";
-import StoragePage from "@pages/StoragePage.vue";
+import HomePage from "~pages/HomePage.vue";
+import StoragePage from "~pages/StoragePage.vue";
+import AccountPage from "~pages/AccountPage.vue";
+import GeneratorPage from "~pages/GeneratorPage.vue";
+import HistoryPage from "~pages/HistoryPage.vue";
 import type { RouteLocationRaw, RouteRecordRaw } from "vue-router";
-import { LocaleHelper } from "@utils/localeHelper";
-import { AppContext } from "@stores/appContext";
-import AccountPage from "@pages/AccountPage.vue";
+import { LocaleHelper } from "~utils/localeHelper";
+import { AppContext } from "~stores/appContext";
 
 export interface RouteInfo<
     TRouteParams extends Record<string, any> | undefined,
@@ -61,7 +63,7 @@ export const Routes = defineRoutes({
     Auth: {
         path: "/:locale/auth",
         anonymous: true,
-        component: () => import("@pages/AuthPage.vue"),
+        component: () => import("~pages/AuthPage.vue"),
         queryParams: {} as { redirectUrl?: string },
     },
     Account: {
@@ -72,6 +74,14 @@ export const Routes = defineRoutes({
         path: "/:locale/storage",
         component: StoragePage,
     },
+    Generator: {
+        path: "/:locale/generator",
+        component: GeneratorPage,
+    },
+    History: {
+        path: "/:locale/history",
+        component: HistoryPage,
+    },
     Home: {
         path: "/:locale/home",
         anonymous: true,
@@ -80,7 +90,7 @@ export const Routes = defineRoutes({
     NotFound: {
         path: "/:pathMatch(.*)*",
         anonymous: true,
-        component: () => import("@pages/NotFoundPage.vue"),
+        component: () => import("~pages/NotFoundPage.vue"),
     },
 });
 

@@ -1,5 +1,5 @@
 import { RestProtocolFactory } from "./base/restProtocolFactory";
-import type { CtrlHistoryPagesPageIndexGetParams, HistoryPageDto } from "@generated/api";
+import type { CtrlHistoryPagesPageIndexGetParams, HistoryPageDto } from "~generated/api";
 
 /**
  * General controllers.

@@ -1,7 +1,7 @@
 import type { App } from "vue";
 import { createI18n } from "vue-i18n";
 import type { RouteLocationRaw } from "vue-router";
-import { LocaleHelper } from "@utils/localeHelper";
+import { LocaleHelper } from "~utils/localeHelper";
 
 const SupportedLocales = {
     en: () => import("../locales/en.json"),

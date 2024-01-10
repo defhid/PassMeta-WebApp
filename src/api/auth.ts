@@ -1,5 +1,5 @@
 import { RestProtocolFactory } from "./base/restProtocolFactory";
-import { type SignInDto } from "@generated/api";
+import { type SignInDto } from "~generated/api";
 
 /**
  * Auth controllers.

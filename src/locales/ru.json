@@ -12,11 +12,27 @@
     "LoginLabel": "Логин",
     "PasswordLabel": "Пароль"
   },
+  "Account": {
+    "Title": "Аккаунт",
+    "LabelName": "Имя",
+    "LabelLogin": "Логин",
+    "BtnResetSessions": "Сбросить все сеансы",
+    "ConfirmResetSessions": "Вы уверены, что хотите сбросить все сеансы, кроме текущего?",
+    "SuccessResetSessions": "Сеансы были успешно сброшены!"
+  },
+  "Home": {
+    "TitleKnown": "Привет",
+    "TitleUnknown": "Добро пожаловать в PassMeta",
+    "LabelServerId": "ID сервера",
+    "LabelServerVersion": "Версия сервера",
+    "BtnAuthorize": "Войти в систему"
+  },
   "App": {
     "NavigationBar": {
       "Account": "Аккаунт",
       "SignIn": "Войти",
-      "SignOut": "Выйти"
+      "SignOut": "Выйти",
+      "ConfirmSignOut": "Вы уверены, что хотите выйти из аккаунта?"
     }
   }
 }

@@ -4,15 +4,15 @@ export interface NotifyBaseOptions {
 
 // TODO
 export class Notify {
-    static error(message: string, options?: NotifyBaseOptions) {
+    static error(message: string, options?: NotifyBaseOptions): void {
         alert(message);
     }
 
-    static warning(message: string, options?: NotifyBaseOptions) {
+    static warning(message: string, options?: NotifyBaseOptions): void {
         alert(message);
     }
 
-    static info(message: string, options?: NotifyBaseOptions) {
+    static info(message: string, options?: NotifyBaseOptions): void {
         alert(message);
     }
 }

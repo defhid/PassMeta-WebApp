@@ -1,5 +1,5 @@
 import { RestProtocolFactory } from "./base/restProtocolFactory";
-import type { SignUpDto, UserDto, UserPatchDto } from "@generated/api";
+import type { SignUpDto, UserDto, UserPatchDto } from "~generated/api";
 
 /**
  * User controllers.

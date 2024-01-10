@@ -1,16 +1,23 @@
 <script setup lang="ts">
-import PassMetaIcon from "@assets/icons/PassMeta.png";
-import { PassMetaApi } from "@api";
-import { AppContext } from "@stores/appContext";
+import PassMetaIcon from "~assets/icons/PassMeta.png";
+import { PassMetaApi } from "~api";
+import { AppContext } from "~stores/appContext";
 import { useRouter } from "vue-router";
-import { Routes } from "@routing/routes";
+import { Routes } from "~routing/routes";
+import { t } from "~plugins/localePlugin";
+import { Ask } from "~utils/ask";
 
 const router = useRouter();
 
 async function singOut() {
+    if (!await Ask.confirm(t("App.NavigationBar.ConfirmSignOut"))) {
+        return;
+    }
+
     await PassMetaApi.auth.resetMe.execute();
+
+    await router.push(Routes.Home.to());
     AppContext.setUser(null);
-    await router.push({ name: "Auth" });
 }
 </script>
 
@@ -25,8 +32,8 @@ async function singOut() {
 
       <div class="flex w-full items-start gap-4 px-6">
         <v-btn icon="mdi-safe-square-outline" :to="Routes.Storage.to()" />
-        <v-btn icon="mdi-lightbulb-outline" />
-        <v-btn icon="mdi-history" />
+        <v-btn icon="mdi-lightbulb-outline" :to="Routes.Generator.to()" />
+        <v-btn icon="mdi-history" :to="Routes.History.to()" />
       </div>
 
       <template #append>

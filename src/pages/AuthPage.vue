@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { PassMetaApi } from "@api";
-import { AppContext } from "@stores/appContext";
+import { PassMetaApi } from "~api";
+import { AppContext } from "~stores/appContext";
 import { useRouter } from "vue-router";
-import { Routes } from "@routing/routes";
+import { Routes } from "~routing/routes";
 
 const login = ref("");
 const password = ref("");

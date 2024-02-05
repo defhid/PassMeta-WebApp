@@ -7,7 +7,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 generateApi({
     name: "api.ts",
-    output: path.resolve(process.cwd(), "../src/.generated"),
+    output: path.resolve(process.cwd(), "../src/shared/.generated"),
     url: config.parsed.VITE_PASSMETA_API + "/openapi.json",
     generateClient: true,
     httpClientType: "fetch",

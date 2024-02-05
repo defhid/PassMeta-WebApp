@@ -1,38 +1,42 @@
 {
-  "Common": {
-    "Api": {
-      "UnknownError": "Unknown error occurred",
-      "RequestBuildError": "Failed to build request"
-    }
-  },
-  "Auth": {
-    "Title": "Authorization",
-    "SignInButton": "Sign In",
-    "SignUpButton": "Sign Up",
-    "LoginLabel": "Login",
-    "PasswordLabel": "Password"
-  },
   "Account": {
-    "Title": "Account",
-    "LabelName": "Name",
+    "BtnResetAllSessions": "Reset all sessions",
+    "BtnResetCurrentSession": "Sign out",
+    "ConfirmResetAllSessions": "Are you sure you want to reset all sessions except the current one?",
+    "ConfirmResetCurrentSession": "Are you sure you want to sign out?",
     "LabelLogin": "Login",
-    "BtnResetSessions": "Reset all sessions",
-    "ConfirmResetSessions": "Are you sure you want to reset all sessions except the current one?",
-    "SuccessResetSessions": "Sessions have been successfully reset!"
-  },
-  "Home": {
-    "TitleKnown": "Hello",
-    "TitleUnknown": "Welcome to PassMeta",
-    "LabelServerId": "Server ID",
-    "LabelServerVersion": "Server version",
-    "BtnAuthorize": "Log in to the system"
+    "LabelName": "Name",
+    "SuccessResetSessions": "Sessions have been successfully reset!",
+    "Title": "Account"
   },
   "App": {
     "NavigationBar": {
       "Account": "Account",
       "SignIn": "Sign in",
-      "SignOut": "Sign out",
-      "ConfirmSignOut": "Are you sure you want to sign out?"
+      "SignOut": "Sign out"
     }
+  },
+  "Auth": {
+    "LoginLabel": "Login",
+    "PasswordLabel": "Password",
+    "SignInButton": "Sign In",
+    "SignUpButton": "Sign Up",
+    "Title": "Authorization"
+  },
+  "Common": {
+    "Api": {
+      "RequestBuildError": "Failed to build request",
+      "UnknownError": "Unknown error occurred"
+    }
+  },
+  "Home": {
+    "BtnAuthorize": "Log in to the system",
+    "LabelServerId": "Server ID",
+    "LabelServerVersion": "Server version",
+    "TitleKnown": "Hello",
+    "TitleUnknown": "Welcome to PassMeta"
+  },
+  "NotFound": {
+    "Title": "Page was not found :("
   }
 }

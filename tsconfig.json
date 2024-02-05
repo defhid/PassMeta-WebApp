@@ -4,16 +4,19 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
-      "~api/*": ["./src/api/*"],
-      "~assets/*": ["./src/assets/*"],
-      "~enums/*": ["./src/enums/*"],
-      "~generated/*": ["./src/.generated/*"],
-      "~models/*": ["./src/models/*"],
-      "~pages/*": ["./src/pages/*"],
+      "~api": ["./src/shared/api"],
+      "~api/*": ["./src/shared/api/*"],
+      "~assets/*": ["./src/shared/assets/*"],
+      "~entities/*": ["./src/entities/*"],
+      "~features/*": ["./src/features/*"],
+      "~generated/*": ["./src/shared/.generated/*"],
+      "~infra/*": ["./src/infrastructure/*"],
+      "~pages": ["./src/pages"],
       "~plugins/*": ["./src/plugins/*"],
-      "~routing/*": ["./src/routing/*"],
-      "~stores/*": ["./src/stores/*"],
-      "~utils/*": ["./src/utils/*"]
+      "~routing": ["./src/shared/routing"],
+      "~stores": ["./src/shared/stores"],
+      "~utils": ["./src/shared/utils"],
+      "~widgets/*": ["./src/widgets/*"]
     }
   },
   "include": [

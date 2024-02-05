@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { AppContext } from "~stores/appContext";
-import { Routes } from "~routing/routes";
+import { AppContext } from "~stores";
+import { Routes } from "~routing";
 </script>
 
 <template>
@@ -10,7 +10,7 @@ import { Routes } from "~routing/routes";
       <span v-if="AppContext.user">
         ,
         <RouterLink class="text-green" :to="Routes.Account.to()">
-          {{ AppContext.user.fullName ?? AppContext.user.login }}
+          {{ AppContext.user!.fullName ?? AppContext.user!.login }}
         </RouterLink>
       </span>
     </h4>

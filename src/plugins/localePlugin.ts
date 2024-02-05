@@ -1,14 +1,13 @@
 import type { App } from "vue";
-import { createI18n } from "vue-i18n";
-import type { RouteLocationRaw } from "vue-router";
-import { LocaleHelper } from "~utils/localeHelper";
+import { getAppLocale, i18n, saveAppLocale } from "~stores";
+import { Routes } from "~routing";
 
 const SupportedLocales = {
     en: () => import("../locales/en.json"),
     ru: () => import("../locales/ru.json"),
 };
 
-const i18n = createI18n({});
+const LoadedLocales: string[] = [];
 
 export default {
     install(app: App) {
@@ -16,9 +15,10 @@ export default {
 
         app.config.globalProperties.$router.beforeEach(async (to) => {
             const paramsLocale = to.params.locale as string | undefined;
+            const currentLocale = getAppLocale();
 
             if (paramsLocale == null) {
-                return { path: "/" + LocaleHelper.getUserLocale() + to.path };
+                return { path: "/" + currentLocale + to.path };
             }
 
             if (!to.name) {
@@ -26,24 +26,23 @@ export default {
             }
 
             if (!(paramsLocale in SupportedLocales)) {
-                return {
-                    path: to.name,
-                    query: to.query,
-                    params: { ...to.params, locale: LocaleHelper.getUserLocale() },
-                } as RouteLocationRaw;
+                return Routes.NotFound.to();
             }
 
-            if (!i18n.global.availableLocales.includes(paramsLocale)) {
+            if (!LoadedLocales.includes(paramsLocale)) {
                 const loader = SupportedLocales[paramsLocale as keyof typeof SupportedLocales];
                 const messages = await loader();
 
                 i18n.global.setLocaleMessage(paramsLocale, messages.default);
+                LoadedLocales.push(paramsLocale);
             }
 
-            i18n.global.locale = paramsLocale;
+            if (currentLocale !== paramsLocale) {
+                i18n.global.locale = paramsLocale;
+                saveAppLocale(paramsLocale);
+            }
+
             document.querySelector("html")!.setAttribute("lang", paramsLocale);
         });
     },
 };
-
-export const t = i18n.global.t;

@@ -1,35 +1,19 @@
 <script setup lang="ts">
-import { AppContext } from "~stores/appContext";
-import { PassMetaApi } from "~api";
-import { Ask } from "~utils/ask";
-import { t } from "~plugins/localePlugin";
-import { Notify } from "~utils/notify";
+import { t } from "~stores";
+import { useRouter } from "vue-router";
+import { ViewerInfo } from "~entities/viewer";
+import { closeAllSessions, closeCurrentSession } from "~features/auth";
 
-async function closeAllSessions() {
-    if (!await Ask.confirm(t("Account.ConfirmResetSessions"))) {
-        return;
-    }
-
-    await PassMetaApi.auth.resetAllExceptMe.execute();
-
-    Notify.info(t("Account.SuccessResetSessions"));
-}
+const router = useRouter();
 </script>
 
 <template>
   <div class="p-4">
-    <h4 class="text-h4 text-center mt-2">{{ $t("Account.Title") }}</h4>
+    <h4 class="text-h4 text-center mt-2">{{ t("Account.Title") }}</h4>
 
-    <div class="grid grid-cols-[auto_1fr] gap-y-3 gap-x-5 mt-7">
-      <b>{{ $t("Account.LabelName") }}:</b>
-      <span class="text-medium-emphasis">{{ AppContext.user!.fullName }}</span>
-
-      <b>{{ $t("Account.LabelLogin") }}:</b>
-      <span class="text-medium-emphasis">{{ AppContext.user!.login }}</span>
-    </div>
-
-    <v-btn class="mt-10" size="small" @click.stop="closeAllSessions">
-      {{ $t("Account.BtnResetSessions") }}
-    </v-btn>
+    <ViewerInfo
+      @reset-all-sessions="closeAllSessions()"
+      @reset-current-session="closeCurrentSession(router)"
+    />
   </div>
 </template>

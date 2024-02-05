@@ -1,38 +1,42 @@
 {
-  "Common": {
-    "Api": {
-      "UnknownError": "Произошла неизвестная ошибка",
-      "RequestBuildError": "Не удалось построить запрос"
-    }
-  },
-  "Auth": {
-    "Title": "Авторизация",
-    "SignInButton": "Войти",
-    "SignUpButton": "Зарегистрироваться",
-    "LoginLabel": "Логин",
-    "PasswordLabel": "Пароль"
-  },
   "Account": {
-    "Title": "Аккаунт",
-    "LabelName": "Имя",
+    "BtnResetAllSessions": "Сбросить все сеансы",
+    "BtnResetCurrentSession": "Выйти",
+    "ConfirmResetAllSessions": "Вы уверены, что хотите сбросить все сеансы, кроме текущего?",
+    "ConfirmResetCurrentSession": "Вы уверены, что хотите выйти из аккаунта?",
     "LabelLogin": "Логин",
-    "BtnResetSessions": "Сбросить все сеансы",
-    "ConfirmResetSessions": "Вы уверены, что хотите сбросить все сеансы, кроме текущего?",
-    "SuccessResetSessions": "Сеансы были успешно сброшены!"
-  },
-  "Home": {
-    "TitleKnown": "Привет",
-    "TitleUnknown": "Добро пожаловать в PassMeta",
-    "LabelServerId": "ID сервера",
-    "LabelServerVersion": "Версия сервера",
-    "BtnAuthorize": "Войти в систему"
+    "LabelName": "Имя",
+    "SuccessResetSessions": "Сеансы были успешно сброшены!",
+    "Title": "Аккаунт"
   },
   "App": {
     "NavigationBar": {
       "Account": "Аккаунт",
       "SignIn": "Войти",
-      "SignOut": "Выйти",
-      "ConfirmSignOut": "Вы уверены, что хотите выйти из аккаунта?"
+      "SignOut": "Выйти"
     }
+  },
+  "Auth": {
+    "LoginLabel": "Логин",
+    "PasswordLabel": "Пароль",
+    "SignInButton": "Войти",
+    "SignUpButton": "Зарегистрироваться",
+    "Title": "Авторизация"
+  },
+  "Common": {
+    "Api": {
+      "RequestBuildError": "Не удалось построить запрос",
+      "UnknownError": "Произошла неизвестная ошибка"
+    }
+  },
+  "Home": {
+    "BtnAuthorize": "Войти в систему",
+    "LabelServerId": "ID сервера",
+    "LabelServerVersion": "Версия сервера",
+    "TitleKnown": "Привет",
+    "TitleUnknown": "Добро пожаловать в PassMeta"
+  },
+  "NotFound": {
+    "Title": "Страница не найдена :("
   }
 }

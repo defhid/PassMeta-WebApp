@@ -1,3 +1,3 @@
 <template>
-  <h1>Page not found</h1>
+  <h2 class="mt-10 text-center">{{ $t("NotFound.Title") }}</h2>
 </template>

@@ -5,8 +5,10 @@ import {
     type RouteLocationNormalized,
     type Router,
 } from "vue-router";
-import { buildRawRoutes, type RouteInfo, Routes } from "~routing/routes";
-import { AppContext } from "~stores/appContext";
+import { AppContext } from "~stores";
+import { initializeRoutes, type RouteInfo } from "~infra/routing";
+import { Routes } from "~routing";
+import { Pages } from "~pages";
 
 let currentRoute: RouteLocationNormalized | null = null;
 
@@ -14,7 +16,7 @@ export default {
     install(app: App) {
         const router = createRouter({
             history: createWebHistory(),
-            routes: buildRawRoutes(),
+            routes: initializeRoutes(Routes, Pages),
         });
 
         router.beforeEach((to) => {
@@ -43,12 +45,14 @@ async function ensureRouteLegal(router: Router) {
         return;
     }
 
-    if (!routeInfo.anonymous && !isAuthenticated) {
-        await router.push(Routes.Auth.to({ queryParams: { redirectUrl: currentRoute!.fullPath } }));
+    if (!routeInfo.to.isAnonymous && !isAuthenticated) {
+        await router.push(Routes.Auth.to({
+            queryParams: { redirectUrl: currentRoute!.fullPath },
+        }));
         return;
     }
 
-    if (currentRoute!.name === Routes.Auth.name && isAuthenticated) {
+    if (currentRoute!.name === Routes.Auth.to.name && isAuthenticated) {
         await router.push(Routes.Storage.to());
         return;
     }

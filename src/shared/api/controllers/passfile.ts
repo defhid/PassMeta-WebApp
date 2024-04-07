@@ -98,6 +98,7 @@ export const Passfile = {
         (api, params) =>
             api.passfiles.ctrlPassfilesPassfileIdVersionsVersionGet(
                 params.passfileId,
-                params.version),
+                params.version,
+                { format: "arrayBuffer" }),
     ),
 };

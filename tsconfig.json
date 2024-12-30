@@ -1,27 +1,23 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./src/*"],
-      "~api": ["./src/shared/api"],
-      "~api/*": ["./src/shared/api/*"],
-      "~assets/*": ["./src/shared/assets/*"],
-      "~entities/*": ["./src/entities/*"],
-      "~features/*": ["./src/features/*"],
-      "~generated/*": ["./src/shared/.generated/*"],
-      "~infra/*": ["./src/infrastructure/*"],
-      "~pages": ["./src/pages"],
-      "~plugins/*": ["./src/plugins/*"],
-      "~routing": ["./src/shared/routing"],
-      "~stores": ["./src/shared/stores"],
-      "~utils": ["./src/shared/utils"],
-      "~widgets/*": ["./src/widgets/*"]
-    }
-  },
-  "include": [
-    "./*.ts",
-    "./src/**/*.ts",
-    "./src/**/*.vue"
-  ]
+    "extends": "@vue/tsconfig/tsconfig.dom.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "~/*": ["./src/*"],
+            "~api": ["./src/shared/api"],
+            "~api/*": ["./src/shared/api/*"],
+            "~assets/*": ["./src/shared/assets/*"],
+            "~entities/*": ["./src/entities/*"],
+            "~features/*": ["./src/features/*"],
+            "~generated/*": ["./src/shared/.generated/*"],
+            "~infra/*": ["./src/infrastructure/*"],
+            "~pages": ["./src/pages"],
+            "~plugins/*": ["./src/plugins/*"],
+            "~routing": ["./src/shared/routing"],
+            "~stores": ["./src/shared/stores"],
+            "~utils": ["./src/shared/utils"],
+            "~widgets/*": ["./src/widgets/*"]
+        }
+    },
+    "include": ["./*.ts", "./src/**/*.ts", "./src/**/*.vue"]
 }

@@ -18,8 +18,7 @@ export class PassMetaCrypto {
     /**
      * Make encryption/decryption key for specific iteration by keyphrase.
      */
-    private static makeKey(iteration: number, keyPhrase: string)
-    {
+    private static makeKey(iteration: number, keyPhrase: string) {
         const offset = (this.cryptoK + iteration) % keyPhrase.length;
         const key =
             keyPhrase.substring(0, offset) +
@@ -32,12 +31,10 @@ export class PassMetaCrypto {
     /**
      * Encrypt data from decrypted bytes with key phrase.
      */
-    public static encrypt(data: ArrayBuffer, keyPhrase: string)
-    {
+    public static encrypt(data: ArrayBuffer, keyPhrase: string) {
         let encryption = arr.create(data);
 
-        for (let i = 0; i < this.cryptoK; ++i)
-        {
+        for (let i = 0; i < this.cryptoK; ++i) {
             const key = this.makeKey(i, keyPhrase);
             const result = aes.encrypt(encryption, key, { iv: this.cryptoSalt });
             encryption = result.ciphertext;

@@ -1,42 +1,42 @@
 {
-  "Account": {
-    "BtnResetAllSessions": "Reset all sessions",
-    "BtnResetCurrentSession": "Sign out",
-    "ConfirmResetAllSessions": "Are you sure you want to reset all sessions except the current one?",
-    "ConfirmResetCurrentSession": "Are you sure you want to sign out?",
-    "LabelLogin": "Login",
-    "LabelName": "Name",
-    "SuccessResetSessions": "Sessions have been successfully reset!",
-    "Title": "Account"
-  },
-  "App": {
-    "NavigationBar": {
-      "Account": "Account",
-      "SignIn": "Sign in",
-      "SignOut": "Sign out"
+    "Account": {
+        "BtnResetAllSessions": "Reset all sessions",
+        "BtnResetCurrentSession": "Sign out",
+        "ConfirmResetAllSessions": "Are you sure you want to reset all sessions except the current one?",
+        "ConfirmResetCurrentSession": "Are you sure you want to sign out?",
+        "LabelLogin": "Login",
+        "LabelName": "Name",
+        "SuccessResetSessions": "Sessions have been successfully reset!",
+        "Title": "Account"
+    },
+    "App": {
+        "NavigationBar": {
+            "Account": "Account",
+            "SignIn": "Sign in",
+            "SignOut": "Sign out"
+        }
+    },
+    "Auth": {
+        "LoginLabel": "Login",
+        "PasswordLabel": "Password",
+        "SignInButton": "Sign In",
+        "SignUpButton": "Sign Up",
+        "Title": "Authorization"
+    },
+    "Common": {
+        "Api": {
+            "RequestBuildError": "Failed to build request",
+            "UnknownError": "Unknown error occurred"
+        }
+    },
+    "Home": {
+        "BtnAuthorize": "Log in to the system",
+        "LabelServerId": "Server ID",
+        "LabelServerVersion": "Server version",
+        "TitleKnown": "Hello",
+        "TitleUnknown": "Welcome to PassMeta"
+    },
+    "NotFound": {
+        "Title": "Page was not found :("
     }
-  },
-  "Auth": {
-    "LoginLabel": "Login",
-    "PasswordLabel": "Password",
-    "SignInButton": "Sign In",
-    "SignUpButton": "Sign Up",
-    "Title": "Authorization"
-  },
-  "Common": {
-    "Api": {
-      "RequestBuildError": "Failed to build request",
-      "UnknownError": "Unknown error occurred"
-    }
-  },
-  "Home": {
-    "BtnAuthorize": "Log in to the system",
-    "LabelServerId": "Server ID",
-    "LabelServerVersion": "Server version",
-    "TitleKnown": "Hello",
-    "TitleUnknown": "Welcome to PassMeta"
-  },
-  "NotFound": {
-    "Title": "Page was not found :("
-  }
 }

@@ -27,6 +27,9 @@ export default typescriptEslint.config({
         "vue/singleline-html-element-content-newline": "off",
         "vue/multi-word-component-names": "off",
         "vue/no-v-text-v-html-on-component": "warn",
+        "vue/max-attributes-per-line": "off",
+        "vue/html-self-closing": ["error", { html: { void: "always", normal: "always", component: "always" } }],
+        "vue/html-indent": "off",
 
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-unused-vars": "warn",

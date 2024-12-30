@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ path: ["./.env.local", "./.env"] });
 
 const baseUrl = import.meta.url;
 

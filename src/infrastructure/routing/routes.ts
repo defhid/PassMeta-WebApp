@@ -5,7 +5,7 @@ import type { RoutePages } from "./routePages";
 export function initializeRoutes(
     routes: RouteSchemas<any>,
     pages: RoutePages,
-    parent?: RouteRecordRaw,
+    parent?: RouteRecordRaw
 ): RouteRecordRaw[] {
     const rawList: RouteRecordRaw[] = [];
 
@@ -14,7 +14,7 @@ export function initializeRoutes(
         let raw: RouteRecordRaw | undefined;
 
         if (route.to) {
-            const page = pages.find(x => x.name === route.to.name);
+            const page = pages.find((x) => x.name === route.to.name);
             if (page == null) {
                 console.error("Не найдена страница для роута " + route.to.name);
                 continue;

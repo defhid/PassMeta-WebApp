@@ -1,46 +1,44 @@
 import type { RouteInfo } from "./routeInfo";
 
-export type RouteSchemaConfig = {
-    path: string,
-    void?: undefined,
-    routeParams?: Record<string, any>,
-    queryParams?: Record<string, any>,
-    redirect?: () => any,
-    anonymous?: boolean,
-    inner?: Record<string, RouteSchemaConfig>,
-    sub?: Record<string, RouteSchemaConfig>,
-} | {
-    path: string,
-    void: true,
-    routeParams?: undefined,
-    queryParams?: undefined,
-    anonymous?: undefined,
-    inner?: undefined,
-    sub: Record<string, RouteSchemaConfig>,
-};
+export type RouteSchemaConfig =
+    | {
+          path: string;
+          void?: undefined;
+          routeParams?: Record<string, any>;
+          queryParams?: Record<string, any>;
+          redirect?: () => any;
+          anonymous?: boolean;
+          inner?: Record<string, RouteSchemaConfig>;
+          sub?: Record<string, RouteSchemaConfig>;
+      }
+    | {
+          path: string;
+          void: true;
+          routeParams?: undefined;
+          queryParams?: undefined;
+          anonymous?: undefined;
+          inner?: undefined;
+          sub: Record<string, RouteSchemaConfig>;
+      };
 
 export type RouteSchemas<T extends Record<string, RouteSchemaConfig>> = Readonly<{
-    [TKey in keyof T]:
-    (T[TKey] extends { void: true }
+    [TKey in keyof T]: (T[TKey] extends { void: true }
         ? never
         : RouteInfo<
-            T[TKey] extends { routeParams: any } ? T[TKey]["routeParams"] : undefined,
-            T[TKey] extends { queryParams: any } ? T[TKey]["queryParams"] : undefined>) &
-    (T[TKey] extends { sub: Record<string, RouteSchemaConfig> }
-        ? RouteSchemas<T[TKey]["sub"]>
-        : object) &
-    (T[TKey] extends { inner: Record<string, RouteSchemaConfig> }
-        ? RouteSchemas<T[TKey]["inner"]>
-        : object)
+              T[TKey] extends { routeParams: any } ? T[TKey]["routeParams"] : undefined,
+              T[TKey] extends { queryParams: any } ? T[TKey]["queryParams"] : undefined
+          >) &
+        (T[TKey] extends { sub: Record<string, RouteSchemaConfig> } ? RouteSchemas<T[TKey]["sub"]> : object) &
+        (T[TKey] extends { inner: Record<string, RouteSchemaConfig> } ? RouteSchemas<T[TKey]["inner"]> : object);
 }>;
 
 export function defineRouteSchemas<T extends Record<string, RouteSchemaConfig>>(
     routes: T,
     options: {
-        rootName?: string,
-        rootPath: string,
-        rootParams: () => Record<string, any>,
-    },
+        rootName?: string;
+        rootPath: string;
+        rootParams: () => Record<string, any>;
+    }
 ): RouteSchemas<T> {
     const schemas: Partial<RouteSchemas<T>> = {};
 
@@ -57,15 +55,14 @@ export function defineRouteSchemas<T extends Record<string, RouteSchemaConfig>>(
                 }) as any;
             }
         } else {
-            const to: Record<string, any> =
-                (opt?: { routeParams: any, queryParams: any }) => ({
-                    name: key,
-                    params: {
-                        ...options.rootParams(),
-                        ...opt?.routeParams,
-                    },
-                    query: opt?.queryParams,
-                });
+            const to: Record<string, any> = (opt?: { routeParams: any; queryParams: any }) => ({
+                name: key,
+                params: {
+                    ...options.rootParams(),
+                    ...opt?.routeParams,
+                },
+                query: opt?.queryParams,
+            });
 
             Object.defineProperties(to, {
                 name: { value: name },
@@ -76,10 +73,10 @@ export function defineRouteSchemas<T extends Record<string, RouteSchemaConfig>>(
 
             const inner = routes[key].inner
                 ? defineRouteSchemas(routes[key].inner!, {
-                    rootName: name,
-                    rootPath: path,
-                    rootParams: options.rootParams,
-                })
+                      rootName: name,
+                      rootPath: path,
+                      rootParams: options.rootParams,
+                  })
                 : {};
 
             for (const innerKey in inner) {
@@ -88,10 +85,10 @@ export function defineRouteSchemas<T extends Record<string, RouteSchemaConfig>>(
 
             const sub = routes[key].sub
                 ? defineRouteSchemas(routes[key].sub!, {
-                    rootName: name,
-                    rootPath: path,
-                    rootParams: options.rootParams,
-                })
+                      rootName: name,
+                      rootPath: path,
+                      rootParams: options.rootParams,
+                  })
                 : {};
 
             schemas[key] = { ...inner, ...sub } as any;

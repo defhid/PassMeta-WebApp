@@ -9,8 +9,7 @@ import { RestProtocolFactory } from "~api/base/restProtocolFactory";
 import { AppContext } from "~stores";
 import { Notify } from "~utils";
 
-RestProtocolFactory.onError = (message: string, more?: string[]) =>
-    Notify.error(message + "\n" + more?.join("\n"));
+RestProtocolFactory.onError = (message: string, more?: string[]) => Notify.error(message + "\n" + more?.join("\n"));
 
 AppContext.load().then();
 

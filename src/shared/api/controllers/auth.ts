@@ -8,24 +8,20 @@ export const Auth = {
     /**
      * Sign in.
      */
-    logIn: RestProtocolFactory.fromGenerated(
-        (api, params: SignInDto) => api.auth.ctrlAuthSignInPost(params)),
+    logIn: RestProtocolFactory.fromGenerated((api, params: SignInDto) => api.auth.ctrlAuthSignInPost(params)),
 
     /**
      * Reset current user session.
      */
-    resetMe: RestProtocolFactory.fromGenerated(
-        (api) => api.auth.ctrlAuthResetMePost()),
+    resetMe: RestProtocolFactory.fromGenerated((api) => api.auth.ctrlAuthResetMePost()),
 
     /**
      * Reset all current user sessions.
      */
-    resetAll: RestProtocolFactory.fromGenerated(
-        (api) => api.auth.ctrlAuthResetAllPost()),
+    resetAll: RestProtocolFactory.fromGenerated((api) => api.auth.ctrlAuthResetAllPost()),
 
     /**
      * Reset all current user sessions except this one.
      */
-    resetAllExceptMe: RestProtocolFactory.fromGenerated(
-        (api) => api.auth.ctrlAuthResetAllExceptMePost()),
+    resetAllExceptMe: RestProtocolFactory.fromGenerated((api) => api.auth.ctrlAuthResetAllExceptMePost()),
 };

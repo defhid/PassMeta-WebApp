@@ -5,7 +5,8 @@ import type {
     CtrlPassfilesGetParams,
     PassfileDto,
     PassfileListDto,
-    PassfilePatchDto, PassfileVersionDto,
+    PassfilePatchDto,
+    PassfileVersionDto,
     PassfileVersionListDto,
 } from "~generated/api";
 import { createFieldsDeserializer, createListDeserializer } from "~infra/serialization";
@@ -20,7 +21,6 @@ const PassFileListDtoDeserializer = createFieldsDeserializer<PassfileListDto>({
     list: createListDeserializer(PassFileDtoDeserializer),
 });
 
-
 /**
  * Passfile controllers.
  */
@@ -30,7 +30,7 @@ export const Passfile = {
      */
     post: RestProtocolFactory.fromGenerated<PassfileDto, PassfileDto>(
         (api, params) => api.passfiles.ctrlPassfilesNewPost(params),
-        { deserialize: PassFileDtoDeserializer },
+        { deserialize: PassFileDtoDeserializer }
     ),
 
     /**
@@ -38,7 +38,7 @@ export const Passfile = {
      */
     getList: RestProtocolFactory.fromGenerated<CtrlPassfilesGetParams, PassfileListDto>(
         (api, params) => api.passfiles.ctrlPassfilesGet(params),
-        { deserialize: PassFileListDtoDeserializer },
+        { deserialize: PassFileListDtoDeserializer }
     ),
 
     /**
@@ -46,7 +46,7 @@ export const Passfile = {
      */
     get: RestProtocolFactory.fromGenerated<{ id: number }, PassfileDto>(
         (api, params) => api.passfiles.ctrlPassfilesPassfileIdGet(params.id),
-        { deserialize: PassFileDtoDeserializer },
+        { deserialize: PassFileDtoDeserializer }
     ),
 
     /**
@@ -54,13 +54,15 @@ export const Passfile = {
      */
     patch: RestProtocolFactory.fromGenerated<PassfilePatchDto & { id: number }, PassfileDto>(
         (api, { id, ...params }) => api.passfiles.ctrlPassfilesPassfileIdPatch(id, params),
-        { deserialize: PassFileDtoDeserializer }),
+        { deserialize: PassFileDtoDeserializer }
+    ),
 
     /**
      * Delete passfile.
      */
-    delete: RestProtocolFactory.fromGenerated<{ id: number }>(
-        (api, params) => api.passfiles.ctrlPassfilesPassfileIdDelete(params.id)),
+    delete: RestProtocolFactory.fromGenerated<{ id: number }>((api, params) =>
+        api.passfiles.ctrlPassfilesPassfileIdDelete(params.id)
+    ),
 
     /**
      * Create a new passfile version content.
@@ -68,37 +70,32 @@ export const Passfile = {
     postVersion: RestProtocolFactory.fromGenerated<
         BodyCtrlPassfilesPassfileIdVersionsNewPost & { passfileId: number },
         PassfileDto
-    >(
-        (api, { passfileId, ...params }) =>
-            api.passfiles.ctrlPassfilesPassfileIdVersionsNewPost(passfileId, params),
-        { deserialize: PassFileDtoDeserializer },
-    ),
+    >((api, { passfileId, ...params }) => api.passfiles.ctrlPassfilesPassfileIdVersionsNewPost(passfileId, params), {
+        deserialize: PassFileDtoDeserializer,
+    }),
 
     /**
      * Get passfile versions.
      */
-    getVersionList: RestProtocolFactory.fromGenerated<
-        { passfileId: number },
-        PassfileVersionListDto
-    >(
+    getVersionList: RestProtocolFactory.fromGenerated<{ passfileId: number }, PassfileVersionListDto>(
         (api, params) => api.passfiles.ctrlPassfilesPassfileIdVersionsGet(params.passfileId),
         {
             deserialize: createFieldsDeserializer<PassfileVersionListDto>({
-                list: createListDeserializer(createFieldsDeserializer<PassfileVersionDto>({
-                    versionDate: dateTimeDeserializer,
-                })),
+                list: createListDeserializer(
+                    createFieldsDeserializer<PassfileVersionDto>({
+                        versionDate: dateTimeDeserializer,
+                    })
+                ),
             }),
-        },
+        }
     ),
 
     /**
      * Get passfile version content.
      */
-    getVersion: RestProtocolFactory.fromGenerated<{ passfileId: number, version: number }, File>(
-        (api, params) =>
-            api.passfiles.ctrlPassfilesPassfileIdVersionsVersionGet(
-                params.passfileId,
-                params.version,
-                { format: "arrayBuffer" }),
+    getVersion: RestProtocolFactory.fromGenerated<{ passfileId: number; version: number }, File>((api, params) =>
+        api.passfiles.ctrlPassfilesPassfileIdVersionsVersionGet(params.passfileId, params.version, {
+            format: "arrayBuffer",
+        })
     ),
 };

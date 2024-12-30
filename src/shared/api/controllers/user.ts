@@ -8,8 +8,7 @@ export const User = {
     /**
      * Create a new user.
      */
-    post: RestProtocolFactory.fromGenerated<SignUpDto, UserDto>(
-        (api, params) => api.users.ctrlUsersNewPost(params)),
+    post: RestProtocolFactory.fromGenerated<SignUpDto, UserDto>((api, params) => api.users.ctrlUsersNewPost(params)),
 
     /**
      * Get current user.
@@ -19,6 +18,7 @@ export const User = {
     /**
      * Edit current user.
      */
-    patchMe: RestProtocolFactory.fromGenerated<UserPatchDto, UserDto>(
-        (api, params) => api.users.ctrlUsersMePatch(params)),
+    patchMe: RestProtocolFactory.fromGenerated<UserPatchDto, UserDto>((api, params) =>
+        api.users.ctrlUsersMePatch(params)
+    ),
 };

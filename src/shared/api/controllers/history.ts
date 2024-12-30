@@ -8,12 +8,12 @@ export const History = {
     /**
      * Get history kinds.
      */
-    getInfo: RestProtocolFactory.fromGenerated(
-        (api) => api.history.ctrlHistoryKindsGet()),
+    getInfo: RestProtocolFactory.fromGenerated((api) => api.history.ctrlHistoryKindsGet()),
 
     /**
      * Get paged history.
      */
-    check: RestProtocolFactory.fromGenerated<CtrlHistoryPagesPageIndexGetParams, HistoryPageDto>(
-        (api, params) => api.history.ctrlHistoryPagesPageIndexGet(params)),
+    check: RestProtocolFactory.fromGenerated<CtrlHistoryPagesPageIndexGetParams, HistoryPageDto>((api, params) =>
+        api.history.ctrlHistoryPagesPageIndexGet(params)
+    ),
 };

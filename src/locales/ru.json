@@ -1,42 +1,42 @@
 {
-  "Account": {
-    "BtnResetAllSessions": "Сбросить все сеансы",
-    "BtnResetCurrentSession": "Выйти",
-    "ConfirmResetAllSessions": "Вы уверены, что хотите сбросить все сеансы, кроме текущего?",
-    "ConfirmResetCurrentSession": "Вы уверены, что хотите выйти из аккаунта?",
-    "LabelLogin": "Логин",
-    "LabelName": "Имя",
-    "SuccessResetSessions": "Сеансы были успешно сброшены!",
-    "Title": "Аккаунт"
-  },
-  "App": {
-    "NavigationBar": {
-      "Account": "Аккаунт",
-      "SignIn": "Войти",
-      "SignOut": "Выйти"
+    "Account": {
+        "BtnResetAllSessions": "Сбросить все сеансы",
+        "BtnResetCurrentSession": "Выйти",
+        "ConfirmResetAllSessions": "Вы уверены, что хотите сбросить все сеансы, кроме текущего?",
+        "ConfirmResetCurrentSession": "Вы уверены, что хотите выйти из аккаунта?",
+        "LabelLogin": "Логин",
+        "LabelName": "Имя",
+        "SuccessResetSessions": "Сеансы были успешно сброшены!",
+        "Title": "Аккаунт"
+    },
+    "App": {
+        "NavigationBar": {
+            "Account": "Аккаунт",
+            "SignIn": "Войти",
+            "SignOut": "Выйти"
+        }
+    },
+    "Auth": {
+        "LoginLabel": "Логин",
+        "PasswordLabel": "Пароль",
+        "SignInButton": "Войти",
+        "SignUpButton": "Зарегистрироваться",
+        "Title": "Авторизация"
+    },
+    "Common": {
+        "Api": {
+            "RequestBuildError": "Не удалось построить запрос",
+            "UnknownError": "Произошла неизвестная ошибка"
+        }
+    },
+    "Home": {
+        "BtnAuthorize": "Войти в систему",
+        "LabelServerId": "ID сервера",
+        "LabelServerVersion": "Версия сервера",
+        "TitleKnown": "Привет",
+        "TitleUnknown": "Добро пожаловать в PassMeta"
+    },
+    "NotFound": {
+        "Title": "Страница не найдена :("
     }
-  },
-  "Auth": {
-    "LoginLabel": "Логин",
-    "PasswordLabel": "Пароль",
-    "SignInButton": "Войти",
-    "SignUpButton": "Зарегистрироваться",
-    "Title": "Авторизация"
-  },
-  "Common": {
-    "Api": {
-      "RequestBuildError": "Не удалось построить запрос",
-      "UnknownError": "Произошла неизвестная ошибка"
-    }
-  },
-  "Home": {
-    "BtnAuthorize": "Войти в систему",
-    "LabelServerId": "ID сервера",
-    "LabelServerVersion": "Версия сервера",
-    "TitleKnown": "Привет",
-    "TitleUnknown": "Добро пожаловать в PassMeta"
-  },
-  "NotFound": {
-    "Title": "Страница не найдена :("
-  }
 }

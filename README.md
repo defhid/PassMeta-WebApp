@@ -1,17 +1,18 @@
 # PassMeta Web App
+
 #### © 2024 Vladislav Mironov
 
-
 ### About the project
+
 PassMeta WebApp is a web client application of PassMeta System.
 
 ### Technologies
-*Vue.js 3, TypeScript, Tailwind, Vite.*
+
+_Vue.js 3, TypeScript, Tailwind, Vite._
 
 ### Screenshots
 
 ...
-
 
 ### Project Setup
 

@@ -1,10 +1,5 @@
 import { type App, watch } from "vue";
-import {
-    createRouter,
-    createWebHistory,
-    type RouteLocationNormalized,
-    type Router,
-} from "vue-router";
+import { createRouter, createWebHistory, type RouteLocationNormalized, type Router } from "vue-router";
 import { AppContext } from "~stores";
 import { initializeRoutes, type RouteInfo } from "~infra/routing";
 import { Routes } from "~routing";
@@ -27,7 +22,8 @@ export default {
         watch(
             () => AppContext.isLoaded,
             () => ensureRouteLegal(router),
-            { immediate: true });
+            { immediate: true }
+        );
 
         app.use(router);
     },
@@ -46,9 +42,11 @@ async function ensureRouteLegal(router: Router) {
     }
 
     if (!routeInfo.to.isAnonymous && !isAuthenticated) {
-        await router.push(Routes.Auth.to({
-            queryParams: { redirectUrl: currentRoute!.fullPath },
-        }));
+        await router.push(
+            Routes.Auth.to({
+                queryParams: { redirectUrl: currentRoute!.fullPath },
+            })
+        );
         return;
     }
 

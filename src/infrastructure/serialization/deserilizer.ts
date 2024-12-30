@@ -1,8 +1,8 @@
 export type Deserializer<T> = (value: any) => T;
 
-export function createFieldsDeserializer<T>(
-    fieldDeserializers: { [TKey in keyof T]?: Deserializer<T[TKey]> },
-): Deserializer<T> {
+export function createFieldsDeserializer<T>(fieldDeserializers: {
+    [TKey in keyof T]?: Deserializer<T[TKey]>;
+}): Deserializer<T> {
     return (value) => {
         if (value == null || typeof value != "object") {
             return null as T;

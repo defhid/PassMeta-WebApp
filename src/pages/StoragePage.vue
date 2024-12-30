@@ -35,7 +35,7 @@ watch(selected, async (passfile) => {
     <div class="p-4 h-full">
         <div class="grid grid-cols-[auto_auto_1fr] h-full">
             <v-card class="w-[300px] h-full">
-                <PassFileList :passfiles="passfiles" v-model:selected="selected" @open="openPassFile" />
+                <PassFileList v-model:selected="selected" :passfiles="passfiles" @open="openPassFile" />
             </v-card>
         </div>
     </div>

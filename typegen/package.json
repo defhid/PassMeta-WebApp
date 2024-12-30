@@ -1,14 +1,14 @@
 {
-  "name": "passmeta-webapp-typegen",
-  "version": "0.0.0",
-  "private": true,
-  "type": "commonjs",
-  "scripts": {
-    "generate": "node index.js"
-  },
-  "devDependencies": {
-    "@types/node": "20.9.4",
-    "dotenv": "16.3.1",
-    "swagger-typescript-api": "13.0.3"
-  }
+    "name": "passmeta-webapp-typegen",
+    "version": "0.0.0",
+    "private": true,
+    "type": "commonjs",
+    "scripts": {
+        "generate": "node index.js"
+    },
+    "devDependencies": {
+        "@types/node": "20.9.4",
+        "dotenv": "16.3.1",
+        "swagger-typescript-api": "13.0.3"
+    }
 }

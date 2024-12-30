@@ -1,40 +1,40 @@
 services:
-  uibuilder:
-    container_name: passmeta-ui-builder
-    build:
-      context: ..
-      args:
-        VITE_PASSMETA_API: ${VITE_PASSMETA_API}
-    volumes:
-      - type: volume
-        source: statics-ui
-        target: /deploy/dist
+    uibuilder:
+        container_name: passmeta-ui-builder
+        build:
+            context: ..
+            args:
+                VITE_PASSMETA_API: ${VITE_PASSMETA_API}
+        volumes:
+            - type: volume
+              source: statics-ui
+              target: /deploy/dist
 
-  uiserver:
-    container_name: passmeta-ui-server
-    image: nginx:1.25.4
-    expose:
-      - "8000"
-    networks:
-      - passmeta-main
-    volumes:
-      - type: bind
-        source: nginx/default.conf
-        target: /etc/nginx/conf.d/default.conf
-        read_only: true
-      - type: volume
-        source: statics-ui
-        target: /usr/share/nginx/html
-        read_only: true
-      - type: volume
-        source: logs
-        target: /var/log/nginx
-    restart: "always"
+    uiserver:
+        container_name: passmeta-ui-server
+        image: nginx:1.25.4
+        expose:
+            - "8000"
+        networks:
+            - passmeta-main
+        volumes:
+            - type: bind
+              source: nginx/default.conf
+              target: /etc/nginx/conf.d/default.conf
+              read_only: true
+            - type: volume
+              source: statics-ui
+              target: /usr/share/nginx/html
+              read_only: true
+            - type: volume
+              source: logs
+              target: /var/log/nginx
+        restart: "always"
 
 volumes:
-  statics-ui:
-  logs:
+    statics-ui:
+    logs:
 
 networks:
-  passmeta-main:
-    external: true
+    passmeta-main:
+        external: true

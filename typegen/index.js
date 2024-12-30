@@ -1,7 +1,7 @@
 const { generateApi } = require("swagger-typescript-api");
 const path = require("path");
 
-const config = require("dotenv").config({ path: "../.env" });
+const config = require("dotenv").config({ path: ["../.env.local", "../.env"] });
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 

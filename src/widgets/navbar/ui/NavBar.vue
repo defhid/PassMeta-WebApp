@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import PassMetaIcon from "~assets/icons/PassMeta.png";
 import { Routes } from "~routing";
-import { AppContext } from "~stores";
+import { AppContext, t } from "~stores";
 import { closeCurrentSession } from "~features/auth";
 import { useRouter } from "vue-router";
 
@@ -30,11 +30,11 @@ const router = useRouter();
 
                 <v-list class="min-w-[150px]">
                     <v-list-item v-if="AppContext.user != undefined" :value="1" :to="Routes.Account.to()">
-                        <v-list-item-title>{{ $t("App.NavigationBar.Account") }}</v-list-item-title>
+                        <v-list-item-title>{{ t("App.NavigationBar.Account") }}</v-list-item-title>
                     </v-list-item>
 
                     <v-list-item v-else :value="1" :to="Routes.Auth.to()">
-                        <v-list-item-title>{{ $t("App.NavigationBar.SignIn") }}</v-list-item-title>
+                        <v-list-item-title>{{ t("App.NavigationBar.SignIn") }}</v-list-item-title>
                     </v-list-item>
 
                     <v-list-item
@@ -42,7 +42,7 @@ const router = useRouter();
                         :value="2"
                         @click.stop="closeCurrentSession(router)"
                     >
-                        <v-list-item-title>{{ $t("App.NavigationBar.SignOut") }}</v-list-item-title>
+                        <v-list-item-title>{{ t("App.NavigationBar.SignOut") }}</v-list-item-title>
                     </v-list-item>
                 </v-list>
             </v-menu>

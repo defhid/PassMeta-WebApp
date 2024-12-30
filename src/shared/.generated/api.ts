@@ -218,7 +218,11 @@ export interface UserPatchDto {
 }
 
 export interface CtrlHistoryPagesPageIndexGetParams {
-    /** Pagesize */
+    /**
+     * Pagesize
+     * @min 0
+     * @max 100
+     */
     pageSize: number;
     /**
      * Month
@@ -227,7 +231,10 @@ export interface CtrlHistoryPagesPageIndexGetParams {
     month: string;
     /** Kind */
     kind?: string | null;
-    /** Pageindex */
+    /**
+     * Pageindex
+     * @min 0
+     */
     pageIndex: number;
 }
 
@@ -282,7 +289,7 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-    public baseUrl: string = "";
+    public baseUrl: string = "/api";
     private securityData: SecurityDataType | null = null;
     private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
     private abortControllers = new Map<CancelToken, AbortController>();
@@ -419,7 +426,7 @@ export class HttpClient<SecurityDataType = unknown> {
             signal: (cancelToken ? this.createAbortSignal(cancelToken) : requestParams.signal) || null,
             body: typeof body === "undefined" || body === null ? null : payloadFormatter(body),
         }).then(async (response) => {
-            const r = response as HttpResponse<T, E>;
+            const r = response.clone() as HttpResponse<T, E>;
             r.data = null as unknown as T;
             r.error = null as unknown as E;
 
@@ -452,6 +459,7 @@ export class HttpClient<SecurityDataType = unknown> {
 /**
  * @title FastAPI
  * @version 0.1.0
+ * @baseUrl /api
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
     auth = {

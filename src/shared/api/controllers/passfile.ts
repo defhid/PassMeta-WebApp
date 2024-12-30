@@ -3,6 +3,8 @@ import { dateTimeDeserializer } from "../serialization";
 import type {
     BodyCtrlPassfilesPassfileIdVersionsNewPost,
     CtrlPassfilesGetParams,
+    FullResultDto,
+    HttpResponse,
     PassfileDto,
     PassfileListDto,
     PassfilePatchDto,
@@ -93,9 +95,10 @@ export const Passfile = {
     /**
      * Get passfile version content.
      */
-    getVersion: RestProtocolFactory.fromGenerated<{ passfileId: number; version: number }, File>((api, params) =>
-        api.passfiles.ctrlPassfilesPassfileIdVersionsVersionGet(params.passfileId, params.version, {
-            format: "arrayBuffer",
-        }),
+    getVersion: RestProtocolFactory.fromGenerated<{ passfileId: number; version: number }, ArrayBuffer>(
+        (api, params) =>
+            api.passfiles.ctrlPassfilesPassfileIdVersionsVersionGet(params.passfileId, params.version, {
+                format: "arrayBuffer",
+            }) as unknown as Promise<HttpResponse<ArrayBuffer, FullResultDto>>,
     ),
 };

@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from "vue";
 import { PassMetaApi } from "~api";
 import type { PassfileDto } from "~generated/api";
 import { PassFileType, PassFileList } from "~entities/passfile";
+import { PassMetaCrypto } from "~/shared/utils/crypto";
 
 const passfiles = ref<PassfileDto[]>([]);
 
@@ -12,6 +13,7 @@ onMounted(async () => {
 });
 
 const selected = ref<PassfileDto>();
+const decryptedContent = ref<string>();
 
 function openPassFile(passfile: PassfileDto) {
     alert(JSON.stringify(passfile));
@@ -19,6 +21,7 @@ function openPassFile(passfile: PassfileDto) {
 
 watch(selected, async (passfile) => {
     if (!passfile) {
+        decryptedContent.value = undefined;
         return;
     }
 
@@ -27,7 +30,15 @@ watch(selected, async (passfile) => {
         version: passfile.version,
     });
 
-    console.log(content);
+    const keyPhrase = window.prompt("Passphrase:");
+    if (keyPhrase == null) {
+        decryptedContent.value = undefined;
+        return;
+    }
+
+    const decrypted = await PassMetaCrypto.decrypt(content, keyPhrase);
+
+    decryptedContent.value = JSON.stringify(JSON.parse(new TextDecoder().decode(decrypted)), undefined, 4);
 });
 </script>
 
@@ -37,6 +48,10 @@ watch(selected, async (passfile) => {
             <v-card class="w-[300px] h-full">
                 <PassFileList v-model:selected="selected" :passfiles="passfiles" @open="openPassFile" />
             </v-card>
+
+            <div class="h-full w-full overflow-y-auto px-2">
+                <code class="whitespace-pre">{{ decryptedContent }}</code>
+            </div>
         </div>
     </div>
 </template>

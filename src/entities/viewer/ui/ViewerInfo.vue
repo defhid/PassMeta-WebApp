@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { AppContext, t } from "~stores";
+import { t, useAppContext } from "~stores";
 
 const emit = defineEmits<{
     (e: "resetCurrentSession"): void;
     (e: "resetAllSessions"): void;
 }>();
 
-const viewer = AppContext.user;
+const { currentUser: viewer } = useAppContext();
 </script>
 
 <template>

@@ -4,6 +4,9 @@ import utf8 from "crypto-js/enc-utf8";
 import utf16 from "crypto-js/enc-utf16";
 import arr from "crypto-js/lib-typedarrays";
 
+/**
+ * PassMeta cryptographic methods.
+ */
 export class PassMetaCrypto {
     /**
      * Number of encryption iterations.

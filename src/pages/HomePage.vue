@@ -1,29 +1,31 @@
 <script setup lang="ts">
-import { AppContext, t } from "~stores";
+import { t, useAppContext } from "~stores";
 import { Routes } from "~routing";
+
+const { currentUser, serverId, serverVersion } = useAppContext();
 </script>
 
 <template>
     <div class="p-4">
         <h4 class="text-h4 text-center mt-2 mb-7">
-            {{ t(AppContext.user ? "Home.TitleKnown" : "Home.TitleUnknown") }}
-            <span v-if="AppContext.user">
+            {{ t(currentUser ? "Home.TitleKnown" : "Home.TitleUnknown") }}
+            <span v-if="currentUser">
                 ,
                 <RouterLink class="text-green" :to="Routes.Account.to()">
-                    {{ AppContext.user!.fullName ?? AppContext.user!.login }}
+                    {{ currentUser!.fullName ?? currentUser!.login }}
                 </RouterLink>
             </span>
         </h4>
 
         <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-3">
             <b>{{ t("Home.LabelServerId") }}:</b>
-            <i class="text-medium-emphasis">{{ AppContext.serverId }}</i>
+            <i class="text-medium-emphasis">{{ serverId }}</i>
 
             <b>{{ t("Home.LabelServerVersion") }}:</b>
-            <i class="text-medium-emphasis">{{ AppContext.serverVersion }}</i>
+            <i class="text-medium-emphasis">{{ serverVersion }}</i>
         </div>
 
-        <div v-if="!AppContext.user" class="mt-7">
+        <div v-if="!currentUser" class="mt-7">
             <v-btn size="small" :to="Routes.Auth.to()">{{ t("Home.BtnAuthorize") }}</v-btn>
         </div>
     </div>

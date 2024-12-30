@@ -1,33 +1,32 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { PassMetaApi } from "~api";
-import { AppContext, t } from "~stores";
+import { t, useAppContext } from "~stores";
 import { useRouter } from "vue-router";
 import { Routes } from "~routing";
 
 const router = useRouter();
+const { currentUser } = useAppContext();
 
 const login = ref("");
 const password = ref("");
 
 async function signIn() {
-    const user = await PassMetaApi.auth.logIn({
+    currentUser.value = await PassMetaApi.auth.logIn({
         login: login.value,
         password: password.value,
     });
 
-    AppContext.setUser(user);
     await router.push(Routes.Storage.to());
 }
 
 async function signUp() {
-    const user = await PassMetaApi.user.post({
+    currentUser.value = await PassMetaApi.user.post({
         fullName: "Unknown",
         login: login.value,
         password: password.value,
     });
 
-    AppContext.setUser(user);
     await router.push(Routes.Storage.to());
 }
 </script>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import PassMetaIcon from "~assets/icons/PassMeta.png";
 import { Routes } from "~routing";
-import { AppContext, t } from "~stores";
-import { closeCurrentSession } from "~features/auth";
-import { useRouter } from "vue-router";
+import { t, useAppContext } from "~stores";
+import { useSessionClose } from "~features/auth";
 
-const router = useRouter();
+const { currentUser } = useAppContext();
+const { closeCurrentSession } = useSessionClose();
 </script>
 
 <template>
@@ -29,7 +29,7 @@ const router = useRouter();
                 </template>
 
                 <v-list class="min-w-[150px]">
-                    <v-list-item v-if="AppContext.user != undefined" :value="1" :to="Routes.Account.to()">
+                    <v-list-item v-if="currentUser" :value="1" :to="Routes.Account.to()">
                         <v-list-item-title>{{ t("App.NavigationBar.Account") }}</v-list-item-title>
                     </v-list-item>
 
@@ -37,11 +37,7 @@ const router = useRouter();
                         <v-list-item-title>{{ t("App.NavigationBar.SignIn") }}</v-list-item-title>
                     </v-list-item>
 
-                    <v-list-item
-                        v-if="AppContext.user != undefined"
-                        :value="2"
-                        @click.stop="closeCurrentSession(router)"
-                    >
+                    <v-list-item v-if="currentUser" :value="2" @click.stop="closeCurrentSession()">
                         <v-list-item-title>{{ t("App.NavigationBar.SignOut") }}</v-list-item-title>
                     </v-list-item>
                 </v-list>

@@ -1,40 +1,41 @@
-import { type App, watch } from "vue";
+import { type App, watch, type Plugin } from "vue";
 import { createRouter, createWebHistory, type RouteLocationNormalized, type Router } from "vue-router";
-import { AppContext } from "~stores";
+import { useAppContext } from "~stores";
 import { initializeRoutes, type RouteInfo } from "~infra/routing";
 import { Routes } from "~routing";
 import { Pages } from "~pages";
+import type { UserDto } from "~generated/api";
 
 let currentRoute: RouteLocationNormalized | null = null;
 
-export default {
-    install(app: App) {
-        const router = createRouter({
-            history: createWebHistory(),
-            routes: initializeRoutes(Routes, Pages),
-        });
+const routerPlugin: Plugin = (app: App) => {
+    const router = createRouter({
+        history: createWebHistory(),
+        routes: initializeRoutes(Routes, Pages),
+    });
 
-        router.beforeEach((to) => {
-            currentRoute = to;
-            return ensureRouteLegal(router);
-        });
+    const { isContextLoaded, currentUser } = useAppContext();
 
-        watch(
-            () => AppContext.isLoaded,
-            () => ensureRouteLegal(router),
-            { immediate: true },
-        );
+    router.beforeEach((to) => {
+        currentRoute = to;
+        return ensureRouteLegal(router, currentUser.value, isContextLoaded.value);
+    });
 
-        app.use(router);
-    },
+    watch(
+        [currentUser.value, isContextLoaded.value],
+        ([user, loaded]: [UserDto | undefined, boolean]) => ensureRouteLegal(router, user, loaded),
+        { immediate: true },
+    );
+
+    app.use(router);
 };
 
-async function ensureRouteLegal(router: Router) {
-    if (!AppContext.isLoaded) {
+async function ensureRouteLegal(router: Router, user: UserDto | undefined, isAppContextLoaded: boolean) {
+    if (!isAppContextLoaded) {
         return;
     }
 
-    const isAuthenticated = AppContext.user != null;
+    const isAuthenticated = user != null;
     const routeInfo = currentRoute!.meta.info as RouteInfo<any, any> | undefined;
 
     if (routeInfo == null) {
@@ -55,3 +56,5 @@ async function ensureRouteLegal(router: Router) {
         return;
     }
 }
+
+export default routerPlugin;

@@ -1,41 +1,77 @@
-import { readonly, ref } from "vue";
+import { type Ref, ref } from "vue";
 import type { UserDto } from "~generated/api";
 import { PassMetaApi } from "~api";
 import { Notify } from "~utils";
+import { createGlobalState } from "@vueuse/shared";
 
-const user = ref<UserDto>();
-const serverId = ref<string>();
-const serverVersion = ref<string>();
-const isLoaded = ref(false);
-const isLoading = ref(false);
+/**
+ * Application context.
+ */
+export interface AppContext {
+    /**
+     * Current authenticated user info.
+     */
+    readonly currentUser: Ref<UserDto | undefined>;
 
-async function load(): Promise<void> {
-    isLoading.value = true;
+    /**
+     * Connected server ID.
+     */
+    readonly serverId: Readonly<Ref<string | undefined>>;
 
-    const response = await PassMetaApi.general.getInfo.silent();
-    if (response.ok) {
-        user.value = response.data.user ?? undefined;
-        serverId.value = response.data.appId;
-        serverVersion.value = response.data.appVersion;
-        isLoaded.value = true;
-    } else {
-        Notify.error(response.message);
-        isLoaded.value = false;
+    /**
+     * Connected server version.
+     */
+    readonly serverVersion: Readonly<Ref<string | undefined>>;
+
+    /**
+     * Indicator that the context is loaded.
+     */
+    readonly isContextLoaded: Readonly<Ref<boolean>>;
+
+    /**
+     * Indicator that the context is loading right now.
+     */
+    readonly isContextLoading: Readonly<Ref<boolean>>;
+
+    /**
+     * Load/reload context.
+     */
+    load(): Promise<void>;
+}
+
+/**
+ * Use application context.
+ */
+export const useAppContext = createGlobalState((): AppContext => {
+    const user = ref<UserDto>();
+    const serverId = ref<string>();
+    const serverVersion = ref<string>();
+    const isContextLoaded = ref(false);
+    const isContextLoading = ref(false);
+
+    async function load(): Promise<void> {
+        isContextLoading.value = true;
+
+        const response = await PassMetaApi.general.getInfo.silent();
+        if (response.ok) {
+            user.value = response.data.user ?? undefined;
+            serverId.value = response.data.appId;
+            serverVersion.value = response.data.appVersion;
+            isContextLoaded.value = true;
+        } else {
+            Notify.error(response.message);
+            isContextLoaded.value = false;
+        }
+
+        isContextLoading.value = false;
     }
 
-    isLoading.value = false;
-}
-
-function setUser(currentUser: UserDto | null | undefined): void {
-    user.value = currentUser ?? undefined;
-}
-
-export const AppContext = readonly({
-    user,
-    serverId,
-    serverVersion,
-    isLoaded,
-    isLoading,
-    load,
-    setUser,
+    return {
+        currentUser: user,
+        serverId,
+        serverVersion,
+        isContextLoaded,
+        isContextLoading,
+        load,
+    };
 });

@@ -5,7 +5,7 @@ import type { RoutePages } from "./routePages";
 export function initializeRoutes(
     routes: RouteSchemas<any>,
     pages: RoutePages,
-    parent?: RouteRecordRaw
+    parent?: RouteRecordRaw,
 ): RouteRecordRaw[] {
     const rawList: RouteRecordRaw[] = [];
 

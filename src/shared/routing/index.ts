@@ -32,5 +32,5 @@ export const Routes = defineRouteSchemas(
     {
         rootParams: () => ({ locale: getAppLocale() }),
         rootPath: "/:locale",
-    }
+    },
 );

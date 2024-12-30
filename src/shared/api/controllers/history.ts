@@ -14,6 +14,6 @@ export const History = {
      * Get paged history.
      */
     check: RestProtocolFactory.fromGenerated<CtrlHistoryPagesPageIndexGetParams, HistoryPageDto>((api, params) =>
-        api.history.ctrlHistoryPagesPageIndexGet(params)
+        api.history.ctrlHistoryPagesPageIndexGet(params),
     ),
 };

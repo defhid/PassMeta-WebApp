@@ -22,7 +22,7 @@ export default {
         watch(
             () => AppContext.isLoaded,
             () => ensureRouteLegal(router),
-            { immediate: true }
+            { immediate: true },
         );
 
         app.use(router);
@@ -45,7 +45,7 @@ async function ensureRouteLegal(router: Router) {
         await router.push(
             Routes.Auth.to({
                 queryParams: { redirectUrl: currentRoute!.fullPath },
-            })
+            }),
         );
         return;
     }

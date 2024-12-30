@@ -38,7 +38,7 @@ export function defineRouteSchemas<T extends Record<string, RouteSchemaConfig>>(
         rootName?: string;
         rootPath: string;
         rootParams: () => Record<string, any>;
-    }
+    },
 ): RouteSchemas<T> {
     const schemas: Partial<RouteSchemas<T>> = {};
 

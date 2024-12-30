@@ -329,7 +329,7 @@ export class HttpClient<SecurityDataType = unknown> {
         const keys = Object.keys(query).filter((key) => "undefined" !== typeof query[key]);
         return keys
             .map((key) =>
-                Array.isArray(query[key]) ? this.addArrayQueryParam(query, key) : this.addQueryParam(query, key)
+                Array.isArray(query[key]) ? this.addArrayQueryParam(query, key) : this.addQueryParam(query, key),
             )
             .join("&");
     }
@@ -353,7 +353,7 @@ export class HttpClient<SecurityDataType = unknown> {
                         ? property
                         : typeof property === "object" && property !== null
                           ? JSON.stringify(property)
-                          : `${property}`
+                          : `${property}`,
                 );
                 return formData;
             }, new FormData()),
@@ -582,7 +582,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         ctrlHistoryPagesPageIndexGet: (
             { pageIndex, ...query }: CtrlHistoryPagesPageIndexGetParams,
-            params: RequestParams = {}
+            params: RequestParams = {},
         ) =>
             this.request<HistoryPageDto, FullResultDto>({
                 path: `/history/pages/${pageIndex}`,
@@ -713,7 +713,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ctrlPassfilesPassfileIdVersionsNewPost: (
             passfileId: number,
             data: BodyCtrlPassfilesPassfileIdVersionsNewPost,
-            params: RequestParams = {}
+            params: RequestParams = {},
         ) =>
             this.request<PassfileDto, FullResultDto>({
                 path: `/passfiles/${passfileId}/versions/new`,

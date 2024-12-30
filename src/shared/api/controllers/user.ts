@@ -19,6 +19,6 @@ export const User = {
      * Edit current user.
      */
     patchMe: RestProtocolFactory.fromGenerated<UserPatchDto, UserDto>((api, params) =>
-        api.users.ctrlUsersMePatch(params)
+        api.users.ctrlUsersMePatch(params),
     ),
 };

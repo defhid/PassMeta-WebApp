@@ -10,7 +10,7 @@ export class RestProtocolFactory {
         call: (api: Api<unknown>, params: TParams) => Promise<HttpResponse<TResponse, FullResultDto>>,
         options?: {
             deserialize?: TResponse extends undefined ? undefined : Deserializer<TResponse>;
-        }
+        },
     ): ApiProtocol<TParams, TResponse> {
         return this.build(async (params) => {
             try {
@@ -51,10 +51,10 @@ export class RestProtocolFactory {
     }
 
     private static build<TParams extends Record<string, undefined> | undefined, TResponse>(
-        executor: (params?: TParams) => Promise<ApiResponse<TResponse>>
+        executor: (params?: TParams) => Promise<ApiResponse<TResponse>>,
     ): ApiProtocol<TParams, TResponse> {
         const execute: Omit<ApiProtocol<TParams, TResponse>, "silent"> = async (
-            params?: TParams
+            params?: TParams,
         ): Promise<TResponse> => {
             let result: ApiResponse<TResponse> | null = null;
 
@@ -74,7 +74,7 @@ export class RestProtocolFactory {
         };
 
         (execute as ApiProtocol<TParams, TResponse>).silent = (async (
-            params?: TParams
+            params?: TParams,
         ): Promise<ApiResponse<TResponse>> => {
             try {
                 return await executor(params);

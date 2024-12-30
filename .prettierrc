@@ -4,7 +4,7 @@
     "printWidth": 120,
     "useTabs": false,
     "quoteProps": "as-needed",
-    "trailingComma": "es5",
+    "trailingComma": "all",
     "tabWidth": 4,
     "singleAttributePerLine": false,
     "singleQuote": false,

@@ -1,6 +1,9 @@
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const baseUrl = import.meta.url;
 
@@ -22,6 +25,14 @@ export default defineConfig({
             "~shared": fileURLToPath(new URL("./src/shared", baseUrl)),
             "~utils": fileURLToPath(new URL("./src/shared/utils", baseUrl)),
             "~widgets": fileURLToPath(new URL("./src/widgets", baseUrl)),
+        },
+    },
+    server: {
+        proxy: {
+            "/api": {
+                target: process.env.VITE_PASSMETA_API,
+                changeOrigin: true,
+            },
         },
     },
 });

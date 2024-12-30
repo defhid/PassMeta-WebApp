@@ -12,7 +12,7 @@ const isLoading = ref(false);
 async function load(): Promise<void> {
     isLoading.value = true;
 
-    const response = await PassMetaApi.general.getInfo.executeSilent();
+    const response = await PassMetaApi.general.getInfo.silent();
     if (response.ok) {
         user.value = response.data.user ?? undefined;
         serverId.value = response.data.appId;

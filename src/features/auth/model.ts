@@ -5,21 +5,21 @@ import type { Router } from "vue-router";
 import { Routes } from "~routing";
 
 export async function closeAllSessions() {
-    if (!await Ask.confirm(t("Account.ConfirmResetAllSessions"))) {
+    if (!(await Ask.confirm(t("Account.ConfirmResetAllSessions")))) {
         return;
     }
 
-    await PassMetaApi.auth.resetAllExceptMe.execute();
+    await PassMetaApi.auth.resetAllExceptMe();
 
     Notify.info(t("Account.SuccessResetSessions"));
 }
 
 export async function closeCurrentSession(router: Router) {
-    if (!await Ask.confirm(t("Account.ConfirmResetCurrentSession"))) {
+    if (!(await Ask.confirm(t("Account.ConfirmResetCurrentSession")))) {
         return;
     }
 
-    await PassMetaApi.auth.resetMe.execute();
+    await PassMetaApi.auth.resetMe();
 
     await router.push(Routes.Home.to());
     AppContext.setUser(null);

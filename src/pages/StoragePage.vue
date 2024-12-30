@@ -1,22 +1,42 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { PassMetaApi } from "~api";
 import type { PassfileDto } from "~generated/api";
-import { PassFileListCard, PassFileType } from "~entities/passfile";
+import { PassFileType, PassFileList } from "~entities/passfile";
 
 const passfiles = ref<PassfileDto[]>([]);
 
 onMounted(async () => {
-    const { list } = await PassMetaApi.passfile.getList.execute({ typeId: PassFileType.Pwd });
+    const { list } = await PassMetaApi.passfile.getList({ typeId: PassFileType.Pwd });
     passfiles.value = list;
 });
 
+const selected = ref<PassfileDto>();
+
+function openPassFile(passfile: PassfileDto) {
+    alert(JSON.stringify(passfile));
+}
+
+watch(selected, async (passfile) => {
+    if (!passfile) {
+        return;
+    }
+
+    const content = await PassMetaApi.passfile.getVersion({
+        passfileId: passfile.id,
+        version: passfile.version,
+    });
+
+    console.log(content);
+});
 </script>
 
 <template>
-  <div class="m-4">
-    <h4 class="text-h4 text-center mt-2">Storage</h4>
-
-    <PassFileListCard v-for="pf in passfiles" :key="pf.id" :passfile="pf" />
-  </div>
+    <div class="p-4 h-full">
+        <div class="grid grid-cols-[auto_auto_1fr] h-full">
+            <v-card class="w-[300px] h-full">
+                <PassFileList :passfiles="passfiles" v-model:selected="selected" @open="openPassFile" />
+            </v-card>
+        </div>
+    </div>
 </template>

@@ -45,5 +45,16 @@
         "Validation": {
             "WrongPassphrase": "Неверная кодовая фраза!"
         }
+    },
+    "Storage": {
+        "ItemPasswordField": {
+            "Label": "Пароль"
+        },
+        "ItemUsernameField": {
+            "Label": "Логин"
+        },
+        "SectionSearchField": {
+            "Label": "Поиск паролей..."
+        }
     }
 }

@@ -45,5 +45,16 @@
         "Validation": {
             "WrongPassphrase": "rong passphrase!"
         }
+    },
+    "Storage": {
+        "ItemPasswordField": {
+            "Label": "Password"
+        },
+        "ItemUsernameField": {
+            "Label": "Login"
+        },
+        "SectionSearchField": {
+            "Label": "Search passwords..."
+        }
     }
 }

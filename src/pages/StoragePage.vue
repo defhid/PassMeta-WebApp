@@ -12,6 +12,7 @@ import {
     type PwdSection,
 } from "~entities/passfile";
 import { makePassFile } from "~entities/passfile/utils/context";
+import { t } from "~stores";
 
 const passfiles = ref<PwdPassFile[]>([]);
 
@@ -63,17 +64,34 @@ watch(selected, async (passfile, prevPassfile) => {
 </script>
 
 <template>
-    <div class="p-4 h-full">
-        <div class="grid grid-cols-[auto_auto_1fr] h-full gap-3">
-            <v-card class="w-[300px] h-full">
-                <PassFileListView v-model:selected="selected" :passfiles="passfiles" @open="openPassFile" />
-            </v-card>
+    <div class="h-full">
+        <div class="grid md:grid-cols-[25%_25%_1fr] 2xl:grid-cols-[400px_400px_1fr] h-full gap-2">
+            <div class="md:block" :class="{ hidden: selected }">
+                <v-card class="h-full">
+                    <PassFileListView v-model:selected="selected" :passfiles="passfiles" @open="openPassFile" />
+                </v-card>
+            </div>
 
-            <v-card v-if="selected?.content.decrypted" class="w-[300px] h-full">
-                <PwdSectionListView v-model:selected="selectedSection" :sections="selected?.content.decrypted" />
-            </v-card>
+            <div
+                v-if="selected?.content.decrypted"
+                class="md:flex flex-col justify-items-stretch"
+                :class="{ hidden: selectedSection }"
+            >
+                <v-text-field :label="t('Storage.SectionSearchField.Label')" clearable />
 
-            <PwdSectionView v-if="selectedSection" :section="selectedSection" />
+                <v-card class="h-full section-list-card">
+                    <PwdSectionListView v-model:selected="selectedSection" :sections="selected?.content.decrypted" />
+                </v-card>
+            </div>
+
+            <PwdSectionView v-if="selectedSection" class="px-3" :section="selectedSection" />
         </div>
     </div>
 </template>
+
+<style scoped>
+.section-list-card {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+</style>

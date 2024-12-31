@@ -6,13 +6,24 @@ const { currentUser, isContextLoaded, isContextLoading } = useAppContext();
 </script>
 
 <template>
-    <v-layout :key="currentUser?.id" class="w-screen h-screen">
+    <v-layout :key="currentUser?.id" class="app-layout">
         <NavBar />
 
-        <v-main class="h-full w-full">
-            <RouterView v-if="isContextLoaded" />
+        <RouterView v-if="isContextLoaded" />
 
-            <v-skeleton-loader v-if="isContextLoading" class="m-4" type="article" />
-        </v-main>
+        <v-skeleton-loader v-if="isContextLoading" class="m-4" type="article" />
     </v-layout>
 </template>
+
+<style scoped>
+.app-layout {
+    width: 100vw;
+    height: 100vh;
+    min-width: 360px;
+    max-width: 1920px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: 0.5rem;
+    gap: 0.5rem;
+}
+</style>

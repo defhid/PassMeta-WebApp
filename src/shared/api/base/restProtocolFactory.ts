@@ -1,7 +1,6 @@
-import type { ApiProtocol, ApiResponse } from "~infra/api";
+import type { ApiProtocol, ApiResponse, Deserializer } from "~infra";
 import { getAppConfig, getAppLocale, t } from "~stores";
 import { Api, type FullResultDto, type HttpResponse } from "~generated/api";
-import type { Deserializer } from "~infra/serialization";
 
 export class RestProtocolFactory {
     static onError: ((message: string, more?: string[]) => void) | null = null;

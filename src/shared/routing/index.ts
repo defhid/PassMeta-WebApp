@@ -1,4 +1,4 @@
-import { defineRouteSchemas } from "~infra/routing";
+import { defineRouteSchemas } from "~infra";
 import { getAppLocale } from "~stores";
 
 export const Routes = defineRouteSchemas(

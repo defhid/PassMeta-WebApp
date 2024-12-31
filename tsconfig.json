@@ -10,7 +10,7 @@
             "~entities/*": ["./src/entities/*"],
             "~features/*": ["./src/features/*"],
             "~generated/*": ["./src/shared/.generated/*"],
-            "~infra/*": ["./src/infrastructure/*"],
+            "~infra": ["./src/infrastructure"],
             "~pages": ["./src/pages"],
             "~plugins/*": ["./src/plugins/*"],
             "~routing": ["./src/shared/routing"],

@@ -38,5 +38,12 @@
     },
     "NotFound": {
         "Title": "Page was not found :("
+    },
+    "Passfile": {
+        "DecryptionError": "Passfile decryption failed",
+        "EncryptionError": "Passfile encryption failed",
+        "Validation": {
+            "WrongPassphrase": "rong passphrase!"
+        }
     }
 }

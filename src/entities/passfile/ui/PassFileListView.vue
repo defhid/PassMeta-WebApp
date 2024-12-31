@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { PassfileDto } from "~generated/api";
+import type { PassFile } from "~entities/passfile";
 
 const props = defineProps<{
-    selected?: PassfileDto | undefined;
-    passfiles: PassfileDto[];
+    selected?: PassFile<unknown> | undefined;
+    passfiles: PassFile<unknown>[];
 }>();
 
 const emit = defineEmits<{
-    (e: "open", passfile: PassfileDto): void;
-    (e: "update:selected", passfile: PassfileDto | undefined): void;
+    (e: "open", passfile: PassFile<unknown>): void;
+    (e: "update:selected", passfile: PassFile<unknown> | undefined): void;
 }>();
 </script>
 

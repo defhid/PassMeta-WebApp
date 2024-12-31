@@ -1,4 +1,4 @@
-import type { Deserializer } from "~infra/serialization";
+import type { Deserializer } from "~infra";
 
 export const dateTimeDeserializer: Deserializer<Date> = (value) => new Date(value);
 

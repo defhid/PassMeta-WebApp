@@ -14,7 +14,7 @@ export default typescriptEslint.config({
     rules: {
         "max-len": ["error", { code: 120 }],
         "no-trailing-spaces": "warn",
-        "no-console": ["warn", { allow: ["warn", "error"] }],
+        "no-console": "off",
         eqeqeq: ["warn", "smart"],
         "comma-dangle": ["warn", "always-multiline"],
         "object-shorthand": "warn",
@@ -33,5 +33,6 @@ export default typescriptEslint.config({
 
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/no-unused-expressions": "off",
     },
 });

@@ -4,7 +4,7 @@ import AccountPage from "./AccountPage.vue";
 import StoragePage from "./StoragePage.vue";
 import GeneratorPage from "./GeneratorPage.vue";
 import HistoryPage from "./HistoryPage.vue";
-import { definePages } from "~infra/routing";
+import { definePages } from "~infra";
 
 export const Pages = definePages([
     {

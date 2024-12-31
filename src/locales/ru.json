@@ -38,5 +38,12 @@
     },
     "NotFound": {
         "Title": "Страница не найдена :("
+    },
+    "Passfile": {
+        "DecryptionError": "Не удаётся расшифровать файл",
+        "EncryptionError": "Не удаётся зашифровать файл",
+        "Validation": {
+            "WrongPassphrase": "Неверная кодовая фраза!"
+        }
     }
 }

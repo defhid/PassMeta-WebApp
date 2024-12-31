@@ -1,7 +1,7 @@
 import { type App, watch, type Plugin } from "vue";
 import { createRouter, createWebHistory, type RouteLocationNormalized, type Router } from "vue-router";
 import { useAppContext } from "~stores";
-import { initializeRoutes, type RouteInfo } from "~infra/routing";
+import { initializeRoutes, type RouteInfo } from "~infra";
 import { Routes } from "~routing";
 import { Pages } from "~pages";
 import type { UserDto } from "~generated/api";

@@ -1,57 +1,79 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
 import { PassMetaApi } from "~api";
-import type { PassfileDto } from "~generated/api";
-import { PassFileType, PassFileList } from "~entities/passfile";
-import { PassMetaCrypto } from "~/shared/utils/crypto";
+import {
+    PassFileType,
+    PassFileListView,
+    PwdSectionListView,
+    PwdSectionView,
+    decryptPassFile,
+    type PwdPassFile,
+    type PassFile,
+    type PwdSection,
+} from "~entities/passfile";
+import { makePassFile } from "~entities/passfile/utils/context";
 
-const passfiles = ref<PassfileDto[]>([]);
+const passfiles = ref<PwdPassFile[]>([]);
 
 onMounted(async () => {
     const { list } = await PassMetaApi.passfile.getList({ typeId: PassFileType.Pwd });
-    passfiles.value = list;
+    passfiles.value = list.map(makePassFile<PwdSection[]>);
 });
 
-const selected = ref<PassfileDto>();
-const decryptedContent = ref<string>();
+const selected = ref<PwdPassFile>();
+const selectedSection = ref<PwdSection>();
 
-function openPassFile(passfile: PassfileDto) {
-    alert(JSON.stringify(passfile));
+function openPassFile(passfile: PassFile<unknown>) {
+    alert(JSON.stringify(passfile, undefined, 4));
 }
 
-watch(selected, async (passfile) => {
+watch(selected, async (passfile, prevPassfile) => {
     if (!passfile) {
-        decryptedContent.value = undefined;
+        selectedSection.value = undefined;
         return;
     }
 
-    const content = await PassMetaApi.passfile.getVersion({
-        passfileId: passfile.id,
-        version: passfile.version,
-    });
+    if (passfile.content.decrypted) {
+        return;
+    }
+
+    passfile.content = {
+        encrypted: await PassMetaApi.passfile.getVersion({
+            passfileId: passfile.id,
+            version: passfile.version,
+        }),
+        passphrase: undefined,
+    };
 
     const keyPhrase = window.prompt("Passphrase:");
     if (keyPhrase == null) {
-        decryptedContent.value = undefined;
+        selected.value = prevPassfile;
         return;
     }
 
-    const decrypted = await PassMetaCrypto.decrypt(content, keyPhrase);
+    const result = await decryptPassFile(passfile, keyPhrase);
+    if (result.bad) {
+        alert(result.message);
+        selected.value = prevPassfile;
+        return;
+    }
 
-    decryptedContent.value = JSON.stringify(JSON.parse(new TextDecoder().decode(decrypted)), undefined, 4);
+    selectedSection.value = undefined;
 });
 </script>
 
 <template>
     <div class="p-4 h-full">
-        <div class="grid grid-cols-[auto_auto_1fr] h-full">
+        <div class="grid grid-cols-[auto_auto_1fr] h-full gap-3">
             <v-card class="w-[300px] h-full">
-                <PassFileList v-model:selected="selected" :passfiles="passfiles" @open="openPassFile" />
+                <PassFileListView v-model:selected="selected" :passfiles="passfiles" @open="openPassFile" />
             </v-card>
 
-            <div class="h-full w-full overflow-y-auto px-2">
-                <code class="whitespace-pre">{{ decryptedContent }}</code>
-            </div>
+            <v-card v-if="selected?.content.decrypted" class="w-[300px] h-full">
+                <PwdSectionListView v-model:selected="selectedSection" :sections="selected?.content.decrypted" />
+            </v-card>
+
+            <PwdSectionView v-if="selectedSection" :section="selectedSection" />
         </div>
     </div>
 </template>

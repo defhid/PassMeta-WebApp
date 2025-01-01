@@ -32,6 +32,8 @@ export default defineConfig({
             "/api": {
                 target: process.env.VITE_PASSMETA_API,
                 changeOrigin: true,
+                secure: false,
+                rewrite: (path) => path.replace(/^\/api/, ""),
             },
         },
     },

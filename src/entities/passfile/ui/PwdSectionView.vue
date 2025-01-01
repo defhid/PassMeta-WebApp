@@ -1,19 +1,13 @@
 <script setup lang="ts">
-import type { PwdItem, PwdSection } from "~entities/passfile";
-import { normalizeExternalUrl } from "~utils";
+import type { PwdSection } from "~entities/passfile";
+import { normalizeExternalUrl, useClipboardHelper } from "~utils";
 import { t } from "~stores";
 
 const props = defineProps<{
     section: PwdSection;
 }>();
 
-function copyUsername(item: PwdItem) {
-    navigator.clipboard.writeText(item.usernames[0] ?? "");
-}
-
-function copyPassword(item: PwdItem) {
-    navigator.clipboard.writeText(item.password);
-}
+const { copyTextToClipboard } = useClipboardHelper();
 </script>
 
 <template>
@@ -36,28 +30,22 @@ function copyPassword(item: PwdItem) {
                         :model-value="item.usernames.join()"
                         density="compact"
                         variant="solo"
-                        class="section__text-field_readonly pr-3"
+                        class="field-only pr-3"
                         readonly
                     />
-                    <v-btn icon="mdi-content-copy" size="small" @click="copyUsername(item)" />
+                    <v-btn icon="mdi-content-copy" size="small" @click="copyTextToClipboard(item.usernames[0] ?? '')" />
 
                     <label class="justify-self-end pr-4">{{ t("Storage.ItemPasswordField.Label") }}</label>
                     <v-text-field
                         v-model="item.password"
                         variant="solo"
                         density="compact"
-                        class="section__text-field_readonly pr-3"
+                        class="field-only pr-3"
                         readonly
                     />
-                    <v-btn icon="mdi-content-copy" size="small" @click="copyPassword(item)" />
+                    <v-btn icon="mdi-content-copy" size="small" @click="copyTextToClipboard(item.password)" />
                 </div>
             </v-card>
         </div>
     </div>
 </template>
-
-<style scoped>
-.section__text-field_readonly :deep(.v-input__details) {
-    display: none;
-}
-</style>

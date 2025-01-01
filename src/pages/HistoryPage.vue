@@ -1,7 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { t } from "~stores";
+</script>
 
 <template>
-    <div class="m-4">
-        <h4 class="text-h4 text-center mt-2">History</h4>
+    <div class="mt-6">
+        <h4 class="text-h4 text-center">{{ t("History.Title") }}</h4>
     </div>
 </template>

@@ -23,16 +23,31 @@
         "SignUpButton": "Sign Up",
         "Title": "Authorization"
     },
+    "Clipboard": {
+        "UnknownError": "Clipboard error!"
+    },
     "Common": {
         "Api": {
             "RequestBuildError": "Failed to build request",
             "UnknownError": "Unknown error occurred"
         }
     },
+    "Generator": {
+        "IncludeDigits": "Numbers",
+        "IncludeLowercase": "Lowercase",
+        "IncludeSpecial": "Spec. symbols",
+        "IncludeUppercase": "Uppercase",
+        "PasswordLength": "Length",
+        "Title": "Password generator"
+    },
+    "History": {
+        "Title": "History"
+    },
     "Home": {
         "BtnAuthorize": "Log in to the system",
         "LabelServerId": "Server ID",
         "LabelServerVersion": "Server version",
+        "Title": "Home",
         "TitleKnown": "Hello",
         "TitleUnknown": "Welcome to PassMeta"
     },
@@ -55,6 +70,7 @@
         },
         "SectionSearchField": {
             "Label": "Search passwords..."
-        }
+        },
+        "Title": "Storage"
     }
 }

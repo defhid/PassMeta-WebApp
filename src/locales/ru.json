@@ -23,16 +23,31 @@
         "SignUpButton": "Зарегистрироваться",
         "Title": "Авторизация"
     },
+    "Clipboard": {
+        "UnknownError": "Ошибка буфера обмена!"
+    },
     "Common": {
         "Api": {
             "RequestBuildError": "Не удалось построить запрос",
             "UnknownError": "Произошла неизвестная ошибка"
         }
     },
+    "Generator": {
+        "IncludeDigits": "Числа",
+        "IncludeLowercase": "Строчные",
+        "IncludeSpecial": "Спец. символы",
+        "IncludeUppercase": "Прописные",
+        "PasswordLength": "Длина",
+        "Title": "Генератор паролей"
+    },
+    "History": {
+        "Title": "История"
+    },
     "Home": {
         "BtnAuthorize": "Войти в систему",
         "LabelServerId": "ID сервера",
         "LabelServerVersion": "Версия сервера",
+        "Title": "Главная",
         "TitleKnown": "Привет",
         "TitleUnknown": "Добро пожаловать в PassMeta"
     },
@@ -55,6 +70,7 @@
         },
         "SectionSearchField": {
             "Label": "Поиск паролей..."
-        }
+        },
+        "Title": "Хранилище"
     }
 }

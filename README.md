@@ -50,8 +50,8 @@ yarn run build
     - `mv PassMeta-WebApp-master /home/passmeta-ui`
 - **Configure:**
     - `nano /home/passmeta-ui/deploy/.env.local`, enter `VITE_PASSMETA_API` (backend URL).
-    - `cp /home/passmeta-ui/deploy/scripts/update.sh /home/passmeta-update.sh`
+    - `cp /home/passmeta-ui/deploy/scripts/update.sh /home/passmeta-ui-update.sh`
 - **Build:** `sudo bash /home/passmeta-ui/deploy/scripts/rebuild.sh`
 - **Start:** `sudo bash /home/passmeta-ui/deploy/scripts/start.sh`
 - **Stop:** `sudo bash /home/passmeta-ui/deploy/scripts/stop.sh`
-- **Update:** `sudo bash /home/passmeta-update.sh`
+- **Update:** `sudo bash /home/passmeta-ui-update.sh`

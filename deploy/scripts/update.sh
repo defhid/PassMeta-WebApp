@@ -15,16 +15,16 @@ unzip ./passmeta-ui-tmp/master.zip -d ./passmeta-ui-tmp || exit 1
 
 # prepare files
 mkdir ./passmeta-ui-new || exit 1
-cp -a ./passmeta-ui-tmp/PassMeta-WebApp-master ./passmeta-ui-new || exit 1
-cp ./passmeta-ui/deploy/.env.local ./passmeta-ui-new/deploy/.env.local
+cp -r ./passmeta-ui-tmp/PassMeta-WebApp-master/. ./passmeta-ui-new || exit 1
+cp ./passmeta-ui/deploy/.env.local ./passmeta-ui-new/deploy/.env.local || exit 1
 rm -r ./passmeta-ui-tmp
 
 # stop services
 bash ./passmeta-ui/deploy/scripts/stop.sh || exit 1
 
 # swap new & current & old directories
-rm -f -r ./passmeta-old
-mv ./passmeta-ui ./passmeta-old || exit 1
+rm -f -r ./passmeta-ui-old
+mv ./passmeta-ui ./passmeta-ui-old || exit 1
 mv ./passmeta-ui-new ./passmeta-ui || exit 1
 
 # rebuild & start container

@@ -8,4 +8,4 @@ CMD rm -r /deploy/dist
 COPY . .
 
 RUN yarn install
-RUN yarn build
+CMD yarn build

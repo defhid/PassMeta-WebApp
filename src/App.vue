@@ -9,7 +9,9 @@ const { currentUser, isContextLoaded, isContextLoading } = useAppContext();
     <v-layout :key="currentUser?.id" class="app-layout">
         <NavBar />
 
-        <RouterView v-if="isContextLoaded" />
+        <div class="h-full overflow-y-auto">
+            <RouterView v-if="isContextLoaded" />
+        </div>
 
         <v-skeleton-loader v-if="isContextLoading" class="m-4" type="article" />
     </v-layout>

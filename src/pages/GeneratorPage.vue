@@ -37,7 +37,7 @@ watch(fieldValues, generate, { immediate: true });
 </script>
 
 <template>
-    <div class="flex flex-col justify-items-center gap-7 mt-6">
+    <div class="flex flex-col justify-items-center gap-7 my-6">
         <h4 class="text-h4 text-center">{{ t("Generator.Title") }}</h4>
 
         <div class="flex flex-col align-center self-center gap-10 sm:flex-row">

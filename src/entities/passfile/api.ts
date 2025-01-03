@@ -1,5 +1,3 @@
-import { RestProtocolFactory } from "../base/restProtocolFactory";
-import { dateTimeDeserializer } from "../serialization";
 import type {
     BodyCtrlPassfilesPassfileIdVersionsNewPost,
     CtrlPassfilesGetParams,
@@ -12,11 +10,12 @@ import type {
     PassfileVersionListDto,
 } from "~generated/api";
 import { createFieldsDeserializer, createListDeserializer } from "~infra";
+import { DateTimeDeserializer, RestProtocolFactory } from "~api";
 
 const PassFileDtoDeserializer = createFieldsDeserializer<PassfileDto>({
-    createdOn: dateTimeDeserializer,
-    infoChangedOn: dateTimeDeserializer,
-    versionChangedOn: dateTimeDeserializer,
+    createdOn: DateTimeDeserializer,
+    infoChangedOn: DateTimeDeserializer,
+    versionChangedOn: DateTimeDeserializer,
 });
 
 const PassFileListDtoDeserializer = createFieldsDeserializer<PassfileListDto>({
@@ -26,7 +25,7 @@ const PassFileListDtoDeserializer = createFieldsDeserializer<PassfileListDto>({
 /**
  * Passfile controllers.
  */
-export const Passfile = {
+export const PassFileApi = {
     /**
      * Create a new passfile.
      */
@@ -85,7 +84,7 @@ export const Passfile = {
             deserialize: createFieldsDeserializer<PassfileVersionListDto>({
                 list: createListDeserializer(
                     createFieldsDeserializer<PassfileVersionDto>({
-                        versionDate: dateTimeDeserializer,
+                        versionDate: DateTimeDeserializer,
                     }),
                 ),
             }),

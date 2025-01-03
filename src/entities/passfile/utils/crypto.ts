@@ -1,5 +1,5 @@
 /**
- * PassMeta cryptographic methods.
+ * PassMeta cryptographic methods for passfiles.
  */
 export class PassMetaCrypto {
     /**

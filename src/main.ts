@@ -1,22 +1,22 @@
 import "~assets/base.css";
-
 import App from "./App.vue";
 import { createApp } from "vue";
-import LocalePlugin from "./plugins/localePlugin";
-import VuetifyPlugin from "./plugins/vuetifyPlugin";
+import localePlugin from "./plugins/localePlugin";
+import vuetifyPlugin from "./plugins/vuetifyPlugin";
 import routerPlugin from "./plugins/routerPlugin";
 import { RestProtocolFactory } from "~api/base/restProtocolFactory";
 import { useAppContext } from "~stores";
 import { Notify } from "~utils";
+import { GeneralApi } from "~entities/backend";
 
 RestProtocolFactory.onError = (message: string, more?: string[]) => Notify.error(message + "\n" + more?.join("\n"));
 
-useAppContext().load().then();
+useAppContext().load(GeneralApi.getInfo).then();
 
 const app = createApp(App);
 
-app.use(VuetifyPlugin);
+app.use(vuetifyPlugin);
 app.use(routerPlugin);
-app.use(LocalePlugin);
+app.use(localePlugin);
 
 app.mount("#app");

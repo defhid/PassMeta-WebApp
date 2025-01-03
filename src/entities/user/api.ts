@@ -1,10 +1,10 @@
-import { RestProtocolFactory } from "../base/restProtocolFactory";
 import type { SignUpDto, UserDto, UserPatchDto } from "~generated/api";
+import { RestProtocolFactory } from "~api";
 
 /**
  * User controllers.
  */
-export const User = {
+export const UserApi = {
     /**
      * Create a new user.
      */

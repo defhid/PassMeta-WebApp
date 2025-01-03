@@ -10,10 +10,16 @@ const { currentUser, isContextLoaded, isContextLoading } = useAppContext();
         <NavBar />
 
         <div class="app-content">
-            <RouterView v-if="isContextLoaded" />
-        </div>
+            <RouterView v-if="isContextLoaded" :key="currentUser?.id" v-slot="{ Component }">
+                <KeepAlive>
+                    <Component :is="Component" />
+                </KeepAlive>
+            </RouterView>
 
-        <v-skeleton-loader v-if="isContextLoading" class="m-4" type="article" />
+            <div v-if="isContextLoading" class="w-full h-full flex justify-center items-center pb-10">
+                <v-progress-circular model-value="20" indeterminate />
+            </div>
+        </div>
     </v-layout>
 </template>
 

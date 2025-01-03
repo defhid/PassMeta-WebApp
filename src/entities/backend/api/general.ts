@@ -1,9 +1,9 @@
-import { RestProtocolFactory } from "../base/restProtocolFactory";
+import { RestProtocolFactory } from "~api/base/restProtocolFactory";
 
 /**
  * General controllers.
  */
-export const General = {
+export const GeneralApi = {
     /**
      * Get current session and server information.
      */

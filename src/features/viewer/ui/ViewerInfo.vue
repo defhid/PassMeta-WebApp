@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { t, useAppContext } from "~stores";
-
-const emit = defineEmits<{
-    (e: "resetCurrentSession"): void;
-    (e: "resetAllSessions"): void;
-}>();
+import { useSessionClose } from "~entities/backend";
 
 const { currentUser: viewer } = useAppContext();
+
+const { closeAllSessions, closeCurrentSession } = useSessionClose();
 </script>
 
 <template>
@@ -19,11 +17,11 @@ const { currentUser: viewer } = useAppContext();
             <span class="text-medium-emphasis">{{ viewer?.login }}</span>
         </div>
 
-        <v-btn class="mt-10" size="small" @click.stop="emit('resetCurrentSession')">
+        <v-btn class="mt-10" size="small" @click="closeCurrentSession()">
             {{ t("Account.BtnResetCurrentSession") }}
         </v-btn>
         <br />
-        <v-btn class="mt-3" size="small" @click.stop="emit('resetAllSessions')">
+        <v-btn class="mt-3" size="small" @click="closeAllSessions()">
             {{ t("Account.BtnResetAllSessions") }}
         </v-btn>
     </div>

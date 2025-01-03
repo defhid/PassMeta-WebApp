@@ -1,10 +1,10 @@
-import { RestProtocolFactory } from "../base/restProtocolFactory";
+import { RestProtocolFactory } from "~api/base/restProtocolFactory";
 import type { CtrlHistoryPagesPageIndexGetParams, HistoryPageDto } from "~generated/api";
 
 /**
- * General controllers.
+ * History controllers.
  */
-export const History = {
+export const HistoryApi = {
     /**
      * Get history kinds.
      */

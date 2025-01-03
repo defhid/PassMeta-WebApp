@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { PassMetaApi } from "~api";
 import { t, useAppContext } from "~stores";
 import { useRouter } from "vue-router";
 import { Routes } from "~routing";
+import { AuthApi } from "~entities/backend";
+import { UserApi } from "~entities/user";
 
 const router = useRouter();
 const { currentUser } = useAppContext();
@@ -12,7 +13,7 @@ const login = ref("");
 const password = ref("");
 
 async function signIn() {
-    currentUser.value = await PassMetaApi.auth.logIn({
+    currentUser.value = await AuthApi.logIn({
         login: login.value,
         password: password.value,
     });
@@ -21,7 +22,7 @@ async function signIn() {
 }
 
 async function signUp() {
-    currentUser.value = await PassMetaApi.user.post({
+    currentUser.value = await UserApi.post({
         fullName: "Unknown",
         login: login.value,
         password: password.value,

@@ -2,8 +2,8 @@
 import PassMetaIcon from "~assets/icons/PassMeta.png";
 import { Routes } from "~routing";
 import { t, useAppContext } from "~stores";
-import { useSessionClose } from "~features/auth";
 import { useRouter } from "vue-router";
+import { useSessionClose } from "~entities/backend";
 
 const { currentRoute } = useRouter();
 const { currentUser } = useAppContext();

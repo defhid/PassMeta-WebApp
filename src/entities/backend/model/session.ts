@@ -1,8 +1,8 @@
 import { Ask, Notify } from "~utils";
 import { t, useAppContext } from "~stores";
-import { PassMetaApi } from "~api";
 import { Routes } from "~routing";
 import { useRouter } from "vue-router";
+import { AuthApi } from "~entities/backend";
 
 /**
  * Use session closing methods for current user.
@@ -16,7 +16,7 @@ export function useSessionClose() {
             return;
         }
 
-        await PassMetaApi.auth.resetAllExceptMe();
+        await AuthApi.resetAllExceptMe();
 
         Notify.info(t("Account.SuccessResetSessions"));
     }
@@ -26,7 +26,7 @@ export function useSessionClose() {
             return;
         }
 
-        await PassMetaApi.auth.resetMe();
+        await AuthApi.resetMe();
 
         await router.push(Routes.Home.to());
         currentUser.value = undefined;

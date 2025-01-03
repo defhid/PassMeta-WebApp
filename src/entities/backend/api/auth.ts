@@ -1,10 +1,10 @@
-import { RestProtocolFactory } from "../base/restProtocolFactory";
+import { RestProtocolFactory } from "~api/base/restProtocolFactory";
 import type { SignInDto } from "~generated/api";
 
 /**
  * Auth controllers.
  */
-export const Auth = {
+export const AuthApi = {
     /**
      * Sign in.
      */

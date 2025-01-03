@@ -1,8 +1,8 @@
 import { type Ref, ref } from "vue";
-import type { UserDto } from "~generated/api";
-import { PassMetaApi } from "~api";
+import type { AppInfoDto, UserDto } from "~generated/api";
 import { Notify } from "~utils";
 import { createGlobalState } from "@vueuse/shared";
+import type { ApiProtocol } from "~infra";
 
 /**
  * Application context.
@@ -36,7 +36,7 @@ export interface AppContext {
     /**
      * Load/reload context.
      */
-    load(): Promise<void>;
+    load(api: ApiProtocol<undefined, AppInfoDto>): Promise<void>;
 }
 
 /**
@@ -49,10 +49,10 @@ export const useAppContext = createGlobalState((): AppContext => {
     const isContextLoaded = ref(false);
     const isContextLoading = ref(false);
 
-    async function load(): Promise<void> {
+    async function load(api: ApiProtocol<undefined, AppInfoDto>): Promise<void> {
         isContextLoading.value = true;
 
-        const response = await PassMetaApi.general.getInfo.silent();
+        const response = await api.silent();
         if (response.ok) {
             user.value = response.data.user ?? undefined;
             serverId.value = response.data.appId;

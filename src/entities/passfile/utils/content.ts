@@ -1,9 +1,9 @@
 import type { PassFile, PwdItem, PwdSection } from "~entities/passfile/model/entities";
 import { type IDetailedResult, Result } from "~infra";
 import { t } from "~stores";
-import { PassMetaCrypto } from "~utils";
 import { PassFileType } from "~entities/passfile/model/enums";
 import type { PwdItemDto, PwdSectionDto } from "~entities/passfile/model/dtos";
+import { PassMetaCrypto } from "~entities/passfile";
 
 const decryptionError = Result.failure(t("Passfile.DecryptionError"));
 

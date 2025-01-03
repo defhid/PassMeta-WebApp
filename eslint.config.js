@@ -30,6 +30,7 @@ export default typescriptEslint.config({
         "vue/max-attributes-per-line": "off",
         "vue/html-self-closing": ["error", { html: { void: "always", normal: "always", component: "always" } }],
         "vue/html-indent": "off",
+        "vue/no-mutating-props": ["error", { shallowOnly: true }],
 
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-unused-vars": "warn",

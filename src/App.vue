@@ -9,7 +9,7 @@ const { currentUser, isContextLoaded, isContextLoading } = useAppContext();
     <v-layout :key="currentUser?.id" class="app-layout">
         <NavBar />
 
-        <div class="h-full overflow-y-auto">
+        <div class="app-content">
             <RouterView v-if="isContextLoaded" />
         </div>
 
@@ -20,12 +20,17 @@ const { currentUser, isContextLoaded, isContextLoading } = useAppContext();
 <style scoped>
 .app-layout {
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     min-width: 360px;
     max-width: 1920px;
     display: grid;
     grid-template-rows: auto 1fr;
     padding: 0.5rem;
     gap: 0.5rem;
+}
+
+.app-content {
+    height: 100%;
+    overflow-y: auto;
 }
 </style>

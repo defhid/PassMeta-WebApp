@@ -64,28 +64,36 @@ watch(selected, async (passfile, prevPassfile) => {
 </script>
 
 <template>
-    <div class="h-full">
-        <div class="grid md:grid-cols-[25%_25%_1fr] 2xl:grid-cols-[400px_400px_1fr] h-full gap-2">
-            <div class="md:block" :class="{ hidden: selected }">
-                <v-card class="h-full">
-                    <PassFileListView v-model:selected="selected" :passfiles="passfiles" @open="openPassFile" />
-                </v-card>
-            </div>
-
-            <div
-                v-if="selected?.content.decrypted"
-                class="md:flex flex-col justify-items-stretch"
-                :class="{ hidden: selectedSection }"
-            >
-                <v-text-field :label="t('Storage.SectionSearchField.Label')" clearable />
-
-                <v-card class="h-full section-list-card">
-                    <PwdSectionListView v-model:selected="selectedSection" :sections="selected?.content.decrypted" />
-                </v-card>
-            </div>
-
-            <PwdSectionView v-if="selectedSection" class="px-3" :section="selectedSection" />
+    <div class="h-full grid md:grid-cols-[25%_25%_1fr] 2xl:grid-cols-[400px_400px_1fr] gap-2">
+        <div class="md:block" :class="{ hidden: selected }">
+            <v-card class="h-full">
+                <PassFileListView v-model:selected="selected" :passfiles="passfiles" @open="openPassFile" />
+            </v-card>
         </div>
+
+        <div
+            v-if="selected?.content.decrypted"
+            class="flex md:flex flex-col justify-items-stretch gap-2"
+            :class="{ hidden: selectedSection }"
+        >
+            <div class="flex gap-2 items-center">
+                <div class="md:hidden">
+                    <v-btn icon="mdi-keyboard-backspace" size="small" @click="selected = undefined" />
+                </div>
+                <v-text-field class="field-only" :label="t('Storage.SectionSearchField.Label')" clearable />
+            </div>
+
+            <v-card class="h-full section-list-card">
+                <PwdSectionListView v-model:selected="selectedSection" :sections="selected?.content.decrypted" />
+            </v-card>
+        </div>
+
+        <PwdSectionView
+            v-if="selectedSection"
+            class="px-3"
+            :section="selectedSection"
+            @back="selectedSection = undefined"
+        />
     </div>
 </template>
 

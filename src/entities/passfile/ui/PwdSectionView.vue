@@ -7,13 +7,22 @@ const props = defineProps<{
     section: PwdSection;
 }>();
 
+const emit = defineEmits<{
+    (e: "back"): void;
+}>();
+
 const { copyTextToClipboard } = useClipboardHelper();
 </script>
 
 <template>
-    <div>
-        <div class="flex justify-between items-center py-4">
-            <h5 class="text-h5">{{ section.name }}</h5>
+    <div class="pb-10">
+        <div class="flex flex-wrap items-center py-4 gap-x-2 gap-y-5">
+            <div class="grid grid-cols-[auto_auto] items-center gap-3">
+                <div class="md:hidden">
+                    <v-btn icon="mdi-keyboard-backspace" size="small" @click="emit('back')" />
+                </div>
+                <h5 class="text-h5 truncate">{{ section.name }}</h5>
+            </div>
 
             <a v-if="section.websiteUrl" :href="normalizeExternalUrl(section.websiteUrl)" target="_blank">
                 <v-btn variant="plain" density="compact" class="italic">{{ section.websiteUrl }}</v-btn>

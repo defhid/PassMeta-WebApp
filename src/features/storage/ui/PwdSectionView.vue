@@ -27,7 +27,7 @@ const emit = defineEmits<{
             </a>
         </div>
 
-        <div class="pt-3.5 md:pt-3">
+        <div class="flex flex-col gap-2 pt-3.5 md:pt-3">
             <PwdItemView v-for="(item, i) in section.items" :key="i" :item="item" />
         </div>
     </div>

@@ -68,6 +68,15 @@
             "WrongPassphrase": "rong passphrase!"
         }
     },
+    "Settings": {
+        "HidePasswords": "Hide passwords",
+        "Lang": {
+            "En": "English",
+            "Ru": "Russian"
+        },
+        "Localization": "Language",
+        "Title": "Settings"
+    },
     "Storage": {
         "ItemPasswordField": {
             "Label": "Password"

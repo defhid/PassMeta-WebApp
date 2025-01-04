@@ -71,8 +71,8 @@ watch(fieldValues, generate, { immediate: true });
         <div class="flex flex-col w-[300px]">
             <v-text-field :model-value="currentGenerated" readonly variant="solo" />
             <div class="flex gap-5">
-                <v-btn icon="mdi-content-copy" @click="copyTextToClipboard(currentGenerated)" />
-                <v-btn icon="mdi-key-variant" @click="generate" />
+                <v-btn icon="mdi-content-copy" color="primary" @click="copyTextToClipboard(currentGenerated)" />
+                <v-btn icon="mdi-key-variant" color="secondary" @click="generate" />
             </div>
         </div>
     </div>

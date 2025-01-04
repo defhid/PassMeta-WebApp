@@ -16,7 +16,16 @@ const vuetifyPlugin: Plugin = (app: App) => {
             sets: { mdi },
         },
         theme: {
-            defaultTheme: "dark",
+            defaultTheme: "passMetaTheme",
+            themes: {
+                passMetaTheme: {
+                    dark: true,
+                    colors: {
+                        primary: "#388E3C",
+                        secondary: "#424242",
+                    },
+                },
+            },
         },
     });
 

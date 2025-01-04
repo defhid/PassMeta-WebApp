@@ -4,6 +4,7 @@ import AccountPage from "./AccountPage.vue";
 import StoragePage from "./StoragePage.vue";
 import GeneratorPage from "./GeneratorPage.vue";
 import HistoryPage from "./HistoryPage.vue";
+import SettingsPage from "./SettingsPage.vue";
 import { definePages } from "~infra";
 
 export const Pages = definePages([
@@ -30,6 +31,10 @@ export const Pages = definePages([
     {
         route: Routes.History,
         component: HistoryPage,
+    },
+    {
+        route: Routes.Settings,
+        component: SettingsPage,
     },
     {
         route: Routes.NotFound,

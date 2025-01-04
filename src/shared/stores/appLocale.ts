@@ -1,16 +1,17 @@
 import { createI18n } from "vue-i18n";
+import { useAppSettings } from "~/shared/stores/appSettings";
+import { watch } from "vue";
 
-export function getAppLocale() {
-    return localStorage.getItem("locale") || saveAppLocale(navigator.language);
-}
-
-export function saveAppLocale(locale: string) {
-    localStorage.setItem("locale", locale);
-    return locale;
-}
+const settings = useAppSettings();
 
 export const i18n = createI18n({
-    locale: getAppLocale(),
+    locale: settings.locale,
 });
+
+watch(
+    () => settings.locale,
+    (locale) => (i18n.global.locale = locale),
+    { flush: "sync" },
+);
 
 export const t = i18n.global.t;

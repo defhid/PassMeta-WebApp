@@ -1,5 +1,5 @@
 import { defineRouteSchemas } from "~infra";
-import { getAppLocale } from "~stores";
+import { useAppSettings } from "~stores";
 
 export const Routes = defineRouteSchemas(
     {
@@ -20,9 +20,14 @@ export const Routes = defineRouteSchemas(
         },
         Generator: {
             path: "generator",
+            anonymous: true,
         },
         History: {
             path: "history",
+        },
+        Settings: {
+            path: "settings",
+            anonymous: true,
         },
         NotFound: {
             path: ":pathMatch(.*)*",
@@ -30,7 +35,7 @@ export const Routes = defineRouteSchemas(
         },
     },
     {
-        rootParams: () => ({ locale: getAppLocale() }),
+        rootParams: () => ({ locale: useAppSettings().locale }),
         rootPath: "/:locale",
     },
 );

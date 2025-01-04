@@ -4,13 +4,14 @@ import { Routes } from "~routing";
 import { t, useAppContext } from "~stores";
 import { useRouter } from "vue-router";
 import { useSessionClose } from "~entities/backend";
+import { describeTooltip } from "~utils";
 
 const { currentRoute } = useRouter();
 const { currentUser } = useAppContext();
 const { closeCurrentSession } = useSessionClose();
 
-function makeItemTooltip(text: string) {
-    return { text, "open-delay": 900, location: "bottom" };
+function describeItemTooltip(text: string) {
+    return describeTooltip(text, { location: "bottom" });
 }
 </script>
 
@@ -18,24 +19,24 @@ function makeItemTooltip(text: string) {
     <v-card class="py-1 w-full">
         <div class="flex justify-between items-center">
             <RouterLink class="mx-3 w-[48px] min-w-[48px]" :to="Routes.Home.to()">
-                <img v-tooltip="makeItemTooltip(t('Home.Title'))" :src="PassMetaIcon" alt="PM" />
+                <img v-tooltip="describeItemTooltip(t('Home.Title'))" :src="PassMetaIcon" alt="PM" />
             </RouterLink>
 
             <div class="flex w-[50%] justify-space-around">
                 <v-btn
-                    v-tooltip="makeItemTooltip(t('Storage.Title'))"
+                    v-tooltip="describeItemTooltip(t('Storage.Title'))"
                     icon="mdi-safe-square-outline"
                     :to="Routes.Storage.to()"
                     :active="currentRoute.name === Routes.Storage.to.name"
                 />
                 <v-btn
-                    v-tooltip="makeItemTooltip(t('Generator.Title'))"
+                    v-tooltip="describeItemTooltip(t('Generator.Title'))"
                     icon="mdi-lightbulb-outline"
                     :to="Routes.Generator.to()"
                     :active="currentRoute.name === Routes.Generator.to.name"
                 />
                 <v-btn
-                    v-tooltip="makeItemTooltip(t('History.Title'))"
+                    v-tooltip="describeItemTooltip(t('History.Title'))"
                     icon="mdi-history"
                     :to="Routes.History.to()"
                     :active="currentRoute.name === Routes.History.to.name"
@@ -45,7 +46,7 @@ function makeItemTooltip(text: string) {
             <v-menu>
                 <template #activator="{ props }">
                     <v-btn
-                        v-tooltip="makeItemTooltip(t('Account.Title'))"
+                        v-tooltip="describeItemTooltip(t('Account.Title'))"
                         v-bind="props"
                         icon="mdi-account-circle-outline"
                         class="mr-3 min-w-[60px]"

@@ -68,6 +68,15 @@
             "WrongPassphrase": "Неверная кодовая фраза!"
         }
     },
+    "Settings": {
+        "HidePasswords": "Скрывать пароли",
+        "Lang": {
+            "En": "Английский",
+            "Ru": "Русский"
+        },
+        "Localization": "Язык",
+        "Title": "Настройки"
+    },
     "Storage": {
         "ItemPasswordField": {
             "Label": "Пароль"

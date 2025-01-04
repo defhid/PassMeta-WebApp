@@ -18,7 +18,7 @@ export interface AppConfig {
 /**
  * Get application config.
  */
-export const getAppConfig = createGlobalState((): AppConfig => {
+export const useAppConfig = createGlobalState((): AppConfig => {
     const isDev = import.meta.env.DEV ?? false;
 
     const passmetaApi =

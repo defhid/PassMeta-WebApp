@@ -23,7 +23,7 @@ const emit = defineEmits<{
             </div>
 
             <a v-if="section.websiteUrl" :href="normalizeExternalUrl(section.websiteUrl)" target="_blank">
-                <v-btn variant="plain" density="compact" class="italic">{{ section.websiteUrl }}</v-btn>
+                <v-btn variant="plain" density="compact" class="italic" :text="section.websiteUrl" />
             </a>
         </div>
 

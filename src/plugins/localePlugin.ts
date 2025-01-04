@@ -1,5 +1,5 @@
-import type { App, Plugin } from "vue";
-import { getAppLocale, i18n, saveAppLocale } from "~stores";
+import { type App, type Plugin } from "vue";
+import { i18n, useAppSettings } from "~stores";
 import { Routes } from "~routing";
 
 const SupportedLocales = {
@@ -12,12 +12,14 @@ const LoadedLocales: string[] = [];
 const localePlugin: Plugin = (app: App) => {
     app.use(i18n);
 
+    const settings = useAppSettings();
+    updateHtmlLocale(settings.locale);
+
     app.config.globalProperties.$router.beforeEach(async (to) => {
         const paramsLocale = to.params.locale as string | undefined;
-        const currentLocale = getAppLocale();
 
         if (paramsLocale == null) {
-            return { path: "/" + currentLocale + to.path };
+            return { path: "/" + settings.locale + to.path };
         }
 
         if (!to.name) {
@@ -36,13 +38,15 @@ const localePlugin: Plugin = (app: App) => {
             LoadedLocales.push(paramsLocale);
         }
 
-        if (currentLocale !== paramsLocale) {
-            i18n.global.locale = paramsLocale;
-            saveAppLocale(paramsLocale);
+        if (settings.locale !== paramsLocale) {
+            settings.locale = paramsLocale;
+            updateHtmlLocale(paramsLocale);
         }
-
-        document.querySelector("html")!.setAttribute("lang", paramsLocale);
     });
 };
 
 export default localePlugin;
+
+function updateHtmlLocale(locale: string) {
+    document.querySelector("html")!.setAttribute("lang", locale);
+}

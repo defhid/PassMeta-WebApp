@@ -1,5 +1,5 @@
 import type { ApiProtocol, ApiResponse, Deserializer } from "~infra";
-import { getAppConfig, getAppLocale, t } from "~stores";
+import { t, useAppConfig, useAppSettings } from "~stores";
 import { Api, type FullResultDto, type HttpResponse } from "~generated/api";
 
 export class RestProtocolFactory {
@@ -14,7 +14,7 @@ export class RestProtocolFactory {
         return this.build(async (params) => {
             try {
                 const api = new Api({
-                    baseUrl: getAppConfig().passmetaApi,
+                    baseUrl: useAppConfig().passmetaApi,
                     customFetch: (input, init) => fetch(input as string, { ...init, credentials: "include" }),
                 });
 
@@ -22,7 +22,7 @@ export class RestProtocolFactory {
                 api.request = (args) =>
                     request({
                         ...args,
-                        query: { ...args?.query, lang: getAppLocale() },
+                        query: { ...args?.query, lang: useAppSettings().locale },
                     });
 
                 const response = await call(api, params!);

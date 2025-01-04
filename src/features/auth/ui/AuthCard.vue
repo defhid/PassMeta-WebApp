@@ -40,7 +40,6 @@ async function signUp() {
                 :label="t('Auth.LoginLabel')"
                 name="login"
                 variant="underlined"
-                clearable
                 @keydown.enter="signIn"
             />
 
@@ -50,7 +49,6 @@ async function signUp() {
                 name="password"
                 variant="underlined"
                 type="password"
-                clearable
                 @keydown.enter="signIn"
             />
         </v-card-item>

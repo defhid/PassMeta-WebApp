@@ -32,6 +32,11 @@
             "UnknownError": "Unknown error occurred"
         }
     },
+    "Dialog": {
+        "BtnCancel": "Cancel",
+        "BtnOk": "Ok",
+        "DefaultAskTitle": "Input form"
+    },
     "Generator": {
         "IncludeDigits": "Numbers",
         "IncludeLowercase": "Lowercase",
@@ -55,6 +60,8 @@
         "Title": "Page was not found :("
     },
     "Passfile": {
+        "AskPassphrase": "Input passphrase",
+        "AskPassphraseAgain": "Wrong passphrase, try input again",
         "DecryptionError": "Passfile decryption failed",
         "EncryptionError": "Passfile encryption failed",
         "Validation": {

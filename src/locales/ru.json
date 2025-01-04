@@ -32,6 +32,11 @@
             "UnknownError": "Произошла неизвестная ошибка"
         }
     },
+    "Dialog": {
+        "BtnCancel": "Отмена",
+        "BtnOk": "Ок",
+        "DefaultAskTitle": "Форма ввода"
+    },
     "Generator": {
         "IncludeDigits": "Числа",
         "IncludeLowercase": "Строчные",
@@ -55,6 +60,8 @@
         "Title": "Страница не найдена :("
     },
     "Passfile": {
+        "AskPassphrase": "Введите кодовую фразу",
+        "AskPassphraseAgain": "Неверная кодовая фраза, попробуйте ввести заново",
         "DecryptionError": "Не удаётся расшифровать файл",
         "EncryptionError": "Не удаётся зашифровать файл",
         "Validation": {

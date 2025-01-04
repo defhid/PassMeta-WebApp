@@ -9,7 +9,8 @@ import {
     PassFileApi,
 } from "~entities/passfile";
 import { makePassFile } from "~features/storage/utils/context";
-import { PassFileListView, PwdSectionListView, PwdSectionView } from "~features/storage";
+import { PassFileListView, PwdSectionListView, PwdSectionView, usePassPhraseAskHelper } from "~features/storage";
+import { t } from "~stores";
 
 const passFiles = ref<PwdPassFile[]>([]);
 
@@ -24,6 +25,8 @@ const selectedSection = ref<PwdSection>();
 function openPassFile(passFile: PassFile<unknown>) {
     alert(JSON.stringify(passFile, undefined, 4));
 }
+
+const { askLooped } = usePassPhraseAskHelper();
 
 watch(selected, async (passFile, prevPassFile) => {
     if (!passFile) {
@@ -43,15 +46,13 @@ watch(selected, async (passFile, prevPassFile) => {
         passphrase: undefined,
     };
 
-    const keyPhrase = window.prompt("Passphrase:");
-    if (keyPhrase == null) {
-        selected.value = prevPassFile;
-        return;
-    }
+    const keyPhrase = await askLooped({
+        question: t("Passfile.AskPassphrase"),
+        repeatQuestion: t("Passfile.AskPassphraseAgain"),
+        validator: async (val) => (await decryptPassFile(passFile, val)).ok,
+    });
 
-    const result = await decryptPassFile(passFile, keyPhrase);
-    if (result.bad) {
-        alert(result.message);
+    if (keyPhrase == null) {
         selected.value = prevPassFile;
         return;
     }

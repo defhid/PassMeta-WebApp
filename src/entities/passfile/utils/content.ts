@@ -5,7 +5,7 @@ import { PassFileType } from "~entities/passfile/model/enums";
 import type { PwdItemDto, PwdSectionDto } from "~entities/passfile/model/dtos";
 import { PassMetaCrypto } from "~entities/passfile";
 
-const decryptionError = Result.failure(t("Passfile.DecryptionError"));
+const decryptionError = () => Result.failure(t("Passfile.DecryptionError"));
 
 /**
  * Decrypt passfile content.
@@ -22,12 +22,12 @@ export async function decryptPassFile<TContent>(
 
     if (!passPhrase) {
         console.error(`Using Decrypt method without key phrase! (passfile #${passFile.id}, v${passFile.version})`);
-        return decryptionError;
+        return decryptionError();
     }
 
     if (!passFile.content.encrypted) {
         console.error(`Using Decrypt method without encrypted data! (passfile #${passFile.id}, v${passFile.version})`);
-        return decryptionError;
+        return decryptionError();
     }
 
     let contentBytes: ArrayBuffer;
@@ -48,13 +48,13 @@ export async function decryptPassFile<TContent>(
         passFile.content = { decrypted: contentRaw, passphrase: passPhrase };
     } catch (err) {
         console.error("Passfile deserializing failed", err);
-        return decryptionError;
+        return decryptionError();
     }
 
     return Result.success();
 }
 
-const encryptionError = Result.failure(t("Passfile.EncryptionError"));
+const encryptionError = () => Result.failure(t("Passfile.EncryptionError"));
 
 /**
  * Encrypt passfile content.
@@ -69,12 +69,12 @@ export async function encryptPassFile<TContent>(
 
     if (!passPhrase) {
         console.error(`Using Encrypt method without key phrase! (passfile #${passFile.id}, v${passFile.version})`);
-        return encryptionError;
+        return encryptionError();
     }
 
     if (!passFile.content.decrypted) {
         console.error(`Using Encrypt method without decrypted data! (passfile #${passFile.id}, v${passFile.version})`);
-        return encryptionError;
+        return encryptionError();
     }
 
     let contentBytes: ArrayBuffer;
@@ -82,7 +82,7 @@ export async function encryptPassFile<TContent>(
         contentBytes = serializePassFileContent(passFile.typeId, passFile.content.decrypted);
     } catch (err) {
         console.debug(`Silent passfile #${passFile.id} v${passFile.version} serializing failed`, err);
-        return encryptionError;
+        return encryptionError();
     }
 
     try {
@@ -90,7 +90,7 @@ export async function encryptPassFile<TContent>(
         passFile.content = { encrypted: encryptedBytes, passphrase: passPhrase };
     } catch (err) {
         console.error(`Passfile #${passFile.id} v${passFile.version} encryption failed`, err);
-        return encryptionError;
+        return encryptionError();
     }
 
     return Result.success();

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useAppContext } from "~stores";
 import { NavBar } from "~widgets/navbar";
+import { DialogsContainer } from "~entities/dialog";
 
 const { currentUser, isContextLoaded, isContextLoading } = useAppContext();
 </script>
@@ -20,6 +21,8 @@ const { currentUser, isContextLoaded, isContextLoading } = useAppContext();
                 <v-progress-circular model-value="20" indeterminate />
             </div>
         </div>
+
+        <DialogsContainer />
     </v-layout>
 </template>
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { t } from "~stores";
 import { useClipboardHelper } from "~utils";
-import { reactive, ref, watch } from "vue";
+import { reactive, ref, useId, watch } from "vue";
 import { generatePassword } from "~features/generator/model";
 
 const { copyTextToClipboard } = useClipboardHelper();
@@ -9,11 +9,11 @@ const { copyTextToClipboard } = useClipboardHelper();
 const currentGenerated = ref("");
 
 const fieldIds = {
-    length: crypto.randomUUID(),
-    digits: crypto.randomUUID(),
-    lowercase: crypto.randomUUID(),
-    uppercase: crypto.randomUUID(),
-    special: crypto.randomUUID(),
+    length: useId(),
+    digits: useId(),
+    lowercase: useId(),
+    uppercase: useId(),
+    special: useId(),
 };
 
 const fieldValues = reactive({

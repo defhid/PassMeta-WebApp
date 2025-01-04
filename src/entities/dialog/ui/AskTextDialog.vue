@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { AskTextOptions } from "~entities/dialog/types";
-import { ref } from "vue";
+import { onMounted, ref, useTemplateRef } from "vue";
 import { t } from "~stores";
 
 const props = defineProps<
@@ -14,12 +14,16 @@ const emit = defineEmits<{
 }>();
 
 const textValue = ref("");
+const textField = useTemplateRef("textField");
+
+onMounted(() => textField.value!.focus()); // in addition to autofocus attribute for mobile
 </script>
 
 <template>
     <v-card class="self-center w-full max-w-[600px]" :title="props.title ?? t('Dialog.DefaultAskTitle')">
         <div class="mx-4">{{ props.question }}</div>
         <v-text-field
+            ref="textField"
             v-model="textValue"
             class="mx-4 mt-4 mb-3 field-only"
             autofocus

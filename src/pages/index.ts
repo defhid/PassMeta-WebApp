@@ -6,6 +6,7 @@ import GeneratorPage from "./GeneratorPage.vue";
 import HistoryPage from "./HistoryPage.vue";
 import SettingsPage from "./SettingsPage.vue";
 import { definePages } from "~infra";
+import AboutPage from "~/pages/AboutPage.vue";
 
 export const Pages = definePages([
     {
@@ -15,6 +16,10 @@ export const Pages = definePages([
     {
         route: Routes.Auth,
         component: () => import("./AuthPage.vue"),
+    },
+    {
+        route: Routes.About,
+        component: AboutPage,
     },
     {
         route: Routes.Account,

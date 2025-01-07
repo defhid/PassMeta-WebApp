@@ -6,11 +6,13 @@
 
 PassMeta WebApp is a web client application of PassMeta System.
 
-Status: MVP (authentication, decryption and view).
+Status: MVP (readonly features).
 
 ### Technologies
 
-_Vue.js, TypeScript, Tailwind, Vite, Vuetify._
+_Vue.js, TypeScript, Tailwind, Vite, Vuetify_<br>
+Feature-Sliced-Design<br>
+AES256 multipass (client side only), SHA256
 
 ## Screenshots
 

@@ -12,6 +12,10 @@ export const Routes = defineRouteSchemas(
             anonymous: true,
             queryParams: {} as { redirectUrl?: string },
         },
+        About: {
+            path: "about",
+            anonymous: true,
+        },
         Account: {
             path: "account",
         },

@@ -31,6 +31,8 @@ const { currentUser, serverId, serverVersion } = useAppContext();
                     :to="Routes.Settings.to()"
                 />
 
+                <v-btn icon="mdi-information-variant" :to="Routes.About.to()" />
+
                 <v-btn
                     v-if="!currentUser"
                     v-tooltip="describeTooltip(t('Home.BtnAuthorize'), { location: 'bottom' })"

@@ -54,7 +54,7 @@
         "LabelServerVersion": "Версия сервера",
         "Title": "Главная",
         "TitleKnown": "Привет",
-        "TitleUnknown": "Добро пожаловать в PassMeta"
+        "TitleUnknown": "Добро пожаловать в"
     },
     "NotFound": {
         "Title": "Страница не найдена :("

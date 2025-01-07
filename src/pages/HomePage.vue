@@ -8,11 +8,19 @@ const { currentUser, serverId, serverVersion } = useAppContext();
 
 <template>
     <div class="p-4">
-        <h4 class="text-h4 text-center mt-2 mb-7">
-            {{ t(currentUser ? "Home.TitleKnown" : "Home.TitleUnknown") + (currentUser ? "," : "") }}
-            <RouterLink v-if="currentUser" class="text-primary font-bold" :to="Routes.Account.to()">
+        <h4 v-if="currentUser" class="text-h4 text-center mt-2 mb-7">
+            {{ t("Home.TitleKnown") }},
+            <RouterLink class="text-primary font-bold" :to="Routes.Account.to()">
                 {{ currentUser!.fullName ?? currentUser!.login }}
             </RouterLink>
+        </h4>
+
+        <h4 v-else class="text-h4 text-center mt-2 mb-7">
+            {{ t("Home.TitleUnknown") }}
+            <button class="logo">
+                <span class="text-gray-500">Pass</span>
+                <span class="text-green-600">Meta</span>
+            </button>
         </h4>
 
         <div class="flex flex-col gap-7">
@@ -44,3 +52,10 @@ const { currentUser, serverId, serverVersion } = useAppContext();
         </div>
     </div>
 </template>
+
+<style scoped>
+.logo {
+    @apply font-black cursor-grab select-none
+    active:rotate-[3600deg] transition-transform duration-[10s] ease-linear;
+}
+</style>

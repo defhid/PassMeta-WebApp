@@ -3,8 +3,8 @@
         <h4 class="text-h4 text-center">
             Что такое
             <em>
-                <span class="text-gray-500 font-weight-black">Pass</span>
-                <span class="text-green-600 font-weight-black">Meta</span>?
+                <span class="text-gray-500 font-black">Pass</span>
+                <span class="text-green-600 font-black">Meta</span>?
             </em>
         </h4>
 

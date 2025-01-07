@@ -54,7 +54,7 @@
         "LabelServerVersion": "Server version",
         "Title": "Home",
         "TitleKnown": "Hello",
-        "TitleUnknown": "Welcome to PassMeta"
+        "TitleUnknown": "Welcome to"
     },
     "NotFound": {
         "Title": "Page was not found :("

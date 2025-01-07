@@ -20,18 +20,16 @@ const searchTextDebounced = refDebounced(searchText, 700);
 const filteredSections = computed(() => {
     const text = searchTextDebounced.value?.trim().toLowerCase();
 
-    if (!text) {
-        return props.sections;
-    }
+    const list = text
+        ? props.sections.filter((x) => x.name.toLowerCase().includes(text) || x.websiteUrl.toLowerCase().includes(text))
+        : [...props.sections];
 
-    return props.sections.filter(
-        (x) => x.name.toLowerCase().includes(text) || x.websiteUrl.toLowerCase().includes(text),
-    );
+    return list.sort((a, b) => (a.name < b.name ? -1 : 1));
 });
 </script>
 
 <template>
-    <div>
+    <div class="min-h-0">
         <div class="flex flex-col justify-items-stretch gap-2 h-full">
             <div class="flex gap-2 items-center">
                 <div class="md:hidden">
@@ -45,24 +43,23 @@ const filteredSections = computed(() => {
                 />
             </div>
 
-            <v-card class="h-full section-list-card">
-                <v-list
-                    density="compact"
-                    :selected="[selected]"
-                    @update:selected="(sel) => emit('update:selected', sel[0])"
-                >
-                    <v-list-item v-for="section in filteredSections" :key="section.id" :value="section" color="primary">
-                        <v-list-item-title>{{ section.name }}</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-card>
+            <v-list
+                class="h-full"
+                density="compact"
+                :selected="[selected]"
+                @update:selected="(sel) => emit('update:selected', sel[0])"
+            >
+                <v-list-item v-for="section in filteredSections" :key="section.id" :value="section" color="primary">
+                    <v-list-item-title>{{ section.name }}</v-list-item-title>
+                </v-list-item>
+            </v-list>
         </div>
     </div>
 </template>
 
 <style scoped>
-.section-list-card {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
+:deep(.v-list) {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 </style>

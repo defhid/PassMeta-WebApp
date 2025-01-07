@@ -82,7 +82,7 @@ watch(selected, async (passFile, prevPassFile) => {
 
         <PwdSectionView
             v-if="selectedSection"
-            class="md:px-3"
+            class="h-full"
             :section="selectedSection"
             @back="selectedSection = undefined"
         />

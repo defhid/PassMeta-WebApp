@@ -13,25 +13,30 @@ const emit = defineEmits<{
 </script>
 
 <template>
-    <div>
-        <v-card class="h-full">
-            <v-list
-                density="compact"
-                :selected="[selected]"
-                @update:selected="(sel) => emit('update:selected', sel[0])"
-            >
-                <v-list-item v-for="passFile in passFiles" :key="passFile.id" :value="passFile" color="primary">
-                    <div class="flex items-center gap-2">
-                        <v-btn
-                            icon="mdi-folder"
-                            size="x-small"
-                            :style="{ color: passFile.color ? '#' + passFile.color : undefined }"
-                            @click.stop="emit('open', passFile)"
-                        />
-                        <v-list-item-title>{{ passFile.name }}</v-list-item-title>
-                    </div>
-                </v-list-item>
-            </v-list>
-        </v-card>
+    <div class="min-h-0">
+        <v-list
+            class="h-full"
+            density="compact"
+            :selected="[selected]"
+            @update:selected="(sel) => emit('update:selected', sel[0])"
+        >
+            <v-list-item v-for="passFile in passFiles" :key="passFile.id" :value="passFile" color="primary">
+                <div class="flex items-center gap-2">
+                    <v-btn
+                        icon="mdi-folder"
+                        size="x-small"
+                        :style="{ color: passFile.color ? '#' + passFile.color : undefined }"
+                        @click.stop="emit('open', passFile)"
+                    />
+                    <v-list-item-title>{{ passFile.name }}</v-list-item-title>
+                </div>
+            </v-list-item>
+        </v-list>
     </div>
 </template>
+
+<style scoped>
+:deep(.v-list) {
+    border-radius: 4px;
+}
+</style>

@@ -18,6 +18,8 @@ AES256 multipass (client side only), SHA256
 
 ![screenshot](docs/screenshots/storage.png)
 
+![screenshot](docs/screenshots/generator.png)
+
 ## Development
 
 #### Prepare

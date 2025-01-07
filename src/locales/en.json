@@ -49,6 +49,7 @@
         "Title": "History"
     },
     "Home": {
+        "BtnAbout": "More about PassMeta",
         "BtnAuthorize": "Log in to the system",
         "LabelServerId": "Server ID",
         "LabelServerVersion": "Server version",

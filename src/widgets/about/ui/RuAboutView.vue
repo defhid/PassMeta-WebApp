@@ -11,14 +11,14 @@
         <p class="text-xl pt-8 italic text-center">
             Это надёжный 🔐 менеджер паролей
             <span class="inline-block text-no-wrap">с открытым 👀 исходным кодом</span><br />
-            <span class="inline-block text-no-wrap">и современным 🔥 дизайном.</span>
+            <span class="inline-block text-no-wrap">и современным дизайном 🔥.</span>
         </p>
 
         <h4 class="text-h4 pt-12 pb-8 text-center">Распределённая система</h4>
         <div class="flex flex-wrap gap-5 align-start justify-center">
             <v-card class="max-w-[390px]" elevation="16" variant="outlined">
                 <v-card-item>
-                    <v-card-title class="text-wrap text-center pb-1">Единый сервер синхронизации</v-card-title>
+                    <v-card-title class="text-wrap text-center pb-1">Сервер синхронизации</v-card-title>
                     <v-card-subtitle class="text-wrap italic">
                         Отвечает за хранение эталонных версий пакетов паролей, доступ к ним, резервное копирование,
                         журналирование.
@@ -41,7 +41,7 @@
 
             <v-card class="max-w-[390px]" elevation="16" variant="outlined">
                 <v-card-item>
-                    <v-card-title class="text-wrap text-center pb-1">Web клиент для работы из браузера</v-card-title>
+                    <v-card-title class="text-wrap text-center pb-1">Web клиент для браузера</v-card-title>
                     <v-card-subtitle class="text-wrap italic">
                         Универсальный способ получить доступ к своим паролям и журналу действий.
                     </v-card-subtitle>
@@ -64,7 +64,7 @@
             <v-card class="max-w-[390px]" elevation="16" variant="outlined">
                 <v-card-item>
                     <v-card-title class="text-wrap text-center pb-1">
-                        Кроссплатформенные приложения для устройств пользователей
+                        Кроссплатформенные приложения для устройств
                     </v-card-title>
                     <v-card-subtitle class="text-wrap italic">
                         Локальные хранилища паролей предоставляют удобный доступ к содержимому, поддерживают автономную
@@ -126,4 +126,3 @@
         <p class="pt-16 opacity-70">* - в разумные сроки, при условии использования качественного мастер-пароля.</p>
     </div>
 </template>
-<script setup lang="ts"></script>

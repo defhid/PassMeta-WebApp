@@ -1,7 +1,6 @@
 import { Ask, Notify } from "~utils";
 import { t, useAppContext } from "~stores";
-import { Routes } from "~routing";
-import { useRouter } from "vue-router";
+import { type RouteLocationRaw, useRouter } from "vue-router";
 import { AuthApi } from "~entities/backend";
 
 /**
@@ -21,14 +20,14 @@ export function useSessionClose() {
         Notify.info(t("Account.SuccessResetSessions"));
     }
 
-    async function closeCurrentSession() {
+    async function closeCurrentSession(redirectTo: RouteLocationRaw) {
         if (!(await Ask.confirm(t("Account.ConfirmResetCurrentSession")))) {
             return;
         }
 
         await AuthApi.resetMe();
 
-        await router.push(Routes.Home.to());
+        await router.push(redirectTo);
         currentUser.value = undefined;
     }
 

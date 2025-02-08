@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { t, useAppContext } from "~stores";
-import { useRouter } from "vue-router";
-import { Routes } from "~routing";
 import { AuthApi } from "~entities/backend";
 import { UserApi } from "~entities/user";
 
-const router = useRouter();
+const emit = defineEmits<{ (e: "signed"): void }>();
+
 const { currentUser } = useAppContext();
 
 const login = ref("");
@@ -18,7 +17,7 @@ async function signIn() {
         password: password.value,
     });
 
-    await router.push(Routes.Storage.to());
+    emit("signed");
 }
 
 async function signUp() {
@@ -28,7 +27,7 @@ async function signUp() {
         password: password.value,
     });
 
-    await router.push(Routes.Storage.to());
+    emit("signed");
 }
 </script>
 

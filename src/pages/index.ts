@@ -8,6 +8,9 @@ import SettingsPage from "./SettingsPage.vue";
 import { definePages } from "~infra";
 import AboutPage from "~/pages/AboutPage.vue";
 
+export * from "./routing";
+export { default as NavBar } from "./components/NavBar.vue";
+
 export const Pages = definePages([
     {
         route: Routes.Home,

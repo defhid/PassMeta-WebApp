@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAppContext } from "~stores";
-import { NavBar } from "~widgets/navbar";
+import { NavBar } from "~pages";
 import { DialogsContainer } from "~entities/dialog";
 
 const { currentUser, isContextLoaded, isContextLoading } = useAppContext();

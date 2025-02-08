@@ -20,7 +20,7 @@ export default defineConfig({
             "~infra": fileURLToPath(new URL("./src/infrastructure", baseUrl)),
             "~pages": fileURLToPath(new URL("./src/pages", baseUrl)),
             "~plugins": fileURLToPath(new URL("./src/plugins", baseUrl)),
-            "~routing": fileURLToPath(new URL("./src/shared/routing", baseUrl)),
+            "~routing": fileURLToPath(new URL("./src/pages/routing", baseUrl)),
             "~stores": fileURLToPath(new URL("./src/shared/stores", baseUrl)),
             "~shared": fileURLToPath(new URL("./src/shared", baseUrl)),
             "~utils": fileURLToPath(new URL("./src/shared/utils", baseUrl)),

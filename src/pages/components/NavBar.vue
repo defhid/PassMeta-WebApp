@@ -4,11 +4,13 @@ import { Routes } from "~routing";
 import { t, useAppContext } from "~stores";
 import { useRouter } from "vue-router";
 import { useSessionClose } from "~entities/backend";
-import { describeTooltip } from "~utils";
+import { useTooltip } from "~utils";
 
 const { currentRoute } = useRouter();
 const { currentUser } = useAppContext();
 const { closeCurrentSession } = useSessionClose();
+
+const { describeTooltip } = useTooltip();
 
 function describeItemTooltip(text: string) {
     return describeTooltip(text, { location: "bottom" });
@@ -63,7 +65,7 @@ function describeItemTooltip(text: string) {
                         <v-list-item-title>{{ t("App.NavigationBar.SignIn") }}</v-list-item-title>
                     </v-list-item>
 
-                    <v-list-item v-if="currentUser" :value="2" @click.stop="closeCurrentSession()">
+                    <v-list-item v-if="currentUser" :value="2" @click.stop="closeCurrentSession(Routes.Home.to())">
                         <v-list-item-title>{{ t("App.NavigationBar.SignOut") }}</v-list-item-title>
                     </v-list-item>
                 </v-list>

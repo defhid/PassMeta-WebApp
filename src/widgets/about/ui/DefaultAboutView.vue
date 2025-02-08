@@ -11,10 +11,10 @@
         <p class="text-xl pt-8 italic text-center">
             This is open-source 👀
             <span class="inline-block text-no-wrap">reliable password manager 🔐</span><br />
-            <span class="inline-block text-no-wrap"> with modern design 🔥.</span>
+            <span class="inline-block text-no-wrap"> with modern design 🔥</span>
         </p>
 
-        <h4 class="text-h4 pt-12 pb-8 text-center">Distributed system</h4>
+        <h4 class="text-h4 pt-12 pb-8 text-center">DISTRIBUTED</h4>
         <div class="flex flex-wrap gap-5 align-start justify-center">
             <v-card class="max-w-[390px]" elevation="16" variant="outlined">
                 <v-card-item>
@@ -105,25 +105,25 @@
             </v-card>
         </div>
 
-        <h4 class="text-h4 pt-12 pb-8 text-center">Uncompromising protection</h4>
+        <h4 class="text-h4 pt-12 pb-8 text-center">SAFE</h4>
         <ul class="text-xl text-center flex flex-col gap-5 italic">
             <li>
                 <span class="text-green text-h5 pr-1">✔</span>
-                All passfiles are saved and transmitted <b>only in encrypted form</b>.
+                All passwords are stored and transmitted <strong>only in encrypted form</strong>
             </li>
             <li>
                 <span class="text-green text-h5 pr-1">✔</span>
-                A special multi-pass algorithm based on <b>AES 256</b> is used as the encryption method.
+                The data is encrypted with a special multi-pass algorithm <strong>based on AES 256</strong>
             </li>
             <li>
                 <span class="text-green text-h5 pr-1">✔</span>
-                With the current development of computer power, it is <b>impossible</b>* to crack the system without
-                knowing user's master password.
+                It is <strong>impossible to crack</strong> the system without knowing user's master password*
             </li>
         </ul>
 
-        <p class="pt-16 opacity-70">
-            * - within a reasonable time, provided that a high-quality master password is used.
+        <p class="pt-16 text-xs opacity-70 italic">
+            * - at the current stage of computer technology development, within a reasonable time, provided that a
+            high-quality master password is used.
         </p>
     </div>
 </template>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { t, useAppSettings } from "~stores";
 import { computed, nextTick } from "vue";
-import { Routes } from "~routing";
-import { useRouter } from "vue-router";
+
+const emit = defineEmits<{
+    (e: "reloadRequired"): void;
+}>();
 
 const settings = useAppSettings();
 
@@ -11,12 +13,10 @@ const locales = computed(() => [
     { locale: "ru", name: t("Settings.Lang.Ru") },
 ]);
 
-const router = useRouter();
-
 async function updateLocale(locale: string) {
     settings.locale = locale;
     await nextTick();
-    await router.replace(Routes.Settings.to());
+    emit("reloadRequired");
 }
 </script>
 

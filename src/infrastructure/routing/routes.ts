@@ -16,7 +16,7 @@ export function initializeRoutes(
         if (route.to) {
             const page = pages.find((x) => x.name === route.to.name);
             if (page == null) {
-                console.error("Не найдена страница для роута " + route.to.name);
+                console.error("Page not found: " + route.to.name);
                 continue;
             }
 

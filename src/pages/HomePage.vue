@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { t, useAppContext } from "~stores";
 import { Routes } from "~routing";
-import { describeTooltip } from "~utils";
+import { useTooltip } from "~utils";
+
+const { describeTooltip } = useTooltip();
 
 const { currentUser, serverId, serverVersion } = useAppContext();
 </script>

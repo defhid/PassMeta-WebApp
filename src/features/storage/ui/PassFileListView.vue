@@ -15,7 +15,7 @@ const emit = defineEmits<{
 <template>
     <div class="min-h-0">
         <v-list
-            class="h-full"
+            class="passfile-list"
             density="compact"
             :selected="[selected]"
             @update:selected="(sel) => emit('update:selected', sel[0])"
@@ -31,12 +31,24 @@ const emit = defineEmits<{
                     <v-list-item-title>{{ passFile.name }}</v-list-item-title>
                 </div>
             </v-list-item>
+
+            <div class="absolute left-0 right-0 bottom-0">
+                <v-btn class="btn-add" text="+" variant="tonal" />
+            </div>
         </v-list>
     </div>
 </template>
 
 <style scoped>
-:deep(.v-list) {
+.passfile-list {
+    @apply h-full pb-8 relative;
     border-radius: 4px;
+}
+
+.btn-add {
+    --v-btn-height: 28px;
+    width: 100%;
+    font-size: 1.35rem;
+    color: rgba(var(--v-theme-on-surface), 0.4);
 }
 </style>

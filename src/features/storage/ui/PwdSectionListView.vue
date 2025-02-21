@@ -12,6 +12,7 @@ const props = defineProps<{
 const emit = defineEmits<{
     (e: "update:selected", section: PwdSection | undefined): void;
     (e: "back"): void;
+    (e: "add-section"): void;
 }>();
 
 const searchText = ref("");
@@ -44,22 +45,36 @@ const filteredSections = computed(() => {
             </div>
 
             <v-list
-                class="h-full"
+                class="section-list"
                 density="compact"
                 :selected="[selected]"
                 @update:selected="(sel) => emit('update:selected', sel[0])"
             >
-                <v-list-item v-for="section in filteredSections" :key="section.id" :value="section" color="primary">
-                    <v-list-item-title>{{ section.name }}</v-list-item-title>
-                </v-list-item>
+                <div class="h-full min-h-0 overflow-y-auto">
+                    <v-list-item v-for="section in filteredSections" :key="section.id" :value="section" color="primary">
+                        <v-list-item-title>{{ section.name }}</v-list-item-title>
+                    </v-list-item>
+                </div>
+
+                <div class="absolute left-0 right-0 bottom-0">
+                    <v-btn class="btn-add" text="+" variant="tonal" @click.stop="emit('add-section')" />
+                </div>
             </v-list>
         </div>
     </div>
 </template>
 
 <style scoped>
-:deep(.v-list) {
+.section-list {
+    @apply h-full pb-8 relative;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
+}
+
+.btn-add {
+    --v-btn-height: 28px;
+    width: 100%;
+    font-size: 1.35rem;
+    color: rgba(var(--v-theme-on-surface), 0.4);
 }
 </style>

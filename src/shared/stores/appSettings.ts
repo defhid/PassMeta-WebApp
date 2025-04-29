@@ -25,7 +25,7 @@ export const useAppSettings = createGlobalState(() => {
         try {
             const obj = JSON.parse(str);
             return {
-                locale: (obj.locale ?? navigator.language) || defaultLocale,
+                locale: (obj.locale ?? navigator.language.split("-")[0]) || defaultLocale,
                 hidePasswords: obj.hidePasswords == null ? defaultHidePasswords : Boolean(obj.hidePasswords),
             };
         } catch {

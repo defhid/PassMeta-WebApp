@@ -1,23 +1,19 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
+import { decryptPassFile, type PwdPassFile, type PassFile, type PwdSection, PassFileApi } from "~entities/passfile";
 import {
-    PassFileType,
-    decryptPassFile,
-    type PwdPassFile,
-    type PassFile,
-    type PwdSection,
-    PassFileApi,
-} from "~entities/passfile";
-import { makePassFile } from "~features/storage/utils/context";
-import { PassFileListView, PwdSectionListView, PwdSectionView, usePassPhraseAskHelper } from "~features/storage";
+    PassFileListView,
+    PwdSectionListView,
+    PwdSectionView,
+    usePassPhraseAskHelper,
+    usePwdPassFileContext,
+} from "~features/storage";
 import { t } from "~stores";
+import { synchronizePassFiles } from "~features/storage/utils/synchronizer.ts";
 
-const passFiles = ref<PwdPassFile[]>([]);
+const context = usePwdPassFileContext();
 
-onMounted(async () => {
-    const { list } = await PassFileApi.getList({ typeId: PassFileType.Pwd });
-    passFiles.value = list.map(makePassFile<PwdSection[]>);
-});
+onMounted(() => synchronizePassFiles(context));
 
 const selected = ref<PwdPassFile>();
 const selectedSection = ref<PwdSection>();
@@ -43,7 +39,7 @@ watch(selected, async (passFile, prevPassFile) => {
             passfileId: passFile.id,
             version: passFile.version,
         }),
-        passphrase: undefined,
+        passPhrase: undefined,
     };
 
     const keyPhrase = await askLooped({
@@ -59,6 +55,15 @@ watch(selected, async (passFile, prevPassFile) => {
 
     selectedSection.value = undefined;
 });
+
+function addSection() {
+    selected.value?.content.decrypted?.push({
+        id: crypto.randomUUID(),
+        name: t("Passfile.AskPassphrase"),
+        websiteUrl: "",
+        items: [],
+    });
+}
 </script>
 
 <template>
@@ -67,7 +72,7 @@ watch(selected, async (passFile, prevPassFile) => {
             v-model:selected="selected"
             class="h-full md:block"
             :class="{ hidden: selected }"
-            :pass-files="passFiles"
+            :pass-files="context.currentList.value"
             @open="openPassFile"
         />
 
@@ -76,8 +81,9 @@ watch(selected, async (passFile, prevPassFile) => {
             v-model:selected="selectedSection"
             class="h-full md:block"
             :class="{ hidden: selectedSection }"
-            :sections="selected?.content.decrypted"
+            :sections="selected.content.decrypted"
             @back="selected = undefined"
+            @add-section="addSection"
         />
 
         <PwdSectionView

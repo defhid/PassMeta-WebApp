@@ -60,6 +60,14 @@
     "NotFound": {
         "Title": "Page was not found :("
     },
+    "Passcontext": {
+        "InfoCommited": "Saved locally"
+    },
+    "Passervice": {
+        "InfoSynchronized": "Synchronized with the server",
+        "WarnNeedMerge": "Merge with remote version required!",
+        "WarnSynchronized": "Synchronized with the server. WARNING: see logs"
+    },
     "Passfile": {
         "AskPassphrase": "Input passphrase",
         "AskPassphraseAgain": "Wrong passphrase, try input again",

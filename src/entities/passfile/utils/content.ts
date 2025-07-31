@@ -18,7 +18,7 @@ export async function decryptPassFile<TContent>(
     passPhrase?: string,
     silent?: boolean,
 ): Promise<IDetailedResult> {
-    passPhrase ??= passFile.content.passphrase ?? undefined;
+    passPhrase ??= passFile.content.passPhrase ?? undefined;
 
     if (!passPhrase) {
         console.error(`Using Decrypt method without key phrase! (passfile #${passFile.id}, v${passFile.version})`);
@@ -45,7 +45,7 @@ export async function decryptPassFile<TContent>(
 
     try {
         const contentRaw = deserializePassFileContent<TContent>(passFile.typeId, contentBytes);
-        passFile.content = { decrypted: contentRaw, passphrase: passPhrase };
+        passFile.content = { decrypted: contentRaw, passPhrase };
     } catch (err) {
         console.error("Passfile deserializing failed", err);
         return decryptionError();
@@ -65,7 +65,7 @@ export async function encryptPassFile<TContent>(
     passFile: PassFile<TContent>,
     passPhrase?: string,
 ): Promise<IDetailedResult> {
-    passPhrase ??= passFile.content.passphrase ?? undefined;
+    passPhrase ??= passFile.content.passPhrase ?? undefined;
 
     if (!passPhrase) {
         console.error(`Using Encrypt method without key phrase! (passfile #${passFile.id}, v${passFile.version})`);
@@ -87,7 +87,7 @@ export async function encryptPassFile<TContent>(
 
     try {
         const encryptedBytes = await PassMetaCrypto.encrypt(contentBytes, passPhrase);
-        passFile.content = { encrypted: encryptedBytes, passphrase: passPhrase };
+        passFile.content = { encrypted: encryptedBytes, passPhrase };
     } catch (err) {
         console.error(`Passfile #${passFile.id} v${passFile.version} encryption failed`, err);
         return encryptionError();

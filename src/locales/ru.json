@@ -60,6 +60,14 @@
     "NotFound": {
         "Title": "Страница не найдена :("
     },
+    "Passcontext": {
+        "InfoCommited": "Сохранено локально"
+    },
+    "Passervice": {
+        "InfoSynchronized": "Cинхронизировано с сервером",
+        "WarnNeedMerge": "Требуется ручное слияние с удалённой версией!",
+        "WarnSynchronized": "Cинхронизировано с сервером. ВНИМАНИЕ: см. логи"
+    },
     "Passfile": {
         "AskPassphrase": "Введите кодовую фразу",
         "AskPassphraseAgain": "Неверная кодовая фраза, попробуйте ввести заново",

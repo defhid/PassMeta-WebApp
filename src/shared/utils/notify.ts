@@ -1,6 +1,7 @@
 export interface NotifyBaseOptions {
     presenter?: "popup" | "window";
     header?: string;
+    more?: string;
 }
 
 // TODO

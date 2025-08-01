@@ -50,7 +50,7 @@ const filteredSections = computed(() => {
                 :selected="[selected]"
                 @update:selected="(sel) => emit('update:selected', sel[0])"
             >
-                <div class="h-full min-h-0 overflow-y-auto">
+                <div class="h-full min-h-0 pb-10 overflow-y-auto">
                     <v-list-item v-for="section in filteredSections" :key="section.id" :value="section" color="primary">
                         <v-list-item-title>{{ section.name }}</v-list-item-title>
                     </v-list-item>
@@ -66,15 +66,17 @@ const filteredSections = computed(() => {
 
 <style scoped>
 .section-list {
-    @apply h-full pb-8 relative;
+    @apply h-full relative;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
 }
 
 .btn-add {
-    --v-btn-height: 28px;
+    --v-btn-height: 40px;
+    padding-bottom: 2px;
     width: 100%;
     font-size: 1.35rem;
     color: rgba(var(--v-theme-on-surface), 0.4);
+    backdrop-filter: blur(2px);
 }
 </style>

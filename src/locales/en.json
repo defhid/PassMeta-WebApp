@@ -61,6 +61,7 @@
         "Title": "Page was not found :("
     },
     "Passcontext": {
+        "ErrOther": "Passfile context manager error (see logs)",
         "InfoCommited": "Saved locally"
     },
     "Passervice": {
@@ -71,6 +72,7 @@
     "Passfile": {
         "AskPassphrase": "Input passphrase",
         "AskPassphraseAgain": "Wrong passphrase, try input again",
+        "AskPassphraseForNewPassfile": "Input passphrase for a new passfile",
         "DecryptionError": "Passfile decryption failed",
         "EncryptionError": "Passfile encryption failed",
         "Validation": {

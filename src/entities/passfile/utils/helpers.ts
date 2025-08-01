@@ -1,4 +1,12 @@
 import type { PassFile } from "~entities/passfile";
+import { reactive, toRaw } from "vue";
+
+/**
+ * Get passfile short identity string (id + name).
+ */
+export function getPassFileIdentityString(passFile: PassFile<unknown>): string {
+    return `#${passFile.id.toString().replace("-", "~")} '${passFile.name.replace("'", "")}'`;
+}
 
 /**
  * Get title for passfile, depending on its current state.
@@ -66,4 +74,11 @@ export function isPassFileLocalChanged(passFile: PassFile<unknown>): boolean {
         isPassFileLocalInfoFieldsChanged(passFile) ||
         isPassFileLocalVersionFieldsChanged(passFile)
     );
+}
+
+/**
+ * Make deep clone of passfile.
+ */
+export function clonePassFile<TContent>(passFile: PassFile<TContent>): PassFile<TContent> {
+    return reactive(structuredClone(toRaw(passFile))) as PassFile<TContent>;
 }

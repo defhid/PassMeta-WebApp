@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { AskTextOptions } from "~entities/dialog/types";
-import { onMounted, ref, useTemplateRef } from "vue";
+import { nextTick, onMounted, ref, useTemplateRef } from "vue";
 import { t } from "~stores";
 
 const props = defineProps<
@@ -16,7 +16,7 @@ const emit = defineEmits<{
 const textValue = ref("");
 const textField = useTemplateRef("textField");
 
-onMounted(() => textField.value!.focus()); // in addition to autofocus attribute for mobile
+onMounted(() => nextTick(() => textField.value!.focus())); // in addition to autofocus attribute for IOS
 </script>
 
 <template>

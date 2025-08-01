@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import { decryptPassFile, type PwdPassFile, type PassFile, type PwdSection, PassFileApi } from "~entities/passfile";
+import { decryptPassFile, type PwdPassFile, type PassFile, type PwdSection } from "~entities/passfile";
 import {
     PassFileListView,
     PwdSectionListView,
@@ -10,6 +10,7 @@ import {
 } from "~features/storage";
 import { t } from "~stores";
 import { synchronizePassFiles } from "~features/storage/utils/synchronizer.ts";
+import { useDialogs } from "~entities/dialog";
 
 const context = usePwdPassFileContext();
 
@@ -24,42 +25,66 @@ function openPassFile(passFile: PassFile<unknown>) {
 
 const { askLooped } = usePassPhraseAskHelper();
 
-watch(selected, async (passFile, prevPassFile) => {
-    if (!passFile) {
+watch(
+    selected,
+    async (passFile, prevPassFile) => {
+        if (!passFile) {
+            selectedSection.value = undefined;
+            return;
+        }
+
+        if (passFile.content.decrypted) {
+            return;
+        }
+
+        if (!(await context.provideEncryptedContent(passFile))) {
+            return;
+        }
+
+        const keyPhrase = await askLooped({
+            question: t("Passfile.AskPassphrase"),
+            repeatQuestion: t("Passfile.AskPassphraseAgain"),
+            validator: async (val) => (await decryptPassFile(passFile, val)).ok,
+        });
+
+        if (keyPhrase == null) {
+            selected.value = prevPassFile;
+            return;
+        }
+
         selectedSection.value = undefined;
-        return;
-    }
+    },
+    { flush: "sync" },
+);
 
-    if (passFile.content.decrypted) {
-        return;
-    }
+const { askPassword } = useDialogs();
 
-    passFile.content = {
-        encrypted: await PassFileApi.getVersion({
-            passfileId: passFile.id,
-            version: passFile.version,
-        }),
-        passPhrase: undefined,
-    };
-
-    const keyPhrase = await askLooped({
-        question: t("Passfile.AskPassphrase"),
-        repeatQuestion: t("Passfile.AskPassphraseAgain"),
-        validator: async (val) => (await decryptPassFile(passFile, val)).ok,
+async function addPassfile() {
+    const passPhrase = await askPassword({
+        question: t("Passfile.AskPassphraseForNewPassfile"),
     });
 
-    if (keyPhrase == null) {
-        selected.value = prevPassFile;
+    if (!passPhrase) {
         return;
     }
 
-    selectedSection.value = undefined;
-});
+    const result = await context.create({ passPhrase });
+    if (result.ok) {
+        const passfile = result.data!;
+        passfile.name =
+            `New ${new Date().getFullYear()}${new Date().getMonth() + 1}` +
+            `${new Date().getDate()}-${new Date().getHours()}${new Date().getMinutes()}`;
+
+        context.updateInfo(passfile);
+    }
+}
 
 function addSection() {
     selected.value?.content.decrypted?.push({
         id: crypto.randomUUID(),
-        name: t("Passfile.AskPassphrase"),
+        name:
+            `New section ${new Date().getFullYear()}${new Date().getMonth() + 1}` +
+            `${new Date().getDate()}-${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}`,
         websiteUrl: "",
         items: [],
     });
@@ -74,6 +99,7 @@ function addSection() {
             :class="{ hidden: selected }"
             :pass-files="context.currentList.value"
             @open="openPassFile"
+            @add-passfile="addPassfile"
         />
 
         <PwdSectionListView

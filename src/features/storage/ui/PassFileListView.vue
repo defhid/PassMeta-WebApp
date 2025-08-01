@@ -9,6 +9,7 @@ defineProps<{
 const emit = defineEmits<{
     (e: "open", passFile: PassFile<TContent>): void;
     (e: "update:selected", passFile: PassFile<TContent> | undefined): void;
+    (e: "add-passfile"): void;
 }>();
 </script>
 
@@ -20,20 +21,22 @@ const emit = defineEmits<{
             :selected="[selected]"
             @update:selected="(sel) => emit('update:selected', sel[0])"
         >
-            <v-list-item v-for="passFile in passFiles" :key="passFile.id" :value="passFile" color="primary">
-                <div class="flex items-center gap-2">
-                    <v-btn
-                        icon="mdi-folder"
-                        size="x-small"
-                        :style="{ color: passFile.color ? '#' + passFile.color : undefined }"
-                        @click.stop="emit('open', passFile)"
-                    />
-                    <v-list-item-title>{{ passFile.name }}</v-list-item-title>
-                </div>
-            </v-list-item>
+            <div class="h-full min-h-0 pb-10 overflow-y-auto">
+                <v-list-item v-for="passFile in passFiles" :key="passFile.id" :value="passFile" color="primary">
+                    <div class="flex items-center gap-2">
+                        <v-btn
+                            icon="mdi-folder"
+                            size="x-small"
+                            :style="{ color: passFile.color ? '#' + passFile.color : undefined }"
+                            @click.stop="emit('open', passFile)"
+                        />
+                        <v-list-item-title>{{ passFile.name }}</v-list-item-title>
+                    </div>
+                </v-list-item>
+            </div>
 
             <div class="absolute left-0 right-0 bottom-0">
-                <v-btn class="btn-add" text="+" variant="tonal" />
+                <v-btn class="btn-add" text="+" variant="tonal" @click="emit('add-passfile')" />
             </div>
         </v-list>
     </div>
@@ -41,14 +44,16 @@ const emit = defineEmits<{
 
 <style scoped>
 .passfile-list {
-    @apply h-full pb-8 relative;
+    @apply h-full relative;
     border-radius: 4px;
 }
 
 .btn-add {
-    --v-btn-height: 28px;
+    --v-btn-height: 40px;
+    padding-bottom: 2px;
     width: 100%;
     font-size: 1.35rem;
     color: rgba(var(--v-theme-on-surface), 0.4);
+    backdrop-filter: blur(2px);
 }
 </style>

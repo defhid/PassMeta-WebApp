@@ -25,7 +25,7 @@ export async function synchronizePassFiles<TContent>(context: PassFileContext<TC
     if (context.hasChanges.value) {
         commited ||= await context.commit();
     } else {
-        await context.load();
+        await context.loadList();
     }
 
     const remoteList = await PassFileApi.getList.silent({ typeId: PassFileType.Pwd });

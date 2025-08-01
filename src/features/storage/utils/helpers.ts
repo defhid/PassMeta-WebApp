@@ -1,6 +1,7 @@
 import { useDialogs } from "~entities/dialog";
 import type { PassfileDto } from "~generated/api.ts";
 import { type PassFile, PassFileMark } from "~entities/passfile";
+import { reactive } from "vue";
 
 /**
  * Use helper methods for asking passphrase.
@@ -29,7 +30,7 @@ export function usePassPhraseAskHelper() {
  * Map passfile DTO to model.
  */
 export function makePassFile<TContent>(dto: PassfileDto): PassFile<TContent> {
-    return {
+    return reactive({
         id: dto.id,
         typeId: dto.typeId,
         userId: dto.userId,
@@ -46,7 +47,7 @@ export function makePassFile<TContent>(dto: PassfileDto): PassFile<TContent> {
             version: dto.version,
         },
         mark: PassFileMark.None,
-    };
+    });
 }
 
 /**

@@ -61,6 +61,7 @@
         "Title": "Страница не найдена :("
     },
     "Passcontext": {
+        "ErrOther": "Ошибка при работе контекстного менеджера пакетов (см. логи)",
         "InfoCommited": "Сохранено локально"
     },
     "Passervice": {
@@ -71,6 +72,7 @@
     "Passfile": {
         "AskPassphrase": "Введите кодовую фразу",
         "AskPassphraseAgain": "Неверная кодовая фраза, попробуйте ввести заново",
+        "AskPassphraseForNewPassfile": "Введите кодовую фразу для нового пакета",
         "DecryptionError": "Не удаётся расшифровать файл",
         "EncryptionError": "Не удаётся зашифровать файл",
         "Validation": {

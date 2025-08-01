@@ -2,6 +2,7 @@
 import { t, useAppSettings } from "~stores";
 import type { PwdItem } from "~entities/passfile";
 import { useClipboardHelper } from "~utils";
+import { ref } from "vue";
 
 defineProps<{
     item: PwdItem;
@@ -9,6 +10,8 @@ defineProps<{
 
 const { copyTextToClipboard } = useClipboardHelper();
 const settings = useAppSettings();
+
+const hidePassword = ref(settings.hidePasswords);
 </script>
 
 <template>
@@ -32,8 +35,10 @@ const settings = useAppSettings();
                 class="field-only pr-3"
                 variant="solo"
                 density="compact"
-                :type="settings.hidePasswords ? 'password' : 'text'"
+                :type="hidePassword ? 'password' : 'text'"
+                :append-icon="hidePassword ? 'mdi-eye-off' : 'mdi-eye'"
                 readonly
+                @click:append="hidePassword = !hidePassword"
             />
             <v-btn icon="mdi-content-copy" size="small" @click="copyTextToClipboard(item.password)" />
         </div>

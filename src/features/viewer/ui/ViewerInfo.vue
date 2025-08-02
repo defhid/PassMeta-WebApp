@@ -19,12 +19,19 @@ const { currentUser: viewer } = useAppContext();
             <span class="text-medium-emphasis">{{ viewer?.login }}</span>
         </div>
 
-        <v-btn class="mt-10" size="small" @click="emit('closeCurrentSession')">
-            {{ t("Account.BtnResetCurrentSession") }}
-        </v-btn>
+        <PmButton
+            class="mt-10"
+            :label="t('Account.BtnResetCurrentSession')"
+            severity="secondary"
+            @click.stop="emit('closeCurrentSession')"
+        />
+
         <br />
-        <v-btn class="mt-3" size="small" @click="emit('closeAllSessions')">
-            {{ t("Account.BtnResetAllSessions") }}
-        </v-btn>
+        <PmButton
+            class="mt-3"
+            :label="t('Account.BtnResetAllSessions')"
+            severity="secondary"
+            @click.stop="emit('closeAllSessions')"
+        />
     </div>
 </template>

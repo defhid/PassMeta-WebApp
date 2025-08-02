@@ -2,13 +2,11 @@
     <div class="py-6 px-2">
         <h4 class="text-h4 text-center">
             Что такое
-            <em>
-                <span class="text-gray-500 font-black">Pass</span>
-                <span class="text-green-600 font-black">Meta</span>?
-            </em>
+            <span class="text-surface-500 font-black">Pass</span>
+            <span class="text-primary-400 font-black">Meta</span>?
         </h4>
 
-        <p class="text-xl pt-8 italic text-center">
+        <p class="text-xl pt-8 italic text-center text-surface-300">
             Это надёжный 🔐 менеджер паролей
             <span class="inline-block text-no-wrap">с открытым 👀 исходным кодом</span><br />
             <span class="inline-block text-no-wrap">и современным дизайном 🔥</span>
@@ -16,114 +14,120 @@
 
         <h4 class="text-h4 pt-12 pb-8 text-center">Распределённая система</h4>
         <div class="flex flex-wrap gap-5 align-start justify-center">
-            <v-card class="max-w-[390px]" elevation="16" variant="outlined">
-                <v-card-item>
-                    <v-card-title class="text-wrap text-center pb-1">Сервер синхронизации</v-card-title>
-                    <v-card-subtitle class="text-wrap italic">
+            <PmCard class="max-w-[420px]">
+                <template #title>
+                    <h4 class="text-center pb-1">Сервер синхронизации</h4>
+                </template>
+
+                <template #content>
+                    <span class="text-surface-400 text-wrap italic">
                         Отвечает за хранение эталонных версий пакетов паролей, доступ к ним, резервное копирование,
                         журналирование.
-                    </v-card-subtitle>
-                </v-card-item>
+                    </span>
+                    <br />
+                    <PmButton
+                        class="mt-4"
+                        severity="contrast"
+                        variant="outlined"
+                        icon="pi pi-github"
+                        as="a"
+                        href="https://github.com/defhid/PassMeta-Server"
+                        target="_blank"
+                        label="PassMeta-Server"
+                    />
+                </template>
+            </PmCard>
 
-                <v-card-text>
-                    <div class="flex flex-col align-start">
-                        <v-card
-                            append-icon="mdi-open-in-new"
-                            href="https://github.com/defhid/PassMeta-Server"
-                            prepend-icon="mdi-github"
-                            rel="noopener"
-                            subtitle="PassMeta-Server"
-                            target="_blank"
-                        />
-                    </div>
-                </v-card-text>
-            </v-card>
+            <PmCard class="max-w-[420px]">
+                <template #title>
+                    <h4 class="text-center pb-1">Web клиент для браузера</h4>
+                </template>
 
-            <v-card class="max-w-[390px]" elevation="16" variant="outlined">
-                <v-card-item>
-                    <v-card-title class="text-wrap text-center pb-1">Web клиент для браузера</v-card-title>
-                    <v-card-subtitle class="text-wrap italic">
+                <template #content>
+                    <span class="text-surface-400 text-wrap italic">
                         Универсальный способ получить доступ к своим паролям и журналу действий.
-                    </v-card-subtitle>
-                </v-card-item>
+                    </span>
+                    <br />
+                    <PmButton
+                        class="mt-4"
+                        severity="contrast"
+                        variant="outlined"
+                        icon="pi pi-github"
+                        as="a"
+                        href="https://github.com/defhid/PassMeta-WebApp"
+                        target="_blank"
+                        label="PassMeta-WebApp"
+                    />
+                </template>
+            </PmCard>
 
-                <v-card-text>
-                    <div class="flex flex-col align-start">
-                        <v-card
-                            append-icon="mdi-open-in-new"
-                            href="https://github.com/defhid/PassMeta-WebApp"
-                            prepend-icon="mdi-github"
-                            rel="noopener"
-                            subtitle="PassMeta-WebApp"
-                            target="_blank"
-                        />
-                    </div>
-                </v-card-text>
-            </v-card>
+            <PmCard class="max-w-[420px]">
+                <template #title>
+                    <h4 class="text-center pb-1">Кроссплатформенные приложения для устройств</h4>
+                </template>
 
-            <v-card class="max-w-[390px]" elevation="16" variant="outlined">
-                <v-card-item>
-                    <v-card-title class="text-wrap text-center pb-1">
-                        Кроссплатформенные приложения для устройств
-                    </v-card-title>
-                    <v-card-subtitle class="text-wrap italic">
+                <template #content>
+                    <span class="text-surface-400 text-wrap italic">
                         Локальные хранилища паролей предоставляют удобный доступ к содержимому, поддерживают автономную
                         работу и синхронизацию, дополнительно резервируют версии пакетов.
-                    </v-card-subtitle>
-                </v-card-item>
-
-                <v-card-text>
-                    <div class="flex flex-col gap-2 align-start">
-                        <v-card
-                            append-icon="mdi-open-in-new"
-                            href="https://github.com/defhid/PassMeta-DesktopApp"
-                            prepend-icon="mdi-github"
-                            rel="noopener"
-                            subtitle="PassMeta-DesktopApp"
-                            target="_blank"
-                        />
-                        <v-card
-                            class="hover:opacity-30"
-                            append-icon="mdi-open-in-new"
-                            disabled
-                            href="#"
-                            prepend-icon="mdi-github"
-                            rel="noopener"
-                            subtitle="PassMeta-IosApp | в планах"
-                        />
-                        <v-card
-                            class="hover:opacity-30"
-                            append-icon="mdi-open-in-new"
-                            disabled
-                            href="#"
-                            prepend-icon="mdi-github"
-                            rel="noopener"
-                            subtitle="PassMeta-AndroidApp | в планах"
-                        />
-                    </div>
-                </v-card-text>
-            </v-card>
+                    </span>
+                    <br />
+                    <PmButton
+                        class="mt-4"
+                        severity="contrast"
+                        variant="outlined"
+                        icon="pi pi-github"
+                        as="a"
+                        href="https://github.com/defhid/PassMeta-DesktopApp"
+                        target="_blank"
+                        label="PassMeta-DesktopApp"
+                    />
+                    <PmButton
+                        v-tooltip.bottom="$tooltip({ value: 'В планах', showDelay: 100 })"
+                        class="mt-4"
+                        severity="contrast"
+                        variant="outlined"
+                        icon="pi pi-github"
+                        disabled
+                        label="PassMeta-IosApp"
+                    />
+                    <PmButton
+                        v-tooltip.bottom="$tooltip({ value: 'В планах', showDelay: 100 })"
+                        class="mt-4"
+                        severity="contrast"
+                        variant="outlined"
+                        icon="pi pi-github"
+                        disabled
+                        label="PassMeta-AndroidApp"
+                    />
+                </template>
+            </PmCard>
         </div>
 
         <h4 class="text-h4 pt-12 pb-8 text-center">Защита без компромиссов</h4>
-        <ul class="text-xl text-center flex flex-col gap-5 italic">
-            <li>
-                <span class="text-green text-h5 pr-1">✔</span>
-                Все пароли хранятся и передаются <strong>только в зашифрованном виде</strong>
-            </li>
-            <li>
-                <span class="text-green text-h5 pr-1">✔</span>
-                Данные шифруются уникальным алгоритмом с мультипроходом <strong>на основе AES 256</strong>
-            </li>
-            <li>
-                <span class="text-green text-h5 pr-1">✔</span>
-                Без знания мастер-пароля <strong>взломать пакет невозможно</strong>*
-            </li>
-        </ul>
+        <div class="flex justify-center">
+            <ul class="text-xl text-surface-300 flex flex-col gap-5 italic">
+                <li class="flex gap-5 items-center">
+                    <span class="text-primary-400 text-h5">✔</span>
+                    <div>Все пароли хранятся и передаются <strong>только в зашифрованном виде</strong></div>
+                </li>
+                <li class="flex gap-5 items-center">
+                    <span class="text-primary-400 text-h5">✔</span>
+                    <div>
+                        Данные шифруются уникальным алгоритмом с мультипроходом <strong>на основе AES 256</strong>
+                    </div>
+                </li>
+                <li class="flex gap-5 items-center">
+                    <span class="text-primary-400 text-h5">✔</span>
+                    <div>Без знания мастер-пароля <strong>взломать пакет невозможно</strong>*</div>
+                </li>
+            </ul>
+        </div>
 
-        <p class="pt-16 text-xs opacity-70 italic">
+        <p class="pt-16 text-xs text-surface-500 italic">
             * - на текущем этапе развития компьютерных технологий, в разумные сроки, при условии использования
             качественного мастер-пароля.
         </p>
     </div>
 </template>
+<script setup lang="ts"></script>

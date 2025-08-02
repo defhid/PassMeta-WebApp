@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { t } from "~stores";
-import { useClipboardHelper } from "~utils";
+import { Notify, useClipboardHelper } from "~utils";
 import { reactive, ref, useId, watch } from "vue";
 import { generatePassword } from "~features/generator/model";
-
-const { copyTextToClipboard } = useClipboardHelper();
 
 const currentGenerated = ref("");
 
@@ -35,44 +33,63 @@ function generate() {
 }
 
 watch(fieldValues, generate, { immediate: true });
+
+const { copyTextToClipboard } = useClipboardHelper();
+
+async function copyPassword() {
+    const ok = await copyTextToClipboard(currentGenerated.value);
+
+    ok && Notify.info(t("Generator.ResultCopied"));
+}
 </script>
 
 <template>
-    <div class="flex flex-col align-center gap-10 sm:flex-row">
-        <v-card class="w-full sm:w-auto">
-            <div class="grid grid-cols-[auto_auto] px-7 py-5 gap-x-6 gap-y-4">
-                <v-label :text="t('Generator.PasswordLength')" :for="fieldIds.length" />
-                <v-text-field
-                    :id="fieldIds.length"
-                    v-model="fieldValues.length"
-                    class="field-only w-[80px]"
-                    step="2"
-                    min="4"
-                    max="100"
-                    type="number"
-                    variant="outlined"
-                    density="compact"
-                />
+    <div class="flex align-center gap-10 flex-wrap justify-center">
+        <PmCard>
+            <template #content>
+                <div class="grid grid-cols-[auto_auto] px-2 pb-2 gap-x-6 gap-y-10 items-center">
+                    <label :for="fieldIds.length">{{ t("Generator.PasswordLength") }}</label>
+                    <PmInputNumber
+                        v-model="fieldValues.length"
+                        :input-id="fieldIds.length"
+                        class="w-[135px]"
+                        show-buttons
+                        increment-button-icon="pi pi-plus"
+                        decrement-button-icon="pi pi-minus"
+                        button-layout="horizontal"
+                        :step="2"
+                        :min="4"
+                        :max="100"
+                    />
 
-                <v-label :text="t('Generator.IncludeDigits')" :for="fieldIds.digits" />
-                <v-checkbox :id="fieldIds.digits" v-model="fieldValues.digits" class="field-only" />
+                    <label :for="fieldIds.digits">{{ t("Generator.IncludeDigits") }}</label>
+                    <PmCheckbox v-model="fieldValues.digits" :input-id="fieldIds.digits" binary size="large" />
 
-                <v-label :text="t('Generator.IncludeLowercase')" :for="fieldIds.lowercase" />
-                <v-checkbox :id="fieldIds.lowercase" v-model="fieldValues.lowercase" class="field-only" />
+                    <label :for="fieldIds.lowercase">{{ t("Generator.IncludeLowercase") }}</label>
+                    <PmCheckbox v-model="fieldValues.lowercase" :input-id="fieldIds.lowercase" binary size="large" />
 
-                <v-label :text="t('Generator.IncludeUppercase')" :for="fieldIds.uppercase" />
-                <v-checkbox :id="fieldIds.uppercase" v-model="fieldValues.uppercase" class="field-only" />
+                    <label :for="fieldIds.uppercase">{{ t("Generator.IncludeUppercase") }}</label>
+                    <PmCheckbox v-model="fieldValues.uppercase" :input-id="fieldIds.uppercase" binary size="large" />
 
-                <v-label :text="t('Generator.IncludeSpecial')" :for="fieldIds.special" />
-                <v-checkbox :id="fieldIds.special" v-model="fieldValues.special" class="field-only" />
-            </div>
-        </v-card>
+                    <label :for="fieldIds.special">{{ t("Generator.IncludeSpecial") }}</label>
+                    <PmCheckbox v-model="fieldValues.special" :input-id="fieldIds.special" binary size="large" />
+                </div>
+            </template>
+        </PmCard>
 
-        <div class="flex flex-col w-[300px]">
-            <v-text-field :model-value="currentGenerated" readonly variant="solo" />
+        <div class="flex flex-col w-[300px] gap-4">
+            <PmInputText :model-value="currentGenerated" size="large" readonly />
+
             <div class="flex gap-5">
-                <v-btn icon="mdi-content-copy" color="primary" @click="copyTextToClipboard(currentGenerated)" />
-                <v-btn icon="mdi-key-variant" color="secondary" @click="generate" />
+                <PmButton icon="pi pi-clone" size="large" variant="outlined" rounded @click.stop="copyPassword" />
+                <PmButton
+                    icon="pi pi-refresh"
+                    size="large"
+                    variant="outlined"
+                    severity="secondary"
+                    rounded
+                    @click.stop="generate"
+                />
             </div>
         </div>
     </div>

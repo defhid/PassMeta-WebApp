@@ -35,7 +35,11 @@
     "Dialog": {
         "BtnCancel": "Отмена",
         "BtnOk": "Ок",
-        "DefaultAskTitle": "Форма ввода"
+        "DefaultAskTitle": "Форма ввода",
+        "DefaultErrorTitle": "Ошибка",
+        "DefaultFailureTitle": "Ошибка",
+        "DefaultInfoTitle": "Информация",
+        "DefaultWarningTitle": "Предупреждение"
     },
     "Generator": {
         "IncludeDigits": "Числа",
@@ -43,6 +47,7 @@
         "IncludeSpecial": "Спец. символы",
         "IncludeUppercase": "Прописные",
         "PasswordLength": "Длина",
+        "ResultCopied": "Пароль скопирован в буфер обмена",
         "Title": "Генератор паролей"
     },
     "History": {

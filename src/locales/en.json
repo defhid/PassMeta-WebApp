@@ -35,7 +35,11 @@
     "Dialog": {
         "BtnCancel": "Cancel",
         "BtnOk": "Ok",
-        "DefaultAskTitle": "Input form"
+        "DefaultAskTitle": "Input form",
+        "DefaultErrorTitle": "Error",
+        "DefaultFailureTitle": "Failure",
+        "DefaultInfoTitle": "Information",
+        "DefaultWarningTitle": "Warning"
     },
     "Generator": {
         "IncludeDigits": "Numbers",
@@ -43,6 +47,7 @@
         "IncludeSpecial": "Spec. symbols",
         "IncludeUppercase": "Uppercase",
         "PasswordLength": "Length",
+        "ResultCopied": "Password is copied to clipboard",
         "Title": "Password generator"
     },
     "History": {
@@ -70,9 +75,9 @@
         "WarnSynchronized": "Synchronized with the server. WARNING: see logs"
     },
     "Passfile": {
-        "AskPassphrase": "Input passphrase",
-        "AskPassphraseAgain": "Wrong passphrase, try input again",
-        "AskPassphraseForNewPassfile": "Input passphrase for a new passfile",
+        "AskPassphrase": "Enter passphrase",
+        "AskPassphraseAgain": "Wrong passphrase, try enter again",
+        "AskPassphraseForNewPassfile": "Enter passphrase for a new passfile",
         "DecryptionError": "Passfile decryption failed",
         "EncryptionError": "Passfile encryption failed",
         "Validation": {

@@ -2,8 +2,17 @@
 import { useAppContext } from "~stores";
 import { NavBar } from "~pages";
 import { DialogsContainer } from "~entities/dialog";
+import Toast, { type ToastBreakpointsType } from "primevue/toast";
+import { initNotify } from "~utils";
 
 const { currentUser, isContextLoaded, isContextLoading } = useAppContext();
+
+initNotify();
+
+const toastBreakpoints: ToastBreakpointsType = {
+    "200px": { width: "75vw" },
+    "500px": { width: "calc(100vw - 40px)" },
+};
 </script>
 
 <template>
@@ -22,6 +31,7 @@ const { currentUser, isContextLoaded, isContextLoading } = useAppContext();
             </div>
         </div>
 
+        <Toast position="bottom-right" :breakpoints="toastBreakpoints" close-icon="pi pi-times" />
         <DialogsContainer />
     </v-layout>
 </template>

@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { t, useAppContext } from "~stores";
 import { Routes } from "~routing";
-import { useTooltip } from "~utils";
-
-const { describeTooltip } = useTooltip();
 
 const { currentUser, serverId, serverVersion } = useAppContext();
 </script>
@@ -20,8 +17,8 @@ const { currentUser, serverId, serverVersion } = useAppContext();
         <h4 v-else class="text-h4 text-center mt-2 mb-7">
             {{ t("Home.TitleUnknown") }}
             <button class="logo">
-                <span class="text-gray-500">Pass</span>
-                <span class="text-green-600">Meta</span>
+                <span class="text-surface-500">Pass</span>
+                <span class="text-primary-400">Meta</span>
             </button>
         </h4>
 
@@ -35,25 +32,35 @@ const { currentUser, serverId, serverVersion } = useAppContext();
             </div>
 
             <div class="flex gap-4">
-                <v-btn
-                    v-tooltip="describeTooltip(t('Settings.Title'), { location: 'bottom' })"
-                    icon="mdi-cog"
-                    :to="Routes.Settings.to()"
-                />
+                <RouterLink :to="Routes.Settings.to()">
+                    <PmButton
+                        v-tooltip.bottom="$tooltip('Settings.Title')"
+                        icon="pi pi-cog"
+                        size="large"
+                        rounded
+                        severity="secondary"
+                    />
+                </RouterLink>
 
-                <v-btn
-                    v-tooltip="describeTooltip(t('Home.BtnAbout'), { location: 'bottom' })"
-                    icon="mdi-information-variant"
-                    :to="Routes.About.to()"
-                />
+                <RouterLink :to="Routes.About.to()">
+                    <PmButton
+                        v-tooltip.bottom="$tooltip('Home.BtnAbout')"
+                        icon="pi pi-info"
+                        size="large"
+                        severity="secondary"
+                        rounded
+                    />
+                </RouterLink>
 
-                <v-btn
-                    v-if="!currentUser"
-                    v-tooltip="describeTooltip(t('Home.BtnAuthorize'), { location: 'bottom' })"
-                    icon="mdi-account-arrow-right"
-                    color="primary"
-                    :to="Routes.Auth.to()"
-                />
+                <RouterLink :to="Routes.Auth.to()">
+                    <PmButton
+                        v-if="!currentUser"
+                        v-tooltip.bottom="$tooltip('Home.BtnAuthorize')"
+                        icon="pi pi-sign-in"
+                        size="large"
+                        rounded
+                    />
+                </RouterLink>
             </div>
         </div>
     </div>
@@ -62,6 +69,6 @@ const { currentUser, serverId, serverVersion } = useAppContext();
 <style scoped>
 .logo {
     @apply font-black cursor-grab select-none
-    active:rotate-[3600deg] transition-transform duration-[10s] ease-linear;
+    active:rotate-[100turn] transition-transform duration-[100s] ease-linear;
 }
 </style>

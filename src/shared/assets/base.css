@@ -6,11 +6,6 @@ html {
     overflow-y: auto !important;
 }
 
-/* hide excess bottom block from text field */
-.field-only .v-input__details {
-    display: none;
-}
-
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -29,4 +24,20 @@ html {
 }
 ::-webkit-scrollbar-thumb:active {
     background-color: rgba(var(--v-theme-on-secondary), 0.6);
+}
+
+.p-inputtext {
+    min-width: 1px;
+}
+.p-password-input {
+    flex: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color-surface-100);
 }

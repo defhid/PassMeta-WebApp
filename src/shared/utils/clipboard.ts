@@ -1,4 +1,5 @@
 import { t } from "~stores";
+import { Notify } from "~/shared/utils/notify.ts";
 
 /**
  * Use helper methods for working with clipboard.
@@ -11,7 +12,7 @@ export function useClipboardHelper() {
             return true;
         } catch (err) {
             console.error("Writing to clipboard failed", err);
-            alert(t("Clipboard.UnknownError"));
+            Notify.error(t("Clipboard.UnknownError"));
             return false;
         }
     }

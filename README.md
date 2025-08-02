@@ -10,7 +10,8 @@ Status: MVP (readonly features).
 
 ### Technologies
 
-_Vue.js, TypeScript, Tailwind, Vite, Vuetify_<br>
+_Vue.js, TypeScript, Tailwind, Vite, PrimeVue_<br>
+PWA<br>
 Feature-Sliced-Design<br>
 AES256 multipass (client side only), SHA256
 

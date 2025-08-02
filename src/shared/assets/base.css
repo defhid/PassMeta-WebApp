@@ -33,6 +33,13 @@ html {
     flex: 1;
 }
 
+.p-card-body {
+    min-height: 0;
+}
+.p-card-content {
+    min-height: 0;
+}
+
 h1,
 h2,
 h3,

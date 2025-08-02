@@ -26,8 +26,8 @@ const toastBreakpoints: ToastBreakpointsType = {
                 </KeepAlive>
             </RouterView>
 
-            <div v-if="isContextLoading" class="w-full h-full flex justify-center items-center pb-10">
-                <v-progress-circular model-value="20" indeterminate />
+            <div v-if="isContextLoading" class="absolute top-0 w-full h-full flex justify-center items-center pb-10">
+                <PmProgressSpinner indeterminate />
             </div>
         </div>
 

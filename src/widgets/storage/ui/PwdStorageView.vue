@@ -18,6 +18,17 @@ onMounted(() => synchronizePassFiles(context));
 
 const selected = ref<PwdPassFile>();
 const selectedSection = ref<PwdSection>();
+const selectedSectionEditMode = ref(false);
+const selectedSectionIsNew = ref(false);
+
+watch(
+    selectedSection,
+    () => {
+        selectedSectionEditMode.value = false;
+        selectedSectionIsNew.value = false;
+    },
+    { flush: "sync" },
+);
 
 function openPassFile(passFile: PassFile<unknown>) {
     alert(JSON.stringify(passFile, undefined, 4));
@@ -57,6 +68,18 @@ watch(
     { flush: "sync" },
 );
 
+watch(
+    () => [selected.value, selected.value?.content.decrypted],
+    async (_curr, prev) => {
+        if (selected.value && selected.value === prev[0]) {
+            if (!selected.value.content.decrypted && selected.value.content.passPhrase) {
+                (await context.provideEncryptedContent(selected.value)) &&
+                    (await decryptPassFile(selected.value, selected.value.content.passPhrase));
+            }
+        }
+    },
+);
+
 const { askPassword } = useDialogs();
 
 async function addPassfile() {
@@ -80,14 +103,48 @@ async function addPassfile() {
 }
 
 function addSection() {
-    selected.value?.content.decrypted?.push({
+    const section: PwdSection = {
         id: crypto.randomUUID(),
         name:
             `New section ${new Date().getFullYear()}${new Date().getMonth() + 1}` +
             `${new Date().getDate()}-${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}`,
         websiteUrl: "",
-        items: [],
-    });
+        items: [
+            {
+                usernames: [],
+                password: "",
+                remark: "",
+            },
+        ],
+    };
+
+    selected.value?.content.decrypted?.push(section);
+    selectedSection.value = section;
+    selectedSectionIsNew.value = true;
+    selectedSectionEditMode.value = true;
+}
+
+function editSection() {
+    const ok = selected.value && context.updateContent(selected.value);
+    ok && synchronizePassFiles(context);
+}
+
+function deleteSection() {
+    if (selected.value && selectedSection.value) {
+        const sectionId = selectedSection.value.id;
+
+        selected.value.content = {
+            decrypted: selected.value.content.decrypted!.filter((x) => x.id !== sectionId),
+            passPhrase: selected.value.content.passPhrase,
+        };
+
+        if (!selectedSectionIsNew.value) {
+            const ok = context.updateContent(selected.value);
+            ok && synchronizePassFiles(context);
+        }
+
+        selectedSection.value = undefined;
+    }
 }
 </script>
 
@@ -108,15 +165,20 @@ function addSection() {
             class="h-full md:block"
             :class="{ hidden: selectedSection }"
             :sections="selected.content.decrypted"
+            :disabled="selectedSectionEditMode"
             @back="selected = undefined"
             @add-section="addSection"
         />
 
         <PwdSectionView
             v-if="selectedSection"
+            v-model:edit-mode="selectedSectionEditMode"
             class="h-full"
             :section="selectedSection"
+            :is-new="selectedSectionIsNew"
             @back="selectedSection = undefined"
+            @edit="editSection"
+            @delete="deleteSection"
         />
     </div>
 </template>

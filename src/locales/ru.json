@@ -94,6 +94,10 @@
         "Title": "Настройки"
     },
     "Storage": {
+        "ItemInfo": {
+            "PasswordCopied": "Пароль скопирован",
+            "UsernameCopied": "Логин '{username}' скопирован"
+        },
         "ItemPasswordField": {
             "Label": "Пароль"
         },

@@ -17,6 +17,11 @@ import {
     Message,
     InputNumber,
     Menu,
+    ProgressSpinner,
+    IconField,
+    InputIcon,
+    Fieldset,
+    Listbox,
 } from "primevue";
 import { definePreset } from "@primeuix/themes";
 import type { PrimeVueConfiguration } from "@primevue/core/config";
@@ -79,11 +84,16 @@ const primeVuePlugin: Plugin = (app: App) => {
     app.component("PmInputText", InputText);
     app.component("PmInputNumber", InputNumber);
     app.component("PmInputPassword", Password);
+    app.component("PmInputIcon", InputIcon);
     app.component("PmFloatLabel", FloatLabel);
     app.component("PmCheckbox", Checkbox);
     app.component("PmSelect", Select);
     app.component("PmMessage", Message);
     app.component("PmMenu", Menu);
+    app.component("PmProgressSpinner", ProgressSpinner);
+    app.component("PmIconField", IconField);
+    app.component("PmFieldset", Fieldset);
+    app.component("PmListbox", Listbox);
 
     app.config.globalProperties.$tooltip = (optionsOrText: TooltipOptions | LocaleMessage): TooltipOptions => {
         if (typeof (optionsOrText as LocaleMessage) == "string") {
@@ -102,13 +112,18 @@ declare module "vue" {
         PmButton: typeof Button;
         PmCard: typeof Card;
         PmInputText: typeof InputText;
+        PmInputNumber: typeof InputNumber;
+        PmInputIcon: typeof InputIcon;
         PmFloatLabel: typeof FloatLabel;
         PmInputPassword: typeof Password;
         PmCheckbox: typeof Checkbox;
         PmSelect: typeof Select;
         PmMessage: typeof Message;
-        PmInputNumber: typeof InputNumber;
         PmMenu: typeof Menu;
+        PmProgressSpinner: typeof ProgressSpinner;
+        PmIconField: typeof IconField;
+        PmFieldset: typeof Fieldset;
+        PmListbox: typeof Listbox;
     }
 
     export interface GlobalDirectives {

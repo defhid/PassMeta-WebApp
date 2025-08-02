@@ -18,6 +18,6 @@ watch(
     { flush: "sync" },
 );
 
-export const t: (resource: LocaleMessage) => string = i18n.global.t;
+export const t: (resource: LocaleMessage, args?: Record<string, string>) => string = i18n.global.t;
 
 export type LocaleMessage = JsonPaths<LocaleSchema>;

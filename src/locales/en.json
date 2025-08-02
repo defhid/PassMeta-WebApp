@@ -94,6 +94,10 @@
         "Title": "Settings"
     },
     "Storage": {
+        "ItemInfo": {
+            "PasswordCopied": "Password is copied to clipboard",
+            "UsernameCopied": "Login '{username}' is copied to clipboard"
+        },
         "ItemPasswordField": {
             "Label": "Password"
         },

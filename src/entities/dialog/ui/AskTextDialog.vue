@@ -43,6 +43,7 @@ onMounted(() =>
                     toggle-mask
                     :feedback="false"
                     @keydown.enter="emit('answer', textValue ?? '')"
+                    @keydown.esc="emit('answer', null)"
                 />
                 <PmInputText
                     v-else
@@ -51,6 +52,7 @@ onMounted(() =>
                     fluid
                     autofocus
                     @keydown.enter="emit('answer', textValue ?? '')"
+                    @keydown.esc="emit('answer', null)"
                 />
             </div>
         </template>

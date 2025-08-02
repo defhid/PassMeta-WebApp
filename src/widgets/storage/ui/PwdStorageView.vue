@@ -98,7 +98,8 @@ async function addPassfile() {
             `New ${new Date().getFullYear()}${new Date().getMonth() + 1}` +
             `${new Date().getDate()}-${new Date().getHours()}${new Date().getMinutes()}`;
 
-        context.updateInfo(passfile);
+        const ok = context.updateInfo(passfile);
+        ok && (await synchronizePassFiles(context));
     }
 }
 

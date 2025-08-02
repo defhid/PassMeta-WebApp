@@ -42,7 +42,7 @@ const ids = {
                 </PmFloatLabel>
 
                 <div class="flex items-center gap-3">
-                    <PmCheckbox v-model="settings.hidePasswords" :input-id="ids.hidePasswords" size="large" />
+                    <PmCheckbox v-model="settings.hidePasswords" :input-id="ids.hidePasswords" binary size="large" />
                     <label :for="ids.hidePasswords">{{ t("Settings.HidePasswords") }}</label>
                 </div>
             </div>

@@ -6,7 +6,7 @@
 
 PassMeta WebApp is a web client application of PassMeta System.
 
-Status: MVP (readonly features).
+Status: MVP.
 
 ### Technologies
 

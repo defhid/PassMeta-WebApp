@@ -16,6 +16,7 @@ import {
     Button,
     Message,
     InputNumber,
+    Menu,
 } from "primevue";
 import { definePreset } from "@primeuix/themes";
 import type { PrimeVueConfiguration } from "@primevue/core/config";
@@ -82,6 +83,7 @@ const primeVuePlugin: Plugin = (app: App) => {
     app.component("PmCheckbox", Checkbox);
     app.component("PmSelect", Select);
     app.component("PmMessage", Message);
+    app.component("PmMenu", Menu);
 
     app.config.globalProperties.$tooltip = (optionsOrText: TooltipOptions | LocaleMessage): TooltipOptions => {
         if (typeof (optionsOrText as LocaleMessage) == "string") {
@@ -106,6 +108,7 @@ declare module "vue" {
         PmSelect: typeof Select;
         PmMessage: typeof Message;
         PmInputNumber: typeof InputNumber;
+        PmMenu: typeof Menu;
     }
 
     export interface GlobalDirectives {

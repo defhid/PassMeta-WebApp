@@ -4,65 +4,108 @@ import { Routes } from "~routing";
 import { t, useAppContext } from "~stores";
 import { useRouter } from "vue-router";
 import { useSessionClose } from "~entities/backend";
+import { computed, useTemplateRef } from "vue";
+import type { MenuItem } from "primevue/menuitem";
+import type { RouteInfo } from "~infra";
 
 const { currentRoute } = useRouter();
 const { currentUser } = useAppContext();
 const { closeCurrentSession } = useSessionClose();
+
+const isVisible = (route: RouteInfo<any, any>) => route.to.isAnonymous || currentUser.value != null;
+
+const router = useRouter();
+
+const profileMenu = useTemplateRef("profileMenu");
+const profileMenuItems = computed(
+    (): MenuItem[] =>
+        [
+            currentUser.value
+                ? {
+                      label: t("App.NavigationBar.Account"),
+                      icon: "pi pi-user",
+                      command: () => router.push(Routes.Account.to()),
+                  }
+                : {
+                      label: t("App.NavigationBar.SignIn"),
+                      icon: "pi pi-sign-in",
+                      command: () => router.push(Routes.Auth.to()),
+                  },
+            currentUser.value
+                ? {
+                      label: t("App.NavigationBar.SignOut"),
+                      icon: "pi pi-sign-out",
+                      command: () => closeCurrentSession(Routes.Home.to()),
+                  }
+                : null,
+        ].filter((x) => x) as MenuItem[],
+);
+const toggleProfileMenu = (event: Event) => profileMenu.value!.toggle(event);
 </script>
 
 <template>
-    <v-card class="py-1 w-full">
-        <div class="flex justify-between items-center">
-            <RouterLink class="mx-3 w-[48px] min-w-[48px]" :to="Routes.Home.to()">
-                <img v-tooltip.bottom="$tooltip('Home.Title')" :src="PassMetaIcon" alt="PM" />
-            </RouterLink>
+    <PmCard class="nav-bar">
+        <template #content>
+            <div class="flex justify-between items-center">
+                <RouterLink class="mx-3 w-[48px] min-w-[48px]" :to="Routes.Home.to()">
+                    <img v-tooltip.bottom="$tooltip('Home.Title')" :src="PassMetaIcon" alt="PM" />
+                </RouterLink>
 
-            <div class="flex w-[50%] justify-space-around">
-                <v-btn
-                    v-tooltip.bottom="$tooltip('Storage.Title')"
-                    icon="mdi-safe-square-outline"
-                    :to="Routes.Storage.to()"
-                    :active="currentRoute.name === Routes.Storage.to.name"
+                <div class="flex w-[50%] justify-space-around">
+                    <RouterLink v-if="isVisible(Routes.Storage)" :to="Routes.Storage.to()">
+                        <PmButton
+                            v-tooltip.bottom="$tooltip('Storage.Title')"
+                            icon="pi pi-lock"
+                            rounded
+                            size="large"
+                            severity="secondary"
+                            :variant="currentRoute.name === Routes.Storage.to.name ? undefined : 'text'"
+                        />
+                    </RouterLink>
+                    <RouterLink v-if="isVisible(Routes.Generator)" :to="Routes.Generator.to()">
+                        <PmButton
+                            v-tooltip.bottom="$tooltip('Generator.Title')"
+                            icon="pi pi-lightbulb"
+                            rounded
+                            size="large"
+                            severity="secondary"
+                            :variant="currentRoute.name === Routes.Generator.to.name ? undefined : 'text'"
+                        />
+                    </RouterLink>
+                    <RouterLink v-if="isVisible(Routes.History)" :to="Routes.History.to()">
+                        <PmButton
+                            v-tooltip.bottom="$tooltip('History.Title')"
+                            icon="pi pi-history"
+                            rounded
+                            size="large"
+                            severity="secondary"
+                            :variant="currentRoute.name === Routes.History.to.name ? undefined : 'text'"
+                        />
+                    </RouterLink>
+                </div>
+
+                <PmButton
+                    v-tooltip.bottom="$tooltip('Account.Title')"
+                    class="mr-2"
+                    icon="pi pi-user"
+                    size="large"
+                    rounded
+                    raised
+                    severity="secondary"
+                    :variant="currentRoute.name === Routes.Account.to.name ? undefined : 'text'"
+                    aria-haspopup="true"
+                    aria-controls="overlay_menu"
+                    @click="toggleProfileMenu"
                 />
-                <v-btn
-                    v-tooltip.bottom="$tooltip('Generator.Title')"
-                    icon="mdi-lightbulb-outline"
-                    :to="Routes.Generator.to()"
-                    :active="currentRoute.name === Routes.Generator.to.name"
-                />
-                <v-btn
-                    v-tooltip.bottom="$tooltip('History.Title')"
-                    icon="mdi-history"
-                    :to="Routes.History.to()"
-                    :active="currentRoute.name === Routes.History.to.name"
-                />
+                <PmMenu id="overlay_menu" ref="profileMenu" :model="profileMenuItems" popup />
             </div>
-
-            <v-menu>
-                <template #activator="{ props }">
-                    <v-btn
-                        v-tooltip.bottom="$tooltip('Account.Title')"
-                        v-bind="props"
-                        icon="mdi-account-circle-outline"
-                        class="mr-3 min-w-[60px]"
-                        :active="currentRoute.name === Routes.Account.to.name"
-                    />
-                </template>
-
-                <v-list class="min-w-[150px]">
-                    <v-list-item v-if="currentUser" :value="1" :to="Routes.Account.to()">
-                        <v-list-item-title>{{ t("App.NavigationBar.Account") }}</v-list-item-title>
-                    </v-list-item>
-
-                    <v-list-item v-else :value="1" :to="Routes.Auth.to()">
-                        <v-list-item-title>{{ t("App.NavigationBar.SignIn") }}</v-list-item-title>
-                    </v-list-item>
-
-                    <v-list-item v-if="currentUser" :value="2" @click.stop="closeCurrentSession(Routes.Home.to())">
-                        <v-list-item-title>{{ t("App.NavigationBar.SignOut") }}</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu>
-        </div>
-    </v-card>
+        </template>
+    </PmCard>
 </template>
+
+<style scoped>
+.nav-bar {
+    width: 100%;
+    --p-card-body-padding: 6px 4px;
+}
+</style>

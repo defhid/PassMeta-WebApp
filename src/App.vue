@@ -44,7 +44,7 @@ const toastBreakpoints: ToastBreakpointsType = {
     max-width: 1920px;
     display: grid;
     grid-template-rows: auto 1fr;
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem clamp(0.5rem, env(safe-area-inset-bottom, 0.5rem), 2rem) 0.5rem;
     gap: 0.5rem;
 }
 

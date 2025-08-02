@@ -31,7 +31,7 @@ const toastBreakpoints: ToastBreakpointsType = {
             </div>
         </div>
 
-        <Toast position="bottom-right" :breakpoints="toastBreakpoints" close-icon="pi pi-times" />
+        <Toast class="app-toast" position="bottom-right" :breakpoints="toastBreakpoints" close-icon="pi pi-times" />
         <DialogsContainer />
     </main>
 </template>
@@ -51,5 +51,15 @@ const toastBreakpoints: ToastBreakpointsType = {
 .app-content {
     height: 100%;
     overflow-y: auto;
+}
+</style>
+
+<style>
+.app-toast {
+    --p-toast-border-radius: 14px;
+    transform: translateY(15px);
+}
+.p-toast-message-text {
+    margin-top: -3px;
 }
 </style>

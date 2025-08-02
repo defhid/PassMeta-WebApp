@@ -4,7 +4,6 @@
     "background_color": "#000",
     "theme_color": "#000",
     "description": "reliable distributed password management tools.",
-    "start_url": "/",
     "icons": [
         {
             "src": "icons/passmeta48.png",

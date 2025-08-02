@@ -18,8 +18,16 @@ AES256 multipass (client side only), SHA256
 ## Screenshots
 
 ![screenshot](docs/screenshots/storage.png)
-
 ![screenshot](docs/screenshots/generator.png)
+
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px;">
+  <img src="docs/screenshots/storage_mobile1.png" alt="drawing" />
+  <img src="docs/screenshots/storage_mobile2.png" alt="drawing" />
+  <img src="docs/screenshots/storage_mobile3.png" alt="drawing" />
+  <img src="docs/screenshots/generator_mobile.png" alt="drawing" />
+  <img src="docs/screenshots/home_mobile.png" alt="drawing" />
+  <img src="docs/screenshots/settings_mobile.png" alt="drawing" />
+</div>
 
 ## Development
 

@@ -27,7 +27,7 @@ onMounted(() =>
 
 <template>
     <PmDialog visible modal keep-in-viewport :closable="false" :header="props.title ?? t('Dialog.DefaultAskTitle')">
-        <div v-focustrap class="w-[50vw] max-w-[500px] flex flex-col gap-2">
+        <div v-focustrap class="w-[80vw] max-w-[500px] flex flex-col gap-2">
             <div class="flex flex-col gap-3 pb-2">
                 <label class="text-surface-300" :for="inputId">{{ props.question }}</label>
                 <PmInputPassword

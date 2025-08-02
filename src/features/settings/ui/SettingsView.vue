@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { t, useAppSettings } from "~stores";
-import { computed, nextTick } from "vue";
+import { computed, nextTick, useId } from "vue";
 
 const emit = defineEmits<{
     (e: "reloadRequired"): void;
@@ -18,21 +18,34 @@ async function updateLocale(locale: string) {
     await nextTick();
     emit("reloadRequired");
 }
+
+const ids = {
+    locale: useId(),
+    hidePasswords: useId(),
+};
 </script>
 
 <template>
-    <v-card>
-        <div class="p-4">
-            <v-combobox
-                :key="settings.locale"
-                :model-value="locales.find((x) => x.locale === settings.locale)"
-                :items="locales"
-                item-title="name"
-                :label="t('Settings.Localization')"
-                @update:model-value="(val) => updateLocale(val.locale)"
-            />
+    <PmCard>
+        <template #content>
+            <div class="flex flex-col gap-5">
+                <PmFloatLabel variant="in">
+                    <PmSelect
+                        :input-id="ids.locale"
+                        class="w-full"
+                        :model-value="locales.find((x) => x.locale === settings.locale)"
+                        :options="locales"
+                        option-label="name"
+                        @update:model-value="(val) => updateLocale(val.locale)"
+                    />
+                    <label :for="ids.locale">{{ t("Settings.Localization") }}</label>
+                </PmFloatLabel>
 
-            <v-checkbox v-model="settings.hidePasswords" class="field-only" :label="t('Settings.HidePasswords')" />
-        </div>
-    </v-card>
+                <div class="flex items-center gap-3">
+                    <PmCheckbox v-model="settings.hidePasswords" :input-id="ids.hidePasswords" binary size="large" />
+                    <label :for="ids.hidePasswords">{{ t("Settings.HidePasswords") }}</label>
+                </div>
+            </div>
+        </template>
+    </PmCard>
 </template>

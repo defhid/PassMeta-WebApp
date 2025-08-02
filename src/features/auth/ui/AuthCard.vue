@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, useId } from "vue";
 import { t, useAppContext } from "~stores";
 import { AuthApi } from "~entities/backend";
 import { UserApi } from "~entities/user";
@@ -29,32 +29,57 @@ async function signUp() {
 
     emit("signed");
 }
+
+const loginInputId = useId();
+const passwordInputId = useId();
 </script>
 
 <template>
-    <v-card class="min-w-[300px]" :title="t('Auth.Title')" variant="tonal">
-        <v-card-item>
-            <v-text-field
-                v-model="login"
-                :label="t('Auth.LoginLabel')"
-                name="login"
-                variant="underlined"
-                @keydown.enter="signIn"
-            />
+    <PmCard class="min-w-[300px]">
+        <template #title>
+            {{ t("Auth.Title") }}
+        </template>
 
-            <v-text-field
-                v-model="password"
-                :label="t('Auth.PasswordLabel')"
-                name="password"
-                variant="underlined"
-                type="password"
-                @keydown.enter="signIn"
-            />
-        </v-card-item>
+        <template #content>
+            <div class="flex flex-col gap-4 pt-4 sm:min-w-[320px]">
+                <PmFloatLabel variant="in">
+                    <PmInputText
+                        :id="loginInputId"
+                        v-model="login"
+                        class="w-full"
+                        name="login"
+                        @keydown.enter="signIn"
+                    />
+                    <label :for="loginInputId">{{ t("Auth.LoginLabel") }}</label>
+                </PmFloatLabel>
 
-        <v-card-actions>
-            <v-btn variant="tonal" @click.stop="signIn">{{ t("Auth.SignInButton") }}</v-btn>
-            <v-btn variant="tonal" @click.stop="signUp">{{ t("Auth.SignUpButton") }}</v-btn>
-        </v-card-actions>
-    </v-card>
+                <PmFloatLabel variant="in">
+                    <PmInputPassword
+                        v-model="password"
+                        :input-id="passwordInputId"
+                        class="w-full"
+                        name="password"
+                        toggle-mask
+                        :feedback="false"
+                        @keydown.enter="signIn"
+                    />
+                    <label :for="passwordInputId">{{ t("Auth.PasswordLabel") }}</label>
+                </PmFloatLabel>
+            </div>
+        </template>
+
+        <template #footer>
+            <div class="flex gap-2 pt-5">
+                <PmButton class="flex-1 px-6" :label="t('Auth.SignInButton')" raised @click.stop="signIn" />
+                <PmButton
+                    class="min-w-[50%] px-6"
+                    :label="t('Auth.SignUpButton')"
+                    severity="secondary"
+                    variant="outlined"
+                    raised
+                    @click.stop="signUp"
+                />
+            </div>
+        </template>
+    </PmCard>
 </template>

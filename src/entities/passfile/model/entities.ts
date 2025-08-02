@@ -1,9 +1,9 @@
-import { PassFileType } from "~entities/passfile";
+import { PassFileMark, PassFileType } from "~entities/passfile";
 
 /**
  * Passfile entity.
  */
-export interface PassFile<TContent> {
+export interface PassFile<TContent> extends PassFileChangeStamps {
     /**
      *  Identifier.
      */
@@ -30,15 +30,35 @@ export interface PassFile<TContent> {
     color: string | null;
 
     /**
-     * Content version.
-     */
-    version: number;
-
-    /**
      * Timestamp of creation.
      */
     createdOn: Date;
 
+    /**
+     * Timestamp of deletion.
+     */
+    deletedOn?: Date;
+
+    /**
+     * Information about last passfile changes from the server origin.
+     */
+    originChangeStamps?: PassFileChangeStamps;
+
+    /**
+     * Assigned marks.
+     */
+    mark: PassFileMark;
+
+    /**
+     * Content information.
+     */
+    content: PassFileContent<TContent>;
+}
+
+/**
+ * Information about last passfile changes.
+ */
+export interface PassFileChangeStamps {
     /**
      * Timestamp of information change.
      */
@@ -50,9 +70,9 @@ export interface PassFile<TContent> {
     versionChangedOn: Date;
 
     /**
-     * Content information.
+     * Content version.
      */
-    content: PassFileContent<TContent>;
+    version: number;
 }
 
 /**
@@ -85,7 +105,7 @@ export type PassFileContentEmpty = {
     /**
      * No secret key for encrypting/decrypting content.
      */
-    readonly passphrase?: undefined;
+    readonly passPhrase?: undefined;
 };
 
 /**
@@ -105,7 +125,7 @@ export type PassFileContentEncrypted = {
     /**
      * Secret key for encrypting/decrypting content.
      */
-    readonly passphrase: string | undefined;
+    readonly passPhrase: string | undefined;
 };
 
 /**
@@ -125,7 +145,7 @@ export type PassFileContentDecrypted<TContent> = {
     /**
      * Secret key for encrypting/decrypting content.
      */
-    readonly passphrase: string | undefined;
+    readonly passPhrase: string | undefined;
 };
 
 /**

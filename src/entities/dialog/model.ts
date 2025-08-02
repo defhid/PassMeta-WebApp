@@ -1,6 +1,5 @@
 import { createGlobalState } from "@vueuse/shared";
-import { defineComponent, h, type Ref, shallowRef, type VNode } from "vue";
-import { VDialog } from "vuetify/components";
+import { defineComponent, h, shallowRef, type VNode } from "vue";
 import AskTextDialog from "~entities/dialog/ui/AskTextDialog.vue";
 import type { AskTextOptions } from "~entities/dialog/types";
 
@@ -14,23 +13,11 @@ export function useDialogs() {
         let resolve: (result: string | null) => void;
         const promise = new Promise<string | null>((res) => (resolve = res));
 
-        const node = h(
-            VDialog,
-            { eager: true, persistent: true },
-            {
-                default: ({ isActive }: { isActive: Ref<boolean> }) => {
-                    isActive.value = true;
-                    return h(AskTextDialog, {
-                        ...options,
-                        isPassword: true,
-                        onAnswer: (result: string | null) => {
-                            isActive.value = false;
-                            onAnswer(result);
-                        },
-                    });
-                },
-            },
-        );
+        const node = h(AskTextDialog, {
+            ...options,
+            isPassword: true,
+            onAnswer: (result: string | null) => onAnswer(result),
+        });
 
         function onAnswer(result: string | null) {
             currentComponents.value = currentComponents.value.filter((x) => x !== node);

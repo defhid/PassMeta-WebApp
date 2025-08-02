@@ -1,6 +1,10 @@
 import { createI18n } from "vue-i18n";
 import { useAppSettings } from "~/shared/stores/appSettings";
 import { watch } from "vue";
+import type { JsonPaths } from "@intlify/core-base";
+import type enLocale from "~/locales/en.json";
+
+export type LocaleSchema = typeof enLocale;
 
 const settings = useAppSettings();
 
@@ -14,4 +18,6 @@ watch(
     { flush: "sync" },
 );
 
-export const t = i18n.global.t;
+export const t: (resource: LocaleMessage, args?: Record<string, string>) => string = i18n.global.t;
+
+export type LocaleMessage = JsonPaths<LocaleSchema>;

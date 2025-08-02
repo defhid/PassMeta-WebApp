@@ -1,26 +1,34 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
+import { decryptPassFile, type PwdPassFile, type PassFile, type PwdSection } from "~entities/passfile";
 import {
-    PassFileType,
-    decryptPassFile,
-    type PwdPassFile,
-    type PassFile,
-    type PwdSection,
-    PassFileApi,
-} from "~entities/passfile";
-import { makePassFile } from "~features/storage/utils/context";
-import { PassFileListView, PwdSectionListView, PwdSectionView, usePassPhraseAskHelper } from "~features/storage";
+    PassFileListView,
+    PwdSectionListView,
+    PwdSectionView,
+    usePassPhraseAskHelper,
+    usePwdPassFileContext,
+} from "~features/storage";
 import { t } from "~stores";
+import { synchronizePassFiles } from "~features/storage/utils/synchronizer.ts";
+import { useDialogs } from "~entities/dialog";
 
-const passFiles = ref<PwdPassFile[]>([]);
+const context = usePwdPassFileContext();
 
-onMounted(async () => {
-    const { list } = await PassFileApi.getList({ typeId: PassFileType.Pwd });
-    passFiles.value = list.map(makePassFile<PwdSection[]>);
-});
+onMounted(() => synchronizePassFiles(context));
 
 const selected = ref<PwdPassFile>();
 const selectedSection = ref<PwdSection>();
+const selectedSectionEditMode = ref(false);
+const selectedSectionIsNew = ref(false);
+
+watch(
+    selectedSection,
+    () => {
+        selectedSectionEditMode.value = false;
+        selectedSectionIsNew.value = false;
+    },
+    { flush: "sync" },
+);
 
 function openPassFile(passFile: PassFile<unknown>) {
     alert(JSON.stringify(passFile, undefined, 4));
@@ -28,37 +36,117 @@ function openPassFile(passFile: PassFile<unknown>) {
 
 const { askLooped } = usePassPhraseAskHelper();
 
-watch(selected, async (passFile, prevPassFile) => {
-    if (!passFile) {
+watch(
+    selected,
+    async (passFile, prevPassFile) => {
+        if (!passFile) {
+            selectedSection.value = undefined;
+            return;
+        }
+
+        if (passFile.content.decrypted) {
+            return;
+        }
+
+        if (!(await context.provideEncryptedContent(passFile))) {
+            return;
+        }
+
+        const keyPhrase = await askLooped({
+            question: t("Passfile.AskPassphrase"),
+            repeatQuestion: t("Passfile.AskPassphraseAgain"),
+            validator: async (val) => (await decryptPassFile(passFile, val)).ok,
+        });
+
+        if (keyPhrase == null) {
+            selected.value = prevPassFile;
+            return;
+        }
+
         selectedSection.value = undefined;
-        return;
-    }
+    },
+    { flush: "sync" },
+);
 
-    if (passFile.content.decrypted) {
-        return;
-    }
+watch(
+    () => [selected.value, selected.value?.content.decrypted],
+    async (_curr, prev) => {
+        if (selected.value && selected.value === prev[0]) {
+            if (!selected.value.content.decrypted && selected.value.content.passPhrase) {
+                (await context.provideEncryptedContent(selected.value)) &&
+                    (await decryptPassFile(selected.value, selected.value.content.passPhrase));
+            }
+        }
+    },
+);
 
-    passFile.content = {
-        encrypted: await PassFileApi.getVersion({
-            passfileId: passFile.id,
-            version: passFile.version,
-        }),
-        passphrase: undefined,
-    };
+const { askPassword } = useDialogs();
 
-    const keyPhrase = await askLooped({
-        question: t("Passfile.AskPassphrase"),
-        repeatQuestion: t("Passfile.AskPassphraseAgain"),
-        validator: async (val) => (await decryptPassFile(passFile, val)).ok,
+async function addPassfile() {
+    const passPhrase = await askPassword({
+        question: t("Passfile.AskPassphraseForNewPassfile"),
     });
 
-    if (keyPhrase == null) {
-        selected.value = prevPassFile;
+    if (!passPhrase) {
         return;
     }
 
-    selectedSection.value = undefined;
-});
+    const result = await context.create({ passPhrase });
+    if (result.ok) {
+        const passfile = result.data!;
+        passfile.name =
+            `New ${new Date().getFullYear()}${new Date().getMonth() + 1}` +
+            `${new Date().getDate()}-${new Date().getHours()}${new Date().getMinutes()}`;
+
+        const ok = context.updateInfo(passfile);
+        ok && (await synchronizePassFiles(context));
+    }
+}
+
+function addSection() {
+    const section: PwdSection = {
+        id: crypto.randomUUID(),
+        name:
+            `New section ${new Date().getFullYear()}${new Date().getMonth() + 1}` +
+            `${new Date().getDate()}-${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}`,
+        websiteUrl: "",
+        items: [
+            {
+                usernames: [],
+                password: "",
+                remark: "",
+            },
+        ],
+    };
+
+    selected.value?.content.decrypted?.push(section);
+    selectedSection.value = section;
+    selectedSectionIsNew.value = true;
+    selectedSectionEditMode.value = true;
+}
+
+function editSection() {
+    const ok = selected.value && context.updateContent(selected.value);
+    ok && synchronizePassFiles(context);
+}
+
+function deleteSection() {
+    if (selected.value && selectedSection.value) {
+        const sectionId = selectedSection.value.id;
+
+        selected.value.content = {
+            decrypted: selected.value.content.decrypted!.filter((x) => x.id !== sectionId),
+            passPhrase: selected.value.content.passPhrase,
+        };
+
+        if (!selectedSectionIsNew.value) {
+            const ok = context.updateContent(selected.value);
+            ok && synchronizePassFiles(context);
+        }
+
+        selectedSection.value = undefined;
+    }
+}
 </script>
 
 <template>
@@ -67,8 +155,10 @@ watch(selected, async (passFile, prevPassFile) => {
             v-model:selected="selected"
             class="h-full md:block"
             :class="{ hidden: selected }"
-            :pass-files="passFiles"
+            :pass-files="context.currentList.value"
+            :disabled="selectedSectionEditMode"
             @open="openPassFile"
+            @add-passfile="addPassfile"
         />
 
         <PwdSectionListView
@@ -76,15 +166,21 @@ watch(selected, async (passFile, prevPassFile) => {
             v-model:selected="selectedSection"
             class="h-full md:block"
             :class="{ hidden: selectedSection }"
-            :sections="selected?.content.decrypted"
+            :sections="selected.content.decrypted"
+            :disabled="selectedSectionEditMode"
             @back="selected = undefined"
+            @add-section="addSection"
         />
 
         <PwdSectionView
             v-if="selectedSection"
+            v-model:edit-mode="selectedSectionEditMode"
             class="h-full"
             :section="selectedSection"
+            :is-new="selectedSectionIsNew"
             @back="selectedSection = undefined"
+            @edit="editSection"
+            @delete="deleteSection"
         />
     </div>
 </template>

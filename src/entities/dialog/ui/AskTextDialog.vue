@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { AskTextOptions } from "~entities/dialog/types";
-import { onMounted, ref, useTemplateRef } from "vue";
+import { nextTick, onMounted, ref, useId } from "vue";
 import { t } from "~stores";
 
 const props = defineProps<
@@ -14,41 +14,53 @@ const emit = defineEmits<{
 }>();
 
 const textValue = ref("");
-const textField = useTemplateRef("textField");
 
-onMounted(() => textField.value!.focus()); // in addition to autofocus attribute for mobile
+const inputId = useId();
+
+onMounted(() =>
+    nextTick(() => {
+        const input = document.getElementById(inputId) as HTMLInputElement | null;
+        input?.focus(); // IOS autofocus fix
+    }),
+);
 </script>
 
 <template>
-    <v-card class="self-center w-full max-w-[600px]" :title="props.title ?? t('Dialog.DefaultAskTitle')">
-        <div class="mx-4">{{ props.question }}</div>
-        <v-text-field
-            ref="textField"
-            v-model="textValue"
-            class="mx-4 mt-4 mb-2 field-only"
-            autofocus
-            variant="outlined"
-            density="compact"
-            :type="props.isPassword ? 'password' : 'text'"
-            @keydown.enter="emit('answer', textValue ?? '')"
-        />
-        <template #actions>
-            <div class="flex gap-2 pb-2 pr-2">
-                <v-btn
-                    class="ml-auto"
-                    color="primary"
-                    variant="flat"
-                    :text="t('Dialog.BtnOk')"
-                    @click="emit('answer', textValue ?? '')"
+    <PmDialog visible modal keep-in-viewport :closable="false" :header="props.title ?? t('Dialog.DefaultAskTitle')">
+        <div v-focustrap class="w-[50vw] max-w-[500px] flex flex-col gap-2">
+            <div class="flex flex-col gap-3 pb-2">
+                <label class="text-surface-300" :for="inputId">{{ props.question }}</label>
+                <PmInputPassword
+                    v-if="isPassword"
+                    v-model="textValue"
+                    :input-id="inputId"
+                    fluid
+                    autofocus
+                    toggle-mask
+                    :feedback="false"
+                    @keydown.enter="emit('answer', textValue ?? '')"
+                    @keydown.esc="emit('answer', null)"
                 />
-                <v-btn
-                    class="ml-auto"
-                    variant="flat"
-                    color="secondary"
-                    :text="t('Dialog.BtnCancel')"
-                    @click="emit('answer', null)"
+                <PmInputText
+                    v-else
+                    :id="inputId"
+                    v-model="textValue"
+                    fluid
+                    autofocus
+                    @keydown.enter="emit('answer', textValue ?? '')"
+                    @keydown.esc="emit('answer', null)"
                 />
             </div>
-        </template>
-    </v-card>
+
+            <div ref="footer" class="flex gap-2 justify-end">
+                <PmButton class="px-6" :label="t('Dialog.BtnOk')" @click.stop="emit('answer', textValue ?? '')" />
+                <PmButton
+                    class="px-4"
+                    severity="secondary"
+                    :label="t('Dialog.BtnCancel')"
+                    @click.stop="emit('answer', null)"
+                />
+            </div>
+        </div>
+    </PmDialog>
 </template>

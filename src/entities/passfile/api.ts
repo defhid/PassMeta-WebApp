@@ -30,7 +30,13 @@ export const PassFileApi = {
      * Create a new passfile.
      */
     post: RestProtocolFactory.fromGenerated<PassfileDto, PassfileDto>(
-        (api, params) => api.passfiles.ctrlPassfilesNewPost(params),
+        (api, params) =>
+            api.passfiles.ctrlPassfilesNewPost({
+                name: params.name,
+                color: params.color,
+                typeId: params.typeId,
+                createdOn: params.createdOn,
+            }),
         { deserialize: PassFileDtoDeserializer },
     ),
 

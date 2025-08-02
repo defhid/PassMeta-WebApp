@@ -35,7 +35,11 @@
     "Dialog": {
         "BtnCancel": "Отмена",
         "BtnOk": "Ок",
-        "DefaultAskTitle": "Форма ввода"
+        "DefaultAskTitle": "Форма ввода",
+        "DefaultErrorTitle": "Ошибка",
+        "DefaultFailureTitle": "Ошибка",
+        "DefaultInfoTitle": "Информация",
+        "DefaultWarningTitle": "Предупреждение"
     },
     "Generator": {
         "IncludeDigits": "Числа",
@@ -43,6 +47,7 @@
         "IncludeSpecial": "Спец. символы",
         "IncludeUppercase": "Прописные",
         "PasswordLength": "Длина",
+        "ResultCopied": "Пароль скопирован в буфер обмена",
         "Title": "Генератор паролей"
     },
     "History": {
@@ -60,9 +65,19 @@
     "NotFound": {
         "Title": "Страница не найдена :("
     },
+    "Passcontext": {
+        "ErrOther": "Ошибка при работе контекстного менеджера пакетов (см. логи)",
+        "InfoCommited": "Сохранено локально"
+    },
+    "Passervice": {
+        "InfoSynchronized": "Cинхронизировано с сервером",
+        "WarnNeedMerge": "Требуется ручное слияние с удалённой версией!",
+        "WarnSynchronized": "Cинхронизировано с сервером. ВНИМАНИЕ: см. логи"
+    },
     "Passfile": {
         "AskPassphrase": "Введите кодовую фразу",
         "AskPassphraseAgain": "Неверная кодовая фраза, попробуйте ввести заново",
+        "AskPassphraseForNewPassfile": "Введите кодовую фразу для нового пакета",
         "DecryptionError": "Не удаётся расшифровать файл",
         "EncryptionError": "Не удаётся зашифровать файл",
         "Validation": {
@@ -79,6 +94,10 @@
         "Title": "Настройки"
     },
     "Storage": {
+        "ItemInfo": {
+            "PasswordCopied": "Пароль скопирован",
+            "UsernameCopied": "Логин '{username}' скопирован"
+        },
         "ItemPasswordField": {
             "Label": "Пароль"
         },

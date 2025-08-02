@@ -4,6 +4,6 @@ import { t } from "~stores";
 
 <template>
     <div class="mt-6">
-        <h4 class="text-h4 text-center">{{ t("History.Title") }}</h4>
+        <h4 class="text-2xl text-center">{{ t("History.Title") }}</h4>
     </div>
 </template>

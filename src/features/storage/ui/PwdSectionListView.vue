@@ -7,6 +7,7 @@ import { refDebounced } from "@vueuse/shared";
 const props = defineProps<{
     selected?: PwdSection | undefined;
     sections: PwdSection[];
+    disabled: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -31,50 +32,74 @@ const filteredSections = computed(() => {
 
 <template>
     <div class="min-h-0">
-        <div class="flex flex-col justify-items-stretch gap-2 h-full">
+        <div class="grid grid-rows-[auto_1fr] justify-items-stretch gap-2 h-full">
             <div class="flex gap-2 items-center">
                 <div class="md:hidden">
-                    <v-btn icon="mdi-keyboard-backspace" size="small" @click="emit('back')" />
+                    <PmButton
+                        icon="pi pi-arrow-left"
+                        severity="secondary"
+                        size="large"
+                        rounded
+                        variant="outlined"
+                        @click="emit('back')"
+                    />
                 </div>
-                <v-text-field
+                <PmInputText
                     v-model="searchText"
-                    class="field-only"
-                    :label="t('Storage.SectionSearchField.Label')"
-                    clearable
+                    class="search-input"
+                    :placeholder="t('Storage.SectionSearchField.Label')"
+                    size="large"
+                    :disabled
                 />
             </div>
 
-            <v-list
-                class="section-list"
-                density="compact"
-                :selected="[selected]"
-                @update:selected="(sel) => emit('update:selected', sel[0])"
-            >
-                <div class="h-full min-h-0 overflow-y-auto">
-                    <v-list-item v-for="section in filteredSections" :key="section.id" :value="section" color="primary">
-                        <v-list-item-title>{{ section.name }}</v-list-item-title>
-                    </v-list-item>
-                </div>
+            <div class="min-h-0 h-full relative">
+                <PmListbox
+                    class="section-listbox"
+                    :model-value="selected"
+                    :options="filteredSections"
+                    :disabled
+                    list-style="max-height: auto"
+                    option-label="name"
+                    @update:model-value="(sel) => emit('update:selected', sel)"
+                />
 
-                <div class="absolute left-0 right-0 bottom-0">
-                    <v-btn class="btn-add" text="+" variant="tonal" @click.stop="emit('add-section')" />
+                <div v-show="!disabled" class="absolute left-0 right-0 bottom-0 backdrop-blur-[2px]">
+                    <PmButton
+                        class="btn-add"
+                        icon="pi pi-plus"
+                        severity="secondary"
+                        @click.stop="emit('add-section')"
+                    />
                 </div>
-            </v-list>
+            </div>
         </div>
     </div>
 </template>
 
 <style scoped>
-.section-list {
-    @apply h-full pb-8 relative;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+.section-listbox {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    border-radius: var(--p-card-border-radius);
+    background-color: var(--p-card-background);
+    border: none;
+    overflow: hidden;
+    padding: 0.5rem 0;
+
+    --p-listbox-list-padding: 0 0 calc(40px + 0.25rem) 0;
 }
 
 .btn-add {
-    --v-btn-height: 28px;
+    height: 40px;
     width: 100%;
-    font-size: 1.35rem;
-    color: rgba(var(--v-theme-on-surface), 0.4);
+    opacity: 0.5;
+    border-radius: var(--p-card-border-radius);
+}
+
+.search-input {
+    width: 100%;
+    border-radius: var(--p-card-border-radius);
 }
 </style>

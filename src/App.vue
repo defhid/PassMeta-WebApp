@@ -16,7 +16,7 @@ const toastBreakpoints: ToastBreakpointsType = {
 </script>
 
 <template>
-    <v-layout :key="currentUser?.id" class="app-layout">
+    <main :key="currentUser?.id" class="app-layout">
         <NavBar />
 
         <div class="app-content">
@@ -33,7 +33,7 @@ const toastBreakpoints: ToastBreakpointsType = {
 
         <Toast position="bottom-right" :breakpoints="toastBreakpoints" close-icon="pi pi-times" />
         <DialogsContainer />
-    </v-layout>
+    </main>
 </template>
 
 <style scoped>

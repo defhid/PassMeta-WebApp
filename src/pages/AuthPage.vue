@@ -7,7 +7,7 @@ const router = useRouter();
 </script>
 
 <template>
-    <div class="grid h-full w-full justify-center align-center">
+    <div class="grid h-full w-full justify-center items-center">
         <AuthCard @signed="router.push(Routes.Storage.to())" />
     </div>
 </template>

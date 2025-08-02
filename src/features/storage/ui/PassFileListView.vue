@@ -4,6 +4,7 @@ import type { PassFile } from "~entities/passfile";
 defineProps<{
     selected?: PassFile<TContent> | undefined;
     passFiles: PassFile<TContent>[];
+    disabled: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -19,6 +20,7 @@ const emit = defineEmits<{
             class="passfile-listbox"
             :model-value="selected"
             :options="passFiles"
+            :disabled
             @update:model-value="(sel) => emit('update:selected', sel)"
         >
             <template #option="{ option }">
@@ -27,6 +29,7 @@ const emit = defineEmits<{
                         icon="pi pi-file"
                         size="small"
                         :style="{ color: option.color ? '#' + option.color : undefined }"
+                        :disabled
                         rounded
                         raised
                         severity="secondary"
@@ -37,7 +40,7 @@ const emit = defineEmits<{
             </template>
         </PmListbox>
 
-        <div class="absolute left-0 right-0 bottom-0 backdrop-blur-[2px]">
+        <div v-show="!disabled" class="absolute left-0 right-0 bottom-0 backdrop-blur-[2px]">
             <PmButton class="btn-add" icon="pi pi-plus" severity="secondary" @click.stop="emit('add-passfile')" />
         </div>
     </div>

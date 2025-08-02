@@ -155,6 +155,7 @@ function deleteSection() {
             class="h-full md:block"
             :class="{ hidden: selected }"
             :pass-files="context.currentList.value"
+            :disabled="selectedSectionEditMode"
             @open="openPassFile"
             @add-passfile="addPassfile"
         />

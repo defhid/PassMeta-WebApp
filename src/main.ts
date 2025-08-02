@@ -2,7 +2,6 @@ import "~assets/base.css";
 import App from "./App.vue";
 import { createApp } from "vue";
 import localePlugin from "./plugins/localePlugin";
-import vuetifyPlugin from "./plugins/vuetifyPlugin";
 import routerPlugin from "./plugins/routerPlugin";
 import { RestProtocolFactory } from "~api/base/restProtocolFactory";
 import { useAppContext } from "~stores";
@@ -16,7 +15,6 @@ useAppContext().load(GeneralApi.getInfo).then();
 
 const app = createApp(App);
 
-app.use(vuetifyPlugin);
 app.use(primeVuePlugin);
 app.use(routerPlugin);
 app.use(localePlugin);

@@ -7,14 +7,14 @@ const { currentUser, serverId, serverVersion } = useAppContext();
 
 <template>
     <div class="p-4">
-        <h4 v-if="currentUser" class="text-h4 text-center mt-2 mb-7">
+        <h4 v-if="currentUser" class="text-2xl text-center mt-2 mb-7">
             {{ t("Home.TitleKnown") }},
             <RouterLink class="text-primary font-bold" :to="Routes.Account.to()">
                 {{ currentUser!.fullName ?? currentUser!.login }}
             </RouterLink>
         </h4>
 
-        <h4 v-else class="text-h4 text-center mt-2 mb-7">
+        <h4 v-else class="text-2xl text-center mt-2 mb-7">
             {{ t("Home.TitleUnknown") }}
             <button class="logo">
                 <span class="text-surface-500">Pass</span>

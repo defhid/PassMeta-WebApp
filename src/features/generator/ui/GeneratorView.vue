@@ -44,7 +44,7 @@ async function copyPassword() {
 </script>
 
 <template>
-    <div class="flex align-center gap-10 flex-wrap justify-center">
+    <div class="flex items-center gap-10 flex-wrap justify-center">
         <PmCard>
             <template #content>
                 <div class="grid grid-cols-[auto_auto] px-2 pb-2 gap-x-6 gap-y-10 items-center">

@@ -9,7 +9,7 @@ const { closeAllSessions, closeCurrentSession } = useSessionClose();
 
 <template>
     <div class="p-4">
-        <h4 class="text-h4 text-center mt-2">{{ t("Account.Title") }}</h4>
+        <h4 class="text-2xl text-center mt-2">{{ t("Account.Title") }}</h4>
 
         <ViewerInfo
             @close-current-session="closeCurrentSession(Routes.Home.to())"

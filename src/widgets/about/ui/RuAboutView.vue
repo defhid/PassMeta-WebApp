@@ -1,6 +1,6 @@
 <template>
     <div class="py-6 px-2">
-        <h4 class="text-h4 text-center">
+        <h4 class="text-3xl text-center">
             Что такое
             <span class="text-surface-500 font-black">Pass</span>
             <span class="text-primary-400 font-black">Meta</span>?
@@ -12,7 +12,7 @@
             <span class="inline-block text-no-wrap">и современным дизайном 🔥</span>
         </p>
 
-        <h4 class="text-h4 pt-12 pb-8 text-center">Распределённая система</h4>
+        <h4 class="text-3xl pt-12 pb-8 text-center">Распределённая система</h4>
         <div class="flex flex-wrap gap-5 align-start justify-center">
             <PmCard class="max-w-[420px]">
                 <template #title>
@@ -104,21 +104,21 @@
             </PmCard>
         </div>
 
-        <h4 class="text-h4 pt-12 pb-8 text-center">Защита без компромиссов</h4>
+        <h4 class="text-3xl pt-12 pb-8 text-center">Защита без компромиссов</h4>
         <div class="flex justify-center">
-            <ul class="text-xl text-surface-300 flex flex-col gap-5 italic">
-                <li class="flex gap-5 items-center">
-                    <span class="text-primary-400 text-h5">✔</span>
+            <ul class="text-xl text-surface-300 flex flex-col gap-5 italic md:items-center">
+                <li class="flex gap-4 items-center">
+                    <i class="pi pi-verified" />
                     <div>Все пароли хранятся и передаются <strong>только в зашифрованном виде</strong></div>
                 </li>
-                <li class="flex gap-5 items-center">
-                    <span class="text-primary-400 text-h5">✔</span>
+                <li class="flex gap-4 items-center">
+                    <i class="pi pi-verified" />
                     <div>
                         Данные шифруются уникальным алгоритмом с мультипроходом <strong>на основе AES 256</strong>
                     </div>
                 </li>
-                <li class="flex gap-5 items-center">
-                    <span class="text-primary-400 text-h5">✔</span>
+                <li class="flex gap-4 items-center">
+                    <i class="pi pi-verified" />
                     <div>Без знания мастер-пароля <strong>взломать пакет невозможно</strong>*</div>
                 </li>
             </ul>
@@ -130,4 +130,10 @@
         </p>
     </div>
 </template>
+
 <script setup lang="ts"></script>
+<style scoped>
+.pi-verified {
+    @apply text-3xl text-primary-400;
+}
+</style>

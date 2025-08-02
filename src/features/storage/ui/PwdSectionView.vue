@@ -56,7 +56,7 @@ function rollback() {
                         <div class="md:hidden">
                             <PmButton icon="pi pi-arrow-left" severity="secondary" rounded @click.stop="emit('back')" />
                         </div>
-                        <h5 class="text-h5 truncate">{{ localSection.name }}</h5>
+                        <h5 class="text-xl truncate">{{ localSection.name }}</h5>
                     </div>
 
                     <PmButton

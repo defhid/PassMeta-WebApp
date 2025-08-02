@@ -64,7 +64,7 @@ const filteredSections = computed(() => {
                     @update:model-value="(sel) => emit('update:selected', sel)"
                 />
 
-                <div class="absolute left-0 right-0 bottom-0 backdrop-blur-[2px]">
+                <div v-show="!disabled" class="absolute left-0 right-0 bottom-0 backdrop-blur-[2px]">
                     <PmButton
                         class="btn-add"
                         icon="pi pi-plus"

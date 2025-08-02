@@ -22,6 +22,7 @@ import {
     InputIcon,
     Fieldset,
     Listbox,
+    Dialog,
 } from "primevue";
 import { definePreset } from "@primeuix/themes";
 import type { PrimeVueConfiguration } from "@primevue/core/config";
@@ -94,6 +95,7 @@ const primeVuePlugin: Plugin = (app: App) => {
     app.component("PmIconField", IconField);
     app.component("PmFieldset", Fieldset);
     app.component("PmListbox", Listbox);
+    app.component("PmDialog", Dialog);
 
     app.config.globalProperties.$tooltip = (optionsOrText: TooltipOptions | LocaleMessage): TooltipOptions => {
         if (typeof (optionsOrText as LocaleMessage) == "string") {
@@ -124,6 +126,7 @@ declare module "vue" {
         PmIconField: typeof IconField;
         PmFieldset: typeof Fieldset;
         PmListbox: typeof Listbox;
+        PmDialog: typeof Dialog;
     }
 
     export interface GlobalDirectives {

@@ -51,7 +51,7 @@ const toggleProfileMenu = (event: Event) => profileMenu.value!.toggle(event);
                     <img v-tooltip.bottom="$tooltip('Home.Title')" :src="PassMetaIcon" alt="PM" />
                 </RouterLink>
 
-                <div class="flex w-[50%] justify-space-around">
+                <div class="flex w-[50%] justify-around">
                     <RouterLink v-if="isVisible(Routes.Storage)" :to="Routes.Storage.to()">
                         <PmButton
                             v-tooltip.bottom="$tooltip('Storage.Title')"

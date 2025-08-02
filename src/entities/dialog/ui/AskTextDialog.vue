@@ -26,12 +26,8 @@ onMounted(() =>
 </script>
 
 <template>
-    <PmCard v-focustrap class="self-center w-full max-w-[500px]">
-        <template #title>
-            {{ props.title ?? t("Dialog.DefaultAskTitle") }}
-        </template>
-
-        <template #content>
+    <PmDialog visible modal keep-in-viewport :closable="false" :header="props.title ?? t('Dialog.DefaultAskTitle')">
+        <div v-focustrap class="w-[50vw] max-w-[500px] flex flex-col gap-2">
             <div class="flex flex-col gap-3 pb-2">
                 <label class="text-surface-300" :for="inputId">{{ props.question }}</label>
                 <PmInputPassword
@@ -55,9 +51,7 @@ onMounted(() =>
                     @keydown.esc="emit('answer', null)"
                 />
             </div>
-        </template>
 
-        <template #footer>
             <div ref="footer" class="flex gap-2 justify-end">
                 <PmButton class="px-6" :label="t('Dialog.BtnOk')" @click.stop="emit('answer', textValue ?? '')" />
                 <PmButton
@@ -67,6 +61,6 @@ onMounted(() =>
                     @click.stop="emit('answer', null)"
                 />
             </div>
-        </template>
-    </PmCard>
+        </div>
+    </PmDialog>
 </template>

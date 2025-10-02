@@ -9,6 +9,25 @@ import type { AskTextOptions } from "~entities/dialog/types";
 export function useDialogs() {
     const { currentComponents } = useDialogsContainer();
 
+    function askText(options: AskTextOptions): Promise<string | null> {
+        let resolve: (result: string | null) => void;
+        const promise = new Promise<string | null>((res) => (resolve = res));
+
+        const node = h(AskTextDialog, {
+            ...options,
+            isPassword: false,
+            onAnswer: (result: string | null) => onAnswer(result),
+        });
+
+        function onAnswer(result: string | null) {
+            currentComponents.value = currentComponents.value.filter((x) => x !== node);
+            resolve(result);
+        }
+
+        currentComponents.value = [...currentComponents.value, node];
+        return promise;
+    }
+
     function askPassword(options: AskTextOptions): Promise<string | null> {
         let resolve: (result: string | null) => void;
         const promise = new Promise<string | null>((res) => (resolve = res));
@@ -28,7 +47,7 @@ export function useDialogs() {
         return promise;
     }
 
-    return { askPassword };
+    return { askText, askPassword };
 }
 
 /**

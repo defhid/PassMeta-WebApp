@@ -94,6 +94,9 @@
         "Title": "Settings"
     },
     "Storage": {
+        "Confirm": {
+            "DeleteSection": "Do you really want to delete section '{section}'?"
+        },
         "ItemInfo": {
             "PasswordCopied": "Password is copied to clipboard",
             "UsernameCopied": "Login '{username}' is copied to clipboard"
@@ -104,6 +107,10 @@
         "ItemUsernameField": {
             "Label": "Login"
         },
+        "SectionNameField": {
+            "Label": "Name"
+        },
+        "SectionNewName": "New section",
         "SectionSearchField": {
             "Label": "Search passwords..."
         },

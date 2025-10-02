@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { PwdSection } from "~entities/passfile";
+import type { PwdItem, PwdSection } from "~entities/passfile";
 import { normalizeExternalUrl } from "~utils";
 import PwdItemView from "~features/storage/ui/PwdItemView.vue";
-import { ref, watch } from "vue";
+import { ref, toRaw, watch } from "vue";
+import { t } from "~stores";
 
 const props = defineProps<{
     section: PwdSection;
@@ -25,6 +26,35 @@ watch(
     () => (localSection.value = cloneSection()),
 );
 
+function addItem() {
+    !editMode.value && switchEdit();
+
+    localSection.value.items.push({
+        usernames: [],
+        password: "",
+        remark: "",
+    });
+}
+
+function deleteItem(item: PwdItem) {
+    !editMode.value && switchEdit();
+
+    const index = toRaw(localSection.value.items).indexOf(toRaw(item));
+    if (index >= 0) {
+        localSection.value.items.splice(index, 1);
+    }
+}
+
+function moveItem(item: PwdItem, direction: 1 | -1) {
+    !editMode.value && switchEdit();
+
+    const index = toRaw(localSection.value.items).indexOf(toRaw(item));
+    if (index >= 0) {
+        const [tmp] = localSection.value.items.splice(index, 1);
+        localSection.value.items.splice(index + direction, 0, tmp);
+    }
+}
+
 function switchEdit() {
     if (!editMode.value) {
         localSection.value = cloneSection();
@@ -45,13 +75,29 @@ function rollback() {
     }
     editMode.value = false;
 }
+
+function onFocusName(ev: FocusEvent) {
+    if (props.isNew) {
+        const input = ev.target as HTMLInputElement;
+        input.select();
+    }
+}
 </script>
 
 <template>
     <PmCard class="pwd-section-card">
         <template #content>
-            <div class="flex flex-col justify-items-stretch h-full min-h-0">
-                <div class="flex flex-wrap items-center pt-2 pb-1 md:px-3 gap-x-2 gap-y-3">
+            <div v-focustrap class="flex flex-col justify-items-stretch h-full min-h-0">
+                <div v-if="editMode" class="flex flex-col flex-1 gap-2 pt-2">
+                    <PmFloatLabel variant="in">
+                        <PmInputText v-model="localSection.name" autofocus fluid @focus="onFocusName" />
+                        <label>{{ t("Storage.SectionNameField.Label") }}</label>
+                    </PmFloatLabel>
+
+                    <PmInputText v-model="localSection.websiteUrl" placeholder="https://" fluid />
+                </div>
+
+                <div v-else class="flex flex-wrap items-center pt-2 pb-1 md:px-3 gap-x-2 gap-y-3">
                     <div class="grid grid-cols-[auto_auto] items-center gap-3">
                         <div class="md:hidden">
                             <PmButton icon="pi pi-arrow-left" severity="secondary" rounded @click.stop="emit('back')" />
@@ -70,46 +116,43 @@ function rollback() {
                     />
                 </div>
 
-                <div class="h-full overflow-y-auto mt-2.5 md:mt-3 md:px-3">
+                <div class="h-full overflow-y-auto mt-2.5 md:mt-3 md:px-3 pb-4">
                     <div class="grid gap-2 pb-12">
                         <PwdItemView
                             v-for="(item, i) in localSection.items"
                             :key="i"
                             :item="item"
                             :readonly="!editMode"
+                            :can-up="i !== 0"
+                            :can-down="i !== localSection.items.length - 1"
+                            @delete="deleteItem(item)"
+                            @up="moveItem(item, -1)"
+                            @down="moveItem(item, 1)"
                         />
                     </div>
                 </div>
 
                 <div class="flex gap-2 absolute z-10 left-0 right-0 bottom-0 backdrop-blur-[2px]">
-                    <PmButton
-                        v-if="!editMode"
-                        class="btn-edit"
-                        icon="pi pi-sliders-h"
-                        severity="secondary"
-                        @click.stop="switchEdit"
-                    />
-                    <PmButton
-                        v-if="editMode"
-                        class="btn-edit"
-                        icon="pi pi-check"
-                        severity="secondary"
-                        @click.stop="switchEdit"
-                    />
-                    <PmButton
-                        v-if="editMode"
-                        class="btn-edit"
-                        icon="pi pi-times"
-                        severity="secondary"
-                        @click.stop="rollback"
-                    />
-                    <PmButton
-                        v-if="editMode && !props.isNew"
-                        class="btn-edit w-auto min-w-[70px]"
-                        icon="pi pi-trash"
-                        severity="secondary"
-                        @click.stop="emit('delete')"
-                    />
+                    <template v-if="editMode">
+                        <PmButton class="btn-edit" icon="pi pi-check" severity="secondary" @click.stop="switchEdit" />
+                        <PmButton class="btn-edit" icon="pi pi-times" severity="secondary" @click.stop="rollback" />
+                        <PmButton class="btn-edit" icon="pi pi-plus" severity="secondary" @click.stop="addItem" />
+                        <PmButton
+                            v-if="!props.isNew"
+                            class="btn-edit"
+                            icon="pi pi-trash"
+                            severity="danger"
+                            @click.stop="emit('delete')"
+                        />
+                    </template>
+                    <template v-else>
+                        <PmButton
+                            class="btn-edit"
+                            icon="pi pi-sliders-h"
+                            severity="secondary"
+                            @click.stop="switchEdit"
+                        />
+                    </template>
                 </div>
             </div>
         </template>

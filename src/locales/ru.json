@@ -94,6 +94,9 @@
         "Title": "Настройки"
     },
     "Storage": {
+        "Confirm": {
+            "DeleteSection": "Вы действительно хотите удалить группу '{section}'?"
+        },
         "ItemInfo": {
             "PasswordCopied": "Пароль скопирован",
             "UsernameCopied": "Логин '{username}' скопирован"
@@ -104,6 +107,10 @@
         "ItemUsernameField": {
             "Label": "Логин"
         },
+        "SectionNameField": {
+            "Label": "Наименование"
+        },
+        "SectionNewName": "Новая группа",
         "SectionSearchField": {
             "Label": "Поиск паролей..."
         },

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import { decryptPassFile, type PwdPassFile, type PassFile, type PwdSection } from "~entities/passfile";
+import { decryptPassFile, type PwdPassFile, type PwdSection } from "~entities/passfile";
 import {
     PassFileListView,
     PwdSectionListView,
@@ -11,6 +11,7 @@ import {
 import { t } from "~stores";
 import { synchronizePassFiles } from "~features/storage/utils/synchronizer.ts";
 import { useDialogs } from "~entities/dialog";
+import { Ask } from "~utils";
 
 const context = usePwdPassFileContext();
 
@@ -30,21 +31,25 @@ watch(
     { flush: "sync" },
 );
 
-function openPassFile(passFile: PassFile<unknown>) {
-    alert(JSON.stringify(passFile, undefined, 4));
+async function openPassFile(passFile: PwdPassFile) {
+    alert(JSON.stringify({ ...passFile, content: undefined }, undefined, 4));
+
+    const name = await askText({ question: "New passfile name" });
+    if (name) {
+        passFile.name = name;
+        const ok = context.updateInfo(passFile);
+        ok && (await synchronizePassFiles(context));
+    }
 }
 
+const { askText } = useDialogs();
 const { askLooped } = usePassPhraseAskHelper();
 
 watch(
     selected,
     async (passFile, prevPassFile) => {
-        if (!passFile) {
+        if (!passFile || passFile.content.decrypted) {
             selectedSection.value = undefined;
-            return;
-        }
-
-        if (passFile.content.decrypted) {
             return;
         }
 
@@ -106,9 +111,7 @@ async function addPassfile() {
 function addSection() {
     const section: PwdSection = {
         id: crypto.randomUUID(),
-        name:
-            `New section ${new Date().getFullYear()}${new Date().getMonth() + 1}` +
-            `${new Date().getDate()}-${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}`,
+        name: t("Storage.SectionNewName"),
         websiteUrl: "",
         items: [
             {
@@ -130,8 +133,17 @@ function editSection() {
     ok && synchronizePassFiles(context);
 }
 
-function deleteSection() {
+async function deleteSection() {
     if (selected.value && selectedSection.value) {
+        if (!selectedSectionIsNew.value) {
+            const confirmed = await Ask.confirm(
+                t("Storage.Confirm.DeleteSection", { section: selectedSection.value.name }),
+            );
+            if (!confirmed) {
+                return;
+            }
+        }
+
         const sectionId = selectedSection.value.id;
 
         selected.value.content = {

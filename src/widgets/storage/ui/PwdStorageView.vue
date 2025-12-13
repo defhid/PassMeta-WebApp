@@ -9,7 +9,7 @@ import {
     usePwdPassFileContext,
 } from "~features/storage";
 import { t } from "~stores";
-import { synchronizePassFiles } from "~features/storage/utils/synchronizer.ts";
+import { synchronizePassFiles } from "~features/storage/utils/synchronizer";
 import { useDialogs } from "~entities/dialog";
 import { Ask } from "~utils";
 
@@ -74,9 +74,9 @@ watch(
 );
 
 watch(
-    () => [selected.value, selected.value?.content.decrypted],
+    () => [selected.value, selected.value?.content.decrypted, context.isCommiting.value],
     async (_curr, prev) => {
-        if (selected.value && selected.value === prev[0]) {
+        if (!context.isCommiting.value && selected.value && selected.value === prev[0]) {
             if (!selected.value.content.decrypted && selected.value.content.passPhrase) {
                 (await context.provideEncryptedContent(selected.value)) &&
                     (await decryptPassFile(selected.value, selected.value.content.passPhrase));
@@ -131,6 +131,10 @@ function addSection() {
 function editSection() {
     const ok = selected.value && context.updateContent(selected.value);
     ok && synchronizePassFiles(context);
+
+    if (selectedSectionIsNew.value) {
+        selectedSection.value = undefined;
+    }
 }
 
 async function deleteSection() {

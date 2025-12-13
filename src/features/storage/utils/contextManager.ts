@@ -1,7 +1,7 @@
 import { PassFileType, type PwdSection } from "~entities/passfile";
 import { createGlobalState } from "@vueuse/shared";
-import { createPassFileContext, type PassFileContext } from "~features/storage/utils/context";
-import { ref } from "vue";
+import { createPassFileContext, type PassFileContext } from "./context";
+import { useLocalStorageCounter } from "./counter.ts";
 
 /**
  * A manager for working with passfile contexts.
@@ -23,7 +23,7 @@ export interface PassFileContextManager {
  */
 export const usePassFileContextManager = createGlobalState((): PassFileContextManager => {
     const contexts: PassFileContext<unknown>[] = [];
-    const localIdCounter = ref(0); // TODO: localStorage/idb
+    const localIdCounter = useLocalStorageCounter("passFileLocalId");
     const contentFactory = () => [];
 
     function resolveContext(type: PassFileType): PassFileContext<unknown> {

@@ -23,7 +23,7 @@ export async function synchronizePassFiles<TContent>(context: PassFileContext<TC
     let syncWarning = false;
 
     if (context.hasChanges.value) {
-        commited ||= await context.commit();
+        commited = (await context.commit()) || commited;
     } else {
         await context.loadList();
     }
@@ -39,7 +39,7 @@ export async function synchronizePassFiles<TContent>(context: PassFileContext<TC
     }
 
     if (context.hasChanges.value) {
-        commited ||= await context.commit();
+        commited = (await context.commit()) || commited;
     }
 
     if (commited) {
@@ -66,7 +66,7 @@ async function synchronizeInternal<TContent>(
     for (const remote of remotePassFiles) {
         const local = localList.find((x) => x.id === remote.id);
         if (local == null) {
-            everythingOk &&= await onRemoteCreated(remote, context);
+            everythingOk = (await onRemoteCreated(remote, context)) && everythingOk;
             continue;
         }
 
@@ -74,23 +74,24 @@ async function synchronizeInternal<TContent>(
         localList.splice(localList.indexOf(local), 1);
 
         if (isPassFileLocalDeleted(local)) {
-            everythingOk &&= await onLocalDeleted(local, remote, context);
+            everythingOk = (await onLocalDeleted(local, remote, context)) && everythingOk;
             continue;
         }
 
         if (remote.infoChangedOn !== local.infoChangedOn) {
-            everythingOk &&= await onInfoChanged(local, remote, context);
+            everythingOk = (await onInfoChanged(local, remote, context)) && everythingOk;
         }
 
         if (remote.version !== local.version) {
-            everythingOk &&= await onVersionChanged(local, remote, context);
+            everythingOk = (await onVersionChanged(local, remote, context)) && everythingOk;
         }
     }
 
     for (const local of localList) {
-        everythingOk &&= isPassFileLocalCreated(local)
-            ? await OnLocalCreatedAsync(local, context)
-            : await OnRemoteDeletedAsync(local, context);
+        everythingOk =
+            (isPassFileLocalCreated(local)
+                ? await onLocalCreatedAsync(local, context)
+                : await onRemoteDeletedAsync(local, context)) && everythingOk;
     }
 
     return everythingOk;
@@ -203,7 +204,7 @@ async function onVersionChanged<TContent>(
 /**
  * Upload new passfile.
  */
-async function OnLocalCreatedAsync<TContent>(
+async function onLocalCreatedAsync<TContent>(
     local: PassFile<TContent>,
     context: PassFileContext<TContent>,
 ): Promise<boolean> {
@@ -234,7 +235,7 @@ async function OnLocalCreatedAsync<TContent>(
 /**
  * Delete passfile finally.
  */
-function OnRemoteDeletedAsync<TContent>(
+function onRemoteDeletedAsync<TContent>(
     local: PassFile<TContent>,
     context: PassFileContext<TContent>,
 ): Promise<boolean> {

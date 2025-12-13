@@ -1,5 +1,5 @@
 import { t } from "~stores";
-import { Notify } from "~/shared/utils/notify.ts";
+import { Notify } from "~/shared/utils/notify";
 
 /**
  * Use helper methods for working with clipboard.

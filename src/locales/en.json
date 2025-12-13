@@ -65,6 +65,10 @@
     "NotFound": {
         "Title": "Page was not found :("
     },
+    "PassStorage": {
+        "Error": "Passfile local manager error! (see logs)",
+        "VersionNotFoundError": "Passfile local version not found!"
+    },
     "Passcontext": {
         "ErrOther": "Passfile context manager error (see logs)",
         "InfoCommited": "Saved locally"

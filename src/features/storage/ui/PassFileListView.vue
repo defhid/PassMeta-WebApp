@@ -20,6 +20,7 @@ const emit = defineEmits<{
             class="passfile-listbox"
             :model-value="selected"
             :options="passFiles"
+            scroll-height="100%"
             :disabled
             @update:model-value="(sel) => emit('update:selected', sel)"
         >

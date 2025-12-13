@@ -59,7 +59,7 @@ const filteredSections = computed(() => {
                     :model-value="selected"
                     :options="filteredSections"
                     :disabled
-                    list-style="max-height: auto"
+                    scroll-height="100%"
                     option-label="name"
                     @update:model-value="(sel) => emit('update:selected', sel)"
                 />

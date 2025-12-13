@@ -1,5 +1,5 @@
 import { useDialogs } from "~entities/dialog";
-import type { PassfileDto } from "~generated/api.ts";
+import type { PassfileDto } from "~generated/api";
 import { type PassFile, PassFileMark } from "~entities/passfile";
 import { reactive } from "vue";
 

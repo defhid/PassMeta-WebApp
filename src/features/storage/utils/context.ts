@@ -7,9 +7,9 @@ import {
     PassFileMark,
     PassFileType,
 } from "~entities/passfile";
-import { computed, reactive, ref, type Ref, shallowReactive, toRaw } from "vue";
+import { computed, reactive, ref, type Ref, shallowReactive, toRaw, watch } from "vue";
 import { t, useAppContext } from "~stores";
-import { type PassFileLocalDto, usePassFileLocalStorage } from "~features/storage/utils/passFileLocalStorage.ts";
+import { type PassFileLocalDto, usePassFileLocalStorage } from "./passFileLocalStorage";
 import { Notify } from "~utils";
 import { type IResult, Result } from "~infra";
 import { assert } from "@vueuse/shared";
@@ -32,6 +32,11 @@ export interface PassFileContext<TContent> {
      * Does current list have any change.
      */
     hasChanges: Readonly<Ref<boolean>>;
+
+    /**
+     * Indicator of commiting process.
+     */
+    isCommiting: Readonly<Ref<boolean>>;
 
     /**
      * Load current list if it hasn't been loaded yet,
@@ -159,6 +164,7 @@ export function createPassFileContext<TContent>({
     let initialized = false;
     const states = shallowReactive(new Map<number, PassFileState<TContent>>());
     const hasChanges = ref(false);
+    const commitingPromise = ref<Promise<boolean>>();
 
     const currentList = computed(() => [...states.values()].filter((x) => x.current != null).map((x) => x.current!));
 
@@ -174,6 +180,10 @@ export function createPassFileContext<TContent>({
                 !x.current ||
                 x.source.infoChangedOn.getTime() !== x.current.infoChangedOn.getTime() ||
                 x.source.versionChangedOn.getTime() !== x.current.versionChangedOn.getTime() ||
+                x.source.originChangeStamps?.infoChangedOn.getTime() !==
+                    x.current.originChangeStamps?.infoChangedOn.getTime() ||
+                x.source.originChangeStamps?.versionChangedOn.getTime() !==
+                    x.current.originChangeStamps?.versionChangedOn.getTime() ||
                 x.source.deletedOn?.getTime() !== x.current.deletedOn?.getTime(),
         );
 
@@ -375,41 +385,61 @@ export function createPassFileContext<TContent>({
             return unexpectedError("Current user is not defined");
         }
 
-        const toSaveList: PassFile<TContent>[] = [];
-        const toSaveContent: PassFile<TContent>[] = [];
-        const toDeleteContent: { passFile: PassFile<TContent>; version: number }[] = [];
-
-        for (const state of states.values()) {
-            if (state.current == null) {
-                continue;
-            }
-
-            if (state.current.versionChangedOn.getTime() !== state.source?.versionChangedOn.getTime()) {
-                const res = await provideEncryptedContent(state.current);
-                if (!res) return res;
-
-                toSaveContent.push(state.current);
-            }
-
-            toSaveList.push(state.current);
+        while (commitingPromise.value) {
+            await commitingPromise.value;
         }
 
-        for (const passFile of toSaveContent) {
-            const res = await pfLocalStorage.getVersions(passFile.id);
-            if (res.bad) {
-                unexpectedError(`${getPassFileIdentityString(passFile)}: ${res.message}`, false);
-                continue;
+        commitingPromise.value = (async () => {
+            const toSaveList: PassFile<TContent>[] = [];
+            const toSaveContent: PassFile<TContent>[] = [];
+            const toDeleteContent: { passFile: PassFile<TContent>; version: number }[] = [];
+
+            for (const state of states.values()) {
+                if (state.current == null) {
+                    continue;
+                }
+
+                if (state.current.versionChangedOn.getTime() !== state.source?.versionChangedOn.getTime()) {
+                    const res = await provideEncryptedContent(state.current);
+                    if (!res) return res;
+
+                    toSaveContent.push(state.current);
+                }
+
+                toSaveList.push(state.current);
             }
 
-            toDeleteContent.push(
-                ...res
-                    .data!.sort((a, b) => b - a)
-                    .slice(KEEP_PASSFILE_VERSIONS)
-                    .map((version) => ({ passFile, version })),
-            );
-        }
+            for (const passFile of toSaveContent) {
+                const unwatch = watch(passFile, () => {}, {
+                    onTrigger: () => {
+                        debugger;
+                    },
+                });
 
-        return await commitInternal(toSaveList, toSaveContent, toDeleteContent);
+                const res = await pfLocalStorage.getVersions(passFile.id);
+                if (res.bad) {
+                    unexpectedError(`${getPassFileIdentityString(passFile)}: ${res.message}`, false);
+                    continue;
+                }
+
+                toDeleteContent.push(
+                    ...res
+                        .data!.sort((a, b) => b - a)
+                        .slice(KEEP_PASSFILE_VERSIONS)
+                        .map((version) => ({ passFile, version })),
+                );
+
+                unwatch();
+            }
+
+            return await commitInternal(toSaveList, toSaveContent, toDeleteContent);
+        })();
+
+        try {
+            return await commitingPromise.value;
+        } finally {
+            commitingPromise.value = undefined;
+        }
     }
 
     async function commitInternal(
@@ -448,7 +478,7 @@ export function createPassFileContext<TContent>({
         states.clear();
         for (const source of toSaveList) {
             states.set(source.id, {
-                source,
+                source: clonePassFile(source),
                 current: source,
             });
         }
@@ -484,6 +514,7 @@ export function createPassFileContext<TContent>({
         passFileType: type,
         currentList,
         hasChanges,
+        isCommiting: computed(() => commitingPromise.value != null),
         loadList,
         loadEncryptedContent,
         provideEncryptedContent,

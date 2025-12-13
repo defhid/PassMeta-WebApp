@@ -22,7 +22,7 @@ const routerPlugin: Plugin = (app: App) => {
     });
 
     watch(
-        [currentUser.value, isContextLoaded.value],
+        [currentUser, isContextLoaded],
         ([user, loaded]: [UserDto | undefined, boolean]) => ensureRouteLegal(router, user, loaded),
         { immediate: true },
     );

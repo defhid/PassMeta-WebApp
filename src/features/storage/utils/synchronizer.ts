@@ -11,49 +11,58 @@ import {
     PassFileMark,
     PassFileType,
 } from "~entities/passfile";
-import { hasFlag, Notify } from "~utils";
+import { hasFlag, Notify, usingProgress } from "~utils";
 import { t } from "~stores";
+import { ref } from "vue";
+
+/**
+ * Global passfile synchronization indicator.
+ */
+export const isPassFileSyncing = ref(false);
 
 /**
  * Synchronize local and remote passfiles.
  */
-export async function synchronizePassFiles<TContent>(context: PassFileContext<TContent>): Promise<void> {
-    let commited = false;
-    let synced = false;
-    let syncWarning = false;
+export const synchronizePassFiles = usingProgress(
+    isPassFileSyncing,
+    async <TContent>(context: PassFileContext<TContent>): Promise<void> => {
+        let commited = false;
+        let synced = false;
+        let syncWarning = false;
 
-    if (context.hasChanges.value) {
-        commited = (await context.commit()) || commited;
-    } else {
-        await context.loadList();
-    }
-
-    const remoteList = await PassFileApi.getList.silent({ typeId: PassFileType.Pwd });
-    if (remoteList.ok) {
-        syncWarning = !(await synchronizeInternal(
-            context,
-            context.currentList.value,
-            remoteList.data.list.map(makePassFile),
-        ));
-        synced = true;
-    }
-
-    if (context.hasChanges.value) {
-        commited = (await context.commit()) || commited;
-    }
-
-    if (commited) {
-        Notify.info(t("Passcontext.InfoCommited"));
-    }
-
-    if (synced) {
-        if (syncWarning) {
-            Notify.failure(t("Passervice.WarnSynchronized"), { presenter: "popup" });
+        if (context.hasChanges.value) {
+            commited = (await context.commit()) || commited;
         } else {
-            Notify.info(t("Passervice.InfoSynchronized"));
+            await context.loadList();
         }
-    }
-}
+
+        const remoteList = await PassFileApi.getList.silent({ typeId: PassFileType.Pwd });
+        if (remoteList.ok) {
+            syncWarning = !(await synchronizeInternal(
+                context,
+                context.currentList.value,
+                remoteList.data.list.map(makePassFile),
+            ));
+            synced = true;
+        }
+
+        if (context.hasChanges.value) {
+            commited = (await context.commit()) || commited;
+        }
+
+        if (commited) {
+            Notify.success(t("Passcontext.InfoCommited"));
+        }
+
+        if (synced) {
+            if (syncWarning) {
+                Notify.failure(t("Passervice.WarnSynchronized"), { presenter: "popup" });
+            } else {
+                Notify.success(t("Passervice.InfoSynchronized"));
+            }
+        }
+    },
+);
 
 async function synchronizeInternal<TContent>(
     context: PassFileContext<TContent>,

@@ -3,6 +3,8 @@ import { t, useAppContext } from "~stores";
 import { Routes } from "~routing";
 
 const { currentUser, serverId, serverVersion } = useAppContext();
+
+const appVersion = APP_VERSION;
 </script>
 
 <template>
@@ -29,6 +31,9 @@ const { currentUser, serverId, serverVersion } = useAppContext();
 
                 <b>{{ t("Home.LabelServerVersion") }}:</b>
                 <i class="text-medium-emphasis">{{ serverVersion }}</i>
+
+                <b>{{ t("Home.LabelFrontendVersion") }}:</b>
+                <i class="text-medium-emphasis">{{ appVersion }}</i>
             </div>
 
             <div class="flex gap-4">

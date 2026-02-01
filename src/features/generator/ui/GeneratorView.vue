@@ -39,7 +39,7 @@ const { copyTextToClipboard } = useClipboardHelper();
 async function copyPassword() {
     const ok = await copyTextToClipboard(currentGenerated.value);
 
-    ok && Notify.info(t("Generator.ResultCopied"));
+    ok && Notify.success(t("Generator.ResultCopied"));
 }
 </script>
 

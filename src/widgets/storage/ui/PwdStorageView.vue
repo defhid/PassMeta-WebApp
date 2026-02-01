@@ -9,7 +9,7 @@ import {
     usePwdPassFileContext,
 } from "~features/storage";
 import { t } from "~stores";
-import { synchronizePassFiles } from "~features/storage/utils/synchronizer";
+import { isPassFileSyncing, synchronizePassFiles } from "~features/storage";
 import { useDialogs } from "~entities/dialog";
 import { Ask } from "~utils";
 
@@ -172,7 +172,7 @@ async function deleteSection() {
             class="h-full md:block"
             :class="{ hidden: selected }"
             :pass-files="context.currentList.value"
-            :disabled="selectedSectionEditMode"
+            :disabled="selectedSectionEditMode || isPassFileSyncing"
             @open="openPassFile"
             @add-passfile="addPassfile"
         />
@@ -183,7 +183,7 @@ async function deleteSection() {
             class="h-full md:block"
             :class="{ hidden: selectedSection }"
             :sections="selected.content.decrypted"
-            :disabled="selectedSectionEditMode"
+            :disabled="selectedSectionEditMode || isPassFileSyncing"
             @back="selected = undefined"
             @add-section="addSection"
         />

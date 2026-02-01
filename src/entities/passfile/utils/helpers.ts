@@ -51,7 +51,10 @@ export function isPassFileLocalDeleted(passFile: PassFile<unknown>): boolean {
  * Is passfile information changed locally, but not uploaded on the server?
  */
 export function isPassFileLocalInfoFieldsChanged(passFile: PassFile<unknown>): boolean {
-    return passFile.originChangeStamps == null || passFile.originChangeStamps.infoChangedOn !== passFile.infoChangedOn;
+    return (
+        passFile.originChangeStamps == null ||
+        passFile.originChangeStamps.infoChangedOn.getTime() !== passFile.infoChangedOn.getTime()
+    );
 }
 
 /**
@@ -60,7 +63,7 @@ export function isPassFileLocalInfoFieldsChanged(passFile: PassFile<unknown>): b
 export function isPassFileLocalVersionFieldsChanged(passFile: PassFile<unknown>): boolean {
     return (
         passFile.originChangeStamps == null ||
-        passFile.originChangeStamps.versionChangedOn !== passFile.versionChangedOn
+        passFile.originChangeStamps.versionChangedOn.getTime() !== passFile.versionChangedOn.getTime()
     );
 }
 

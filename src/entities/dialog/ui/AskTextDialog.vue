@@ -2,6 +2,7 @@
 import type { AskTextOptions } from "~entities/dialog/types";
 import { nextTick, onMounted, ref, useId } from "vue";
 import { t } from "~stores";
+import { useMobileFirstBreakpoints } from "~utils";
 
 const props = defineProps<
     AskTextOptions & {
@@ -13,8 +14,10 @@ const emit = defineEmits<{
     (e: "answer", result: string | null): void;
 }>();
 
-const textValue = ref("");
+const { md } = useMobileFirstBreakpoints();
+const isFocused = ref(true);
 
+const textValue = ref("");
 const inputId = useId();
 
 onMounted(() =>
@@ -26,7 +29,14 @@ onMounted(() =>
 </script>
 
 <template>
-    <PmDialog visible modal keep-in-viewport :closable="false" :header="props.title ?? t('Dialog.DefaultAskTitle')">
+    <PmDialog
+        visible
+        modal
+        keep-in-viewport
+        :closable="false"
+        :position="md || !isFocused ? 'center' : 'top'"
+        :header="props.title ?? t('Dialog.DefaultAskTitle')"
+    >
         <div v-focustrap class="w-[80vw] max-w-[500px] flex flex-col gap-2">
             <div class="flex flex-col gap-3 pb-2">
                 <label class="text-surface-300" :for="inputId">{{ props.question }}</label>
@@ -40,6 +50,8 @@ onMounted(() =>
                     :feedback="false"
                     @keydown.enter="emit('answer', textValue ?? '')"
                     @keydown.esc="emit('answer', null)"
+                    @focus="isFocused = true"
+                    @blur="isFocused = false"
                 />
                 <PmInputText
                     v-else
@@ -49,6 +61,8 @@ onMounted(() =>
                     autofocus
                     @keydown.enter="emit('answer', textValue ?? '')"
                     @keydown.esc="emit('answer', null)"
+                    @focus="isFocused = true"
+                    @blur="isFocused = false"
                 />
             </div>
 

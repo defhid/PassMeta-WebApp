@@ -56,6 +56,33 @@ const primeVuePlugin: Plugin = (app: App) => {
                     },
                 },
             },
+            formField: {
+                borderRadius: "{borderRadius.xl}",
+            },
+            list: {
+                option: {
+                    borderRadius: "{borderRadius.xl}",
+                },
+            },
+            content: {
+                borderRadius: "{borderRadius.xl}",
+            },
+            navigation: {
+                item: {
+                    borderRadius: "{borderRadius.xl}",
+                },
+            },
+            overlay: {
+                select: {
+                    borderRadius: "{borderRadius.xl}",
+                },
+                popover: {
+                    borderRadius: "{borderRadius.xl}",
+                },
+                modal: {
+                    borderRadius: "{borderRadius.xl}",
+                },
+            },
         },
     });
 

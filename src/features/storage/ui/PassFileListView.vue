@@ -52,7 +52,6 @@ const emit = defineEmits<{
     display: grid;
     grid-template-rows: auto 1fr;
     height: 100%;
-    border-radius: var(--p-card-border-radius);
     background-color: var(--p-card-background);
     border: none;
     overflow: hidden;
@@ -65,6 +64,5 @@ const emit = defineEmits<{
     height: 40px;
     width: 100%;
     opacity: 0.5;
-    border-radius: var(--p-card-border-radius);
 }
 </style>

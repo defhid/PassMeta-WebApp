@@ -7,6 +7,7 @@ import { useSessionClose } from "~entities/backend";
 import { computed, useTemplateRef } from "vue";
 import type { MenuItem } from "primevue/menuitem";
 import type { RouteInfo } from "~infra";
+import { isPassFileSyncing } from "~features/storage";
 
 const { currentRoute } = useRouter();
 const { currentUser } = useAppContext();
@@ -47,7 +48,11 @@ const toggleProfileMenu = (event: Event) => profileMenu.value!.toggle(event);
     <PmCard class="nav-bar">
         <template #content>
             <div class="flex justify-between items-center">
-                <RouterLink class="mx-3 w-[48px] min-w-[48px]" :to="Routes.Home.to()">
+                <RouterLink
+                    class="mx-3 w-[48px] min-w-[48px]"
+                    :class="{ 'passmeta-logo-progress': isPassFileSyncing }"
+                    :to="Routes.Home.to()"
+                >
                     <img v-tooltip.bottom="$tooltip('Home.Title')" :src="PassMetaIcon" alt="PM" />
                 </RouterLink>
 
@@ -107,5 +112,22 @@ const toggleProfileMenu = (event: Event) => profileMenu.value!.toggle(event);
 .nav-bar {
     width: 100%;
     --p-card-body-padding: 6px 4px;
+}
+
+@keyframes scalePulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.8);
+        filter: brightness(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.passmeta-logo-progress {
+    animation: scalePulse 2s ease-in-out infinite;
 }
 </style>

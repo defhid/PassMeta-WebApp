@@ -19,7 +19,7 @@ const localePlugin: Plugin = (app: App) => {
         const paramsLocale = to.params.locale as string | undefined;
 
         if (paramsLocale == null) {
-            return { path: "/" + settings.locale + to.path };
+            return { path: "/" + settings.locale + "/" + to.path.replace(/^[\/\s]+/g, "") };
         }
 
         if (!to.name) {

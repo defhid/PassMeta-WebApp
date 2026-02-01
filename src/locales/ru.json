@@ -38,7 +38,7 @@
         "DefaultAskTitle": "Форма ввода",
         "DefaultErrorTitle": "Ошибка",
         "DefaultFailureTitle": "Ошибка",
-        "DefaultInfoTitle": "Информация",
+        "DefaultSuccessTitle": "Успешно",
         "DefaultWarningTitle": "Предупреждение"
     },
     "Generator": {
@@ -58,6 +58,7 @@
         "BtnAuthorize": "Войти в систему",
         "LabelServerId": "ID сервера",
         "LabelServerVersion": "Версия сервера",
+        "LabelFrontendVersion": "Версия UI",
         "Title": "Главная",
         "TitleKnown": "Привет",
         "TitleUnknown": "Добро пожаловать в"
@@ -116,7 +117,7 @@
         },
         "SectionNewName": "Новая группа",
         "SectionSearchField": {
-            "Label": "Поиск паролей..."
+            "Label": "Поиск..."
         },
         "Title": "Хранилище"
     }

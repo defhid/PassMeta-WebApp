@@ -20,10 +20,18 @@ const searchText = ref("");
 const searchTextDebounced = refDebounced(searchText, 700);
 
 const filteredSections = computed(() => {
-    const text = searchTextDebounced.value?.trim().toLowerCase();
+    const textRaw = searchTextDebounced.value;
+    const text = textRaw?.trim().toLowerCase();
+    const textAsRemark = text?.startsWith("#") ? text.slice(1, text.length) : null;
 
     const list = text
-        ? props.sections.filter((x) => x.name.toLowerCase().includes(text) || x.websiteUrl.toLowerCase().includes(text))
+        ? props.sections.filter(
+              (x) =>
+                  x.name.toLowerCase().includes(text) ||
+                  x.websiteUrl.toLowerCase().includes(text) ||
+                  (textAsRemark && x.items.some((x) => x.remark.toLowerCase().startsWith(textAsRemark))) ||
+                  x.items.some((x) => x.password === textRaw),
+          )
         : [...props.sections];
 
     return list.sort((a, b) => (a.name < b.name ? -1 : 1));
@@ -49,6 +57,7 @@ const filteredSections = computed(() => {
                     class="search-input"
                     :placeholder="t('Storage.SectionSearchField.Label')"
                     size="large"
+                    type="search"
                     :disabled
                 />
             </div>
@@ -82,7 +91,6 @@ const filteredSections = computed(() => {
     display: grid;
     grid-template-rows: auto 1fr;
     height: 100%;
-    border-radius: var(--p-card-border-radius);
     background-color: var(--p-card-background);
     border: none;
     overflow: hidden;
@@ -91,15 +99,21 @@ const filteredSections = computed(() => {
     --p-listbox-list-padding: 0 0 calc(40px + 0.25rem) 0;
 }
 
+:deep(.p-listbox-option) {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .btn-add {
     height: 40px;
     width: 100%;
     opacity: 0.5;
-    border-radius: var(--p-card-border-radius);
 }
 
 .search-input {
     width: 100%;
-    border-radius: var(--p-card-border-radius);
+    --p-inputtext-lg-font-size: 1rem;
 }
 </style>

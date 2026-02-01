@@ -17,7 +17,7 @@ export function useSessionClose() {
 
         await AuthApi.resetAllExceptMe();
 
-        Notify.info(t("Account.SuccessResetSessions"));
+        Notify.success(t("Account.SuccessResetSessions"));
     }
 
     async function closeCurrentSession(redirectTo: RouteLocationRaw) {

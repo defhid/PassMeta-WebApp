@@ -38,7 +38,7 @@
         "DefaultAskTitle": "Input form",
         "DefaultErrorTitle": "Error",
         "DefaultFailureTitle": "Failure",
-        "DefaultInfoTitle": "Information",
+        "DefaultSuccessTitle": "Success",
         "DefaultWarningTitle": "Warning"
     },
     "Generator": {
@@ -58,6 +58,7 @@
         "BtnAuthorize": "Log in to the system",
         "LabelServerId": "Server ID",
         "LabelServerVersion": "Server version",
+        "LabelFrontendVersion": "UI version",
         "Title": "Home",
         "TitleKnown": "Hello",
         "TitleUnknown": "Welcome to"
@@ -116,7 +117,7 @@
         },
         "SectionNewName": "New section",
         "SectionSearchField": {
-            "Label": "Search passwords..."
+            "Label": "Search..."
         },
         "Title": "Storage"
     }

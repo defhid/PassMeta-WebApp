@@ -2,17 +2,14 @@
 import { useAppContext } from "~stores";
 import { NavBar } from "~pages";
 import { DialogsContainer } from "~entities/dialog";
-import Toast, { type ToastBreakpointsType } from "primevue/toast";
-import { initNotify } from "~utils";
+import Toast from "primevue/toast";
+import { initNotify, useMobileFirstBreakpoints } from "~utils";
 
 const { currentUser, isContextLoaded, isContextLoading } = useAppContext();
 
 initNotify();
 
-const toastBreakpoints: ToastBreakpointsType = {
-    "200px": { width: "75vw" },
-    "500px": { width: "calc(100vw - 40px)" },
-};
+const { md } = useMobileFirstBreakpoints();
 </script>
 
 <template>
@@ -27,11 +24,11 @@ const toastBreakpoints: ToastBreakpointsType = {
             </RouterView>
 
             <div v-if="isContextLoading" class="absolute top-0 w-full h-full flex justify-center items-center pb-10">
-                <PmProgressSpinner indeterminate />
+                <PmProgressSpinner class="app-progress-spinner" indeterminate />
             </div>
         </div>
 
-        <Toast class="app-toast" position="bottom-right" :breakpoints="toastBreakpoints" close-icon="pi pi-times" />
+        <Toast class="app-toast" :position="md ? 'top-right' : 'bottom-center'" close-icon="pi pi-times" />
         <DialogsContainer />
     </main>
 </template>
@@ -52,14 +49,37 @@ const toastBreakpoints: ToastBreakpointsType = {
     height: 100%;
     overflow-y: auto;
 }
+
+.app-progress-spinner {
+    width: 75px;
+}
 </style>
 
 <style>
 .app-toast {
-    --p-toast-border-radius: 14px;
-    transform: translateY(15px);
+    --p-toast-summary-font-size: 0.95rem;
+    --p-toast-detail-font-size: 0.8rem;
+    --p-toast-text-gap: 0.1rem;
+    --p-toast-icon-size: 1.1rem;
+    --p-toast-close-icon-size: 0.85rem;
+    --p-toast-content-padding: 0.5rem;
+    --p-toast-content-gap: 0.45rem;
+    transform: translateY(56px) translateX(12px);
 }
+
 .p-toast-message-text {
     margin-top: -3px;
+}
+
+@media all and (width <= 500px) {
+    .app-toast {
+        --p-toast-width: calc(100vw - 1.5rem);
+    }
+}
+
+@media all and (width <= 768px) {
+    .app-toast {
+        margin-bottom: calc(0.65rem + clamp(0.5rem, env(safe-area-inset-bottom, 0.5rem), 2rem));
+    }
 }
 </style>

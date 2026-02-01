@@ -4,3 +4,4 @@ export { default as PwdSectionView } from "./ui/PwdSectionView.vue";
 export * from "./utils/context";
 export * from "./utils/contextManager";
 export * from "./utils/helpers";
+export * from "./utils/synchronizer";

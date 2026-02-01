@@ -103,7 +103,7 @@ function onFocusName(ev: FocusEvent) {
 
             <div v-else class="flex flex-wrap items-center pt-2 pb-1 md:px-3 gap-x-2 gap-y-3">
                 <div class="grid grid-cols-[auto_auto] items-center gap-3">
-                    <div class="md:hidden">
+                    <div class="md:hidden pl-2">
                         <PmButton icon="pi pi-arrow-left" severity="secondary" rounded @click.stop="emit('back')" />
                     </div>
                     <h5 class="text-xl truncate">{{ localSection.name }}</h5>

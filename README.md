@@ -1,6 +1,6 @@
 # PassMeta Web App
 
-#### © 2025 Vladislav Mironov
+#### © 2026 Vladislav Mironov
 
 ## About the project
 

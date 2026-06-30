@@ -37,7 +37,7 @@ async function copyPassword() {
                     {{ t("Storage.ItemUsernameField.Label") }}<br />
                     <span class="h-0 block invisible">{{ t("Storage.ItemPasswordField.Label") }}</span>
                 </label>
-                <span class="break-words min-w-0">{{ item.usernames.join(", ") }}</span>
+                <span class="break-words min-w-0 leading-5">{{ item.usernames.join(", ") }}</span>
                 <PmButton
                     icon="pi pi-clone"
                     class="justify-self-end"
@@ -58,7 +58,7 @@ async function copyPassword() {
                         />
                     </div>
                 </template>
-                <span v-else class="text-primary font-bold">{{ item.password }}</span>
+                <span v-else class="text-primary font-bold break-all leading-5">{{ item.password }}</span>
                 <div class="flex gap-3">
                     <PmButton
                         :icon="hidePassword ? 'pi pi-eye-slash' : 'pi pi-eye'"

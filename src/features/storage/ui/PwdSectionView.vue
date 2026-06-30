@@ -112,7 +112,7 @@ function onFocusName(ev: FocusEvent) {
                 <PmButton
                     v-if="localSection.websiteUrl"
                     variant="outlined"
-                    class="italic"
+                    class="italic break-all leading-5"
                     size="small"
                     :label="localSection.websiteUrl"
                     as="a"

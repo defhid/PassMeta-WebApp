@@ -118,6 +118,7 @@ function addSection() {
                 usernames: [],
                 password: "",
                 remark: "",
+                totp: null,
             },
         ],
     };

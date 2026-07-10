@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { t, useAppSettings } from "~stores";
 import type { PwdItem } from "~entities/passfile";
-import { Notify, useClipboardHelper } from "~utils";
+import { Notify, useClipboardHelper, useTotpCalculation } from "~utils";
 import { ref } from "vue";
 import KeyIcon from "~assets/icons/Key.vue";
 
@@ -25,6 +25,18 @@ async function copyPassword() {
 
     ok && Notify.success(t("Storage.ItemInfo.PasswordCopied"));
 }
+
+async function copyOtp() {
+    if (!otp.value) {
+        return;
+    }
+
+    const ok = await copyTextToClipboard(otp.value.password);
+
+    ok && Notify.success(t("Storage.ItemInfo.OtpCopied"));
+}
+
+const { otp } = useTotpCalculation(() => props.item.totp, 2);
 </script>
 
 <template>
@@ -69,6 +81,23 @@ async function copyPassword() {
                     />
                     <PmButton icon="pi pi-clone" severity="secondary" size="small" @click.stop="copyPassword" />
                 </div>
+            </template>
+
+            <template v-if="otp">
+                <label class="unselectable text-muted-color">{{ t("Storage.ItemTotpField.Label") }}</label>
+                <span class="text-primary font-bold break-all leading-5">
+                    {{ otp.password }}
+                    <span class="text-muted-color">
+                        <i class="pi pi-stopwatch ml-1" style="font-size: 0.8rem" /> {{ otp.lifetimeSeconds }}
+                    </span>
+                </span>
+                <PmButton
+                    class="justify-self-end"
+                    icon="pi pi-clone"
+                    severity="secondary"
+                    size="small"
+                    @click.stop="copyOtp"
+                />
             </template>
         </div>
     </div>

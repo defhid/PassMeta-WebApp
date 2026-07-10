@@ -56,9 +56,9 @@
     "Home": {
         "BtnAbout": "More about PassMeta",
         "BtnAuthorize": "Log in to the system",
+        "LabelFrontendVersion": "UI version",
         "LabelServerId": "Server ID",
         "LabelServerVersion": "Server version",
-        "LabelFrontendVersion": "UI version",
         "Title": "Home",
         "TitleKnown": "Hello",
         "TitleUnknown": "Welcome to"
@@ -103,11 +103,15 @@
             "DeleteSection": "Do you really want to delete section '{section}'?"
         },
         "ItemInfo": {
+            "OtpCopied": "Code is copied to clipboard",
             "PasswordCopied": "Password is copied to clipboard",
             "UsernameCopied": "Login '{username}' is copied to clipboard"
         },
         "ItemPasswordField": {
             "Label": "Password"
+        },
+        "ItemTotpField": {
+            "Label": "Code"
         },
         "ItemUsernameField": {
             "Label": "Login"

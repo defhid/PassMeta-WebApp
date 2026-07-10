@@ -56,9 +56,9 @@
     "Home": {
         "BtnAbout": "Узнать больше о PassMeta",
         "BtnAuthorize": "Войти в систему",
+        "LabelFrontendVersion": "Версия UI",
         "LabelServerId": "ID сервера",
         "LabelServerVersion": "Версия сервера",
-        "LabelFrontendVersion": "Версия UI",
         "Title": "Главная",
         "TitleKnown": "Привет",
         "TitleUnknown": "Добро пожаловать в"
@@ -103,11 +103,15 @@
             "DeleteSection": "Вы действительно хотите удалить группу '{section}'?"
         },
         "ItemInfo": {
+            "OtpCopied": "Код скопирован",
             "PasswordCopied": "Пароль скопирован",
             "UsernameCopied": "Логин '{username}' скопирован"
         },
         "ItemPasswordField": {
             "Label": "Пароль"
+        },
+        "ItemTotpField": {
+            "Label": "Код"
         },
         "ItemUsernameField": {
             "Label": "Логин"

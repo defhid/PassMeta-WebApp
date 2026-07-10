@@ -3,7 +3,8 @@ import { type IDetailedResult, Result } from "~infra";
 import { t } from "~stores";
 import { PassFileType } from "~entities/passfile/model/enums";
 import type { PwdItemDto, PwdSectionDto } from "~entities/passfile/model/dtos";
-import { PassMetaCrypto } from "~entities/passfile";
+import { PassMetaCrypto } from "~entities/passfile/utils/crypto";
+import { parseTotpUrl } from "~utils";
 
 const decryptionError = () => Result.failure(t("Passfile.DecryptionError"));
 
@@ -118,6 +119,7 @@ function deserializePassFileContent<TContent>(passFileType: PassFileType, conten
                                 usernames: item.usr ?? [],
                                 password: item.pwd ?? "",
                                 remark: item.rmk ?? "",
+                                totp: item.totp ? parseTotpUrl(item.totp, true) : null,
                             }),
                         ) ?? [],
                 }),
@@ -149,6 +151,7 @@ function serializePassFileContent(passFileType: PassFileType, content: any): Arr
                             usr: item.usernames,
                             pwd: item.password,
                             rmk: item.remark,
+                            totp: item.totp?.url,
                         }),
                     ),
                 }),

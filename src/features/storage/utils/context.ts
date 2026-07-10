@@ -410,12 +410,6 @@ export function createPassFileContext<TContent>({
             }
 
             for (const passFile of toSaveContent) {
-                const unwatch = watch(passFile, () => {}, {
-                    onTrigger: () => {
-                        debugger;
-                    },
-                });
-
                 const res = await pfLocalStorage.getVersions(passFile.id);
                 if (res.bad) {
                     unexpectedError(`${getPassFileIdentityString(passFile)}: ${res.message}`, false);
@@ -428,8 +422,6 @@ export function createPassFileContext<TContent>({
                         .slice(KEEP_PASSFILE_VERSIONS)
                         .map((version) => ({ passFile, version })),
                 );
-
-                unwatch();
             }
 
             return await commitInternal(toSaveList, toSaveContent, toDeleteContent);

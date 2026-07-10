@@ -13,7 +13,7 @@ Status: MVP.
 _Vue.js, TypeScript, Tailwind, Vite, PrimeVue_<br>
 PWA<br>
 Feature-Sliced-Design<br>
-AES256 multipass (client side only), SHA256
+AES256 multipass (client side only), SHA256, TOTP
 
 ## Screenshots
 

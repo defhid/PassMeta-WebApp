@@ -1,3 +1,5 @@
+import type { TotpUrl } from "~utils";
+
 /**
  * DTO for password section.
  */
@@ -41,4 +43,9 @@ export interface PwdItemDto {
      * Comment.
      */
     rmk?: string;
+
+    /**
+     * Time-based One-Time Password config.
+     */
+    totp?: TotpUrl;
 }

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { t, useAppSettings } from "~stores";
 import type { PwdItem } from "~entities/passfile";
-import { Notify, useClipboardHelper } from "~utils";
+import { Notify, parseTotpUrl, type TotpUrl, useClipboardHelper } from "~utils";
 import { ref } from "vue";
 
-const props = defineProps<{
+defineProps<{
     item: PwdItem;
     canUp: boolean;
     canDown: boolean;
@@ -15,25 +15,6 @@ const emit = defineEmits<{
     up: [];
     down: [];
 }>();
-
-const { copyTextToClipboard } = useClipboardHelper();
-const settings = useAppSettings();
-
-const hidePassword = ref(settings.hidePasswords);
-
-async function copyUsername() {
-    const username = props.item.usernames[0] ?? "";
-
-    const ok = await copyTextToClipboard(username);
-
-    ok && Notify.success(t("Storage.ItemInfo.UsernameCopied", { username }));
-}
-
-async function copyPassword() {
-    const ok = await copyTextToClipboard(props.item.password);
-
-    ok && Notify.success(t("Storage.ItemInfo.PasswordCopied"));
-}
 </script>
 
 <template>
@@ -46,45 +27,36 @@ async function copyPassword() {
         <div class="flex gap-4 pt-2 pb-3">
             <div class="flex flex-1 flex-col gap-4">
                 <PmFloatLabel variant="in">
-                    <PmIconField>
-                        <PmInputText
-                            :model-value="item.usernames.join(', ')"
-                            fluid
-                            @update:model-value="
-                                (val) =>
-                                    (item.usernames =
-                                        val
-                                            ?.split(',')
-                                            .map((x) => x.trim())
-                                            .filter((x) => x) ?? [])
-                            "
-                        />
-                        <PmInputIcon class="pi pi-clone cursor-pointer" @click.stop="copyUsername" />
-                    </PmIconField>
+                    <PmInputText
+                        :model-value="item.usernames.join(', ')"
+                        fluid
+                        @update:model-value="
+                            (val) =>
+                                (item.usernames =
+                                    val
+                                        ?.split(',')
+                                        .map((x) => x.trim())
+                                        .filter((x) => x) ?? [])
+                        "
+                    />
                     <label>{{ t("Storage.ItemUsernameField.Label") }}</label>
                 </PmFloatLabel>
 
                 <PmFloatLabel variant="in">
-                    <PmIconField>
-                        <PmInputText
-                            v-model="item.password"
-                            :type="hidePassword ? 'password' : 'text'"
-                            fluid
-                            variant="outlined"
-                        />
-
-                        <PmInputIcon>
-                            <div class="flex gap-3">
-                                <i
-                                    class="pi cursor-pointer"
-                                    :class="hidePassword ? 'pi-eye-slash' : 'pi-eye'"
-                                    @click.stop="hidePassword = !hidePassword"
-                                />
-                                <i class="pi pi-clone cursor-pointer" @click.stop="copyPassword" />
-                            </div>
-                        </PmInputIcon>
-                    </PmIconField>
+                    <PmInputText v-model="item.password" type="text" fluid variant="outlined" />
                     <label class="justify-self-end pr-4">{{ t("Storage.ItemPasswordField.Label") }}</label>
+                </PmFloatLabel>
+
+                <PmFloatLabel variant="in">
+                    <PmInputText
+                        :model-value="item.totp?.url"
+                        type="text"
+                        fluid
+                        variant="outlined"
+                        placeholder="otpauth://totp/"
+                        @update:model-value="(val) => (item.totp = val ? parseTotpUrl(val as TotpUrl, false) : null)"
+                    />
+                    <label class="justify-self-end pr-4">{{ t("Storage.ItemTotpField.Label") }}</label>
                 </PmFloatLabel>
             </div>
 

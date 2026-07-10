@@ -1,4 +1,5 @@
 import { PassFileMark, PassFileType } from "~entities/passfile";
+import type { TotpParsed } from "~utils";
 
 /**
  * Passfile entity.
@@ -191,4 +192,9 @@ export interface PwdItem {
      * Comment.
      */
     remark: string;
+
+    /**
+     * Time-based One-Time Password generation config.
+     */
+    totp: TotpParsed | null;
 }

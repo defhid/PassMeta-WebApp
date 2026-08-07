@@ -18,16 +18,20 @@ const localePlugin: Plugin = (app: App) => {
     app.config.globalProperties.$router.beforeEach(async (to) => {
         const paramsLocale = to.params.locale as string | undefined;
 
-        if (paramsLocale == null) {
-            return { path: "/" + settings.locale + "/" + to.path.replace(/^[\/\s]+/g, "") };
+        if (!to.name) {
+            return paramsLocale == null
+                ? { path: "/" + settings.locale + "/" + to.path.replace(/^[\/\s]+/g, "") }
+                : Routes.NotFound.to();
         }
 
-        if (!to.name) {
+        if (!paramsLocale) {
             return;
         }
 
         if (!(paramsLocale in SupportedLocales)) {
-            return Routes.NotFound.to();
+            return to.name === Routes.Home.to.name
+                ? { path: "/" + settings.locale + "/" + to.path.replace(/^[\/\s]+/g, "") }
+                : Routes.NotFound.to();
         }
 
         if (!LoadedLocales.includes(paramsLocale)) {

@@ -7,6 +7,8 @@ import HistoryPage from "./HistoryPage.vue";
 import SettingsPage from "./SettingsPage.vue";
 import { definePages } from "~infra";
 import AboutPage from "~/pages/AboutPage.vue";
+import { defineComponent, onBeforeMount } from "vue";
+import { useRouter } from "vue-router";
 
 export * from "./routing";
 export { default as NavBar } from "./components/NavBar.vue";
@@ -43,6 +45,12 @@ export const Pages = definePages([
     {
         route: Routes.Settings,
         component: SettingsPage,
+    },
+    {
+        route: Routes.Launcher,
+        component: defineComponent({
+            setup: () => onBeforeMount(() => useRouter().replace(Routes.Storage.to())),
+        }),
     },
     {
         route: Routes.NotFound,

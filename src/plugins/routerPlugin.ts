@@ -6,37 +6,30 @@ import { Routes } from "~routing";
 import { Pages } from "~pages";
 import type { UserDto } from "~generated/api";
 
-let currentRoute: RouteLocationNormalized | null = null;
-
 const routerPlugin: Plugin = (app: App) => {
     const router = createRouter({
         history: createWebHistory(),
         routes: initializeRoutes(Routes, Pages),
     });
 
-    const { isContextLoaded, currentUser } = useAppContext();
+    const context = useAppContext();
 
-    router.beforeEach((to) => {
-        currentRoute = to;
-        return ensureRouteLegal(router, currentUser.value, isContextLoaded.value);
+    const isReady = Promise.all([router.isReady(), context.isReady()]);
+
+    isReady.then(() => {
+        router.beforeEach((to) => ensureRouteLegal(router, to, context.currentUser.value));
+
+        watch(context.currentUser, (user) => ensureRouteLegal(router, router.currentRoute.value, user), {
+            immediate: true,
+        });
     });
-
-    watch(
-        [currentUser, isContextLoaded],
-        ([user, loaded]: [UserDto | undefined, boolean]) => ensureRouteLegal(router, user, loaded),
-        { immediate: true },
-    );
 
     app.use(router);
 };
 
-async function ensureRouteLegal(router: Router, user: UserDto | undefined, isAppContextLoaded: boolean) {
-    if (!isAppContextLoaded) {
-        return;
-    }
-
+async function ensureRouteLegal(router: Router, route: RouteLocationNormalized, user: UserDto | undefined) {
     const isAuthenticated = user != null;
-    const routeInfo = currentRoute!.meta.info as RouteInfo<any, any> | undefined;
+    const routeInfo = route.meta.info as RouteInfo<any, any> | undefined;
 
     if (routeInfo == null) {
         return;
@@ -45,13 +38,13 @@ async function ensureRouteLegal(router: Router, user: UserDto | undefined, isApp
     if (!routeInfo.to.isAnonymous && !isAuthenticated) {
         await router.push(
             Routes.Auth.to({
-                queryParams: { redirectUrl: currentRoute!.fullPath },
+                queryParams: { redirectUrl: route.fullPath },
             }),
         );
         return;
     }
 
-    if (currentRoute!.name === Routes.Auth.to.name && isAuthenticated) {
+    if (route.name === Routes.Auth.to.name && isAuthenticated) {
         await router.push(Routes.Storage.to());
         return;
     }

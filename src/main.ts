@@ -8,6 +8,7 @@ import { useAppContext } from "~stores";
 import { Notify } from "~utils";
 import { GeneralApi } from "~entities/backend";
 import primeVuePlugin from "~plugins/primeVuePlugin";
+import versionPlugin from "~plugins/versionPlugin.ts";
 
 RestProtocolFactory.onError = (message: string, more?: string[]) => Notify.failure(message + "\n" + more?.join("\n"));
 
@@ -18,5 +19,6 @@ const app = createApp(App);
 app.use(primeVuePlugin);
 app.use(routerPlugin);
 app.use(localePlugin);
+app.use(versionPlugin);
 
 app.mount("#app");

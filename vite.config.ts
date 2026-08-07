@@ -4,16 +4,47 @@ import vue from "@vitejs/plugin-vue";
 import dotenv from "dotenv";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import process from "node:process";
+import { VitePWA } from "vite-plugin-pwa";
+import vitePluginChecker from "vite-plugin-checker";
+import { viteGenVersion } from "./plugins/viteGenVersion.ts";
 
 dotenv.config({ path: ["./.env.local", "./.env"] });
 
 const config: UserConfigFnObject = ({ mode }) => {
     const baseUrl = import.meta.url;
     const env = loadEnv(mode, process.cwd());
+    const isProduction = mode === "production";
 
     return defineConfig({
         plugins: [
             vue(),
+            VitePWA({
+                filename: "sw.ts",
+                srcDir: "src",
+                manifest: false,
+                strategies: "injectManifest",
+                injectManifest: {
+                    globPatterns: ["**/*"],
+                    globIgnores: ["version.json"],
+                },
+                devOptions: {
+                    enabled: !isProduction,
+                    type: "module",
+                },
+            }),
+            vitePluginChecker({
+                vueTsc: true,
+                eslint: isProduction
+                    ? undefined
+                    : {
+                          useFlatConfig: true,
+                          lintCommand: "eslint .",
+                      },
+                overlay: {
+                    initialIsOpen: false,
+                },
+            }),
+            viteGenVersion("version.json"),
             env.VITE_LOCAL_SSL === "true"
                 ? basicSsl({
                       name: "local-cert",

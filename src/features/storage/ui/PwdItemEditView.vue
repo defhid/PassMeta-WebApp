@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { t, useAppSettings } from "~stores";
+import { t } from "~stores";
 import type { PwdItem } from "~entities/passfile";
-import { Notify, parseTotpUrl, type TotpUrl, useClipboardHelper } from "~utils";
-import { ref } from "vue";
+import { parseTotpUrl, type TotpUrl } from "~utils";
 
 defineProps<{
     item: PwdItem;

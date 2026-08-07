@@ -1,6 +1,7 @@
 import type { ApiProtocol, ApiResponse, Deserializer } from "~infra";
 import { t, useAppConfig, useAppSettings } from "~stores";
 import { Api, type FullResultDto, type HttpResponse } from "~generated/api";
+import { useOnline } from "./online.ts";
 
 export class RestProtocolFactory {
     static onError: ((message: string, more?: string[]) => void) | null = null;
@@ -12,6 +13,7 @@ export class RestProtocolFactory {
         },
     ): ApiProtocol<TParams, TResponse> {
         return this.build(async (params) => {
+            const { isOnline } = useOnline();
             try {
                 const api = new Api({
                     baseUrl: useAppConfig().passmetaApi,
@@ -26,6 +28,8 @@ export class RestProtocolFactory {
                     });
 
                 const response = await call(api, params!);
+                isOnline.value = true;
+
                 return {
                     ok: true,
                     message: undefined,
@@ -34,6 +38,7 @@ export class RestProtocolFactory {
                 };
             } catch (err) {
                 if (err instanceof Error) {
+                    isOnline.value = false;
                     throw err;
                 }
 

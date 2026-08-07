@@ -6,7 +6,7 @@
     "theme_color": "#000",
     "description": "reliable distributed password management tools.",
     "handle_links": "preferred",
-    "start_url": "//storage?referrer=pwa",
+    "start_url": "/launcher?referrer=pwa",
     "display": "standalone",
     "icons": [
         {

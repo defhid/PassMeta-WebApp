@@ -33,6 +33,11 @@ export const Routes = defineRouteSchemas(
             path: "settings",
             anonymous: true,
         },
+        Launcher: {
+            path: "launcher",
+            noroot: true,
+            anonymous: true,
+        },
         NotFound: {
             path: ":pathMatch(.*)*",
             anonymous: true,

@@ -157,7 +157,7 @@ function serializePassFileContent(passFileType: PassFileType, content: any): Arr
                 }),
             );
 
-            return new TextEncoder().encode(JSON.stringify(prepared));
+            return new TextEncoder().encode(JSON.stringify(prepared)).buffer;
         }
         default: {
             throw new Error("Specified content type is not supported: " + passFileType);

@@ -8,6 +8,7 @@ export type RouteSchemaConfig =
           queryParams?: Record<string, any>;
           redirect?: () => any;
           anonymous?: boolean;
+          noroot?: boolean;
           inner?: Record<string, RouteSchemaConfig>;
           sub?: Record<string, RouteSchemaConfig>;
       }
@@ -17,6 +18,7 @@ export type RouteSchemaConfig =
           routeParams?: undefined;
           queryParams?: undefined;
           anonymous?: undefined;
+          noroot?: undefined;
           inner?: undefined;
           sub: Record<string, RouteSchemaConfig>;
       };
@@ -43,22 +45,25 @@ export function defineRouteSchemas<T extends Record<string, RouteSchemaConfig>>(
     const schemas: Partial<RouteSchemas<T>> = {};
 
     for (const key in routes) {
-        const path = options.rootPath + "/" + routes[key].path;
-        const name = options.rootName ? options.rootName + "." + key : key;
+        const route = routes[key];
 
-        if ((routes[key] as { void: true }).void) {
-            if (routes[key].sub) {
-                schemas[key] = defineRouteSchemas(routes[key].sub!, {
+        const path = (route.noroot ? "" : options.rootPath) + "/" + route.path;
+        const name = options.rootName && !route.noroot ? options.rootName + "." + key : key;
+        const params = route.noroot ? () => ({}) : options.rootParams;
+
+        if (route.void) {
+            if (route.sub) {
+                schemas[key] = defineRouteSchemas(route.sub!, {
                     rootName: name,
                     rootPath: path,
-                    rootParams: options.rootParams,
+                    rootParams: params,
                 }) as any;
             }
         } else {
             const to: Record<string, any> = (opt?: { routeParams: any; queryParams: any }) => ({
                 name: key,
                 params: {
-                    ...options.rootParams(),
+                    ...params(),
                     ...opt?.routeParams,
                 },
                 query: opt?.queryParams,
@@ -68,14 +73,14 @@ export function defineRouteSchemas<T extends Record<string, RouteSchemaConfig>>(
                 name: { value: name },
                 path: { value: path },
                 isInner: { value: false },
-                isAnonymous: { value: Boolean(routes[key].anonymous) },
+                isAnonymous: { value: Boolean(route.anonymous) },
             });
 
-            const inner = routes[key].inner
-                ? defineRouteSchemas(routes[key].inner!, {
+            const inner = route.inner
+                ? defineRouteSchemas(route.inner!, {
                       rootName: name,
                       rootPath: path,
-                      rootParams: options.rootParams,
+                      rootParams: params,
                   })
                 : {};
 
@@ -83,11 +88,11 @@ export function defineRouteSchemas<T extends Record<string, RouteSchemaConfig>>(
                 (inner[innerKey] as RouteInfo<any, any>).to.isInner = true;
             }
 
-            const sub = routes[key].sub
-                ? defineRouteSchemas(routes[key].sub!, {
+            const sub = route.sub
+                ? defineRouteSchemas(route.sub!, {
                       rootName: name,
                       rootPath: path,
-                      rootParams: options.rootParams,
+                      rootParams: params,
                   })
                 : {};
 

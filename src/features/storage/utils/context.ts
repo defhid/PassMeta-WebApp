@@ -7,7 +7,7 @@ import {
     PassFileMark,
     PassFileType,
 } from "~entities/passfile";
-import { computed, reactive, ref, type Ref, shallowReactive, toRaw, watch } from "vue";
+import { computed, reactive, ref, type Ref, shallowReactive, toRaw } from "vue";
 import { t, useAppContext } from "~stores";
 import { type PassFileLocalDto, usePassFileLocalStorage } from "./passFileLocalStorage";
 import { Notify } from "~utils";

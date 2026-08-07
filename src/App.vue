@@ -23,7 +23,10 @@ const { md } = useMobileFirstBreakpoints();
                 </KeepAlive>
             </RouterView>
 
-            <div v-if="isContextLoading" class="absolute top-0 w-full h-full flex justify-center items-center pb-10">
+            <div
+                v-else-if="isContextLoading"
+                class="absolute top-0 w-full h-full flex justify-center items-center pb-10"
+            >
                 <PmProgressSpinner class="app-progress-spinner" indeterminate />
             </div>
         </div>

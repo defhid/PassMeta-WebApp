@@ -17,7 +17,8 @@
             "~stores": ["./src/shared/stores"],
             "~utils": ["./src/shared/utils"],
             "~widgets/*": ["./src/widgets/*"]
-        }
+        },
+        "types": ["@types/serviceworker"]
     },
-    "include": ["./*.ts", "./src/**/*.ts", "./src/**/*.vue"]
+    "include": ["./*.ts", "./src/**/*.ts", "./src/**/*.vue", "./src/sw.ts"]
 }

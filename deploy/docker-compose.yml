@@ -3,6 +3,8 @@ services:
         container_name: passmeta-ui-builder
         build:
             context: ..
+            args:
+                VITE_PRIMEUI_LICENSE: ${VITE_PRIMEUI_LICENSE}
         volumes:
             - type: volume
               source: ui-statics

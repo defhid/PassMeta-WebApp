@@ -116,13 +116,13 @@ interface PassFileState<TContent> {
      * Current PassFile.
      * @remarks Empty for finally deleted.
      */
-    current?: PassFile<TContent>;
+    readonly current?: PassFile<TContent>;
 
     /**
      * Initial loaded passfile.
      * @remarks Empty for new.
      */
-    source?: PassFile<TContent>;
+    readonly source?: PassFile<TContent>;
 }
 
 /**
@@ -355,7 +355,7 @@ export function createPassFileContext<TContent>({
         if (!state.source) {
             states.delete(passFile.id);
         } else if (isPassFileLocalCreated(state.current!) || fromOrigin) {
-            state.current = undefined;
+            states.set(passFile.id, { source: state.source });
         } else {
             state.current!.deletedOn = new Date();
         }
@@ -484,7 +484,10 @@ export function createPassFileContext<TContent>({
             if (state.source == null) {
                 states.delete(passFileId);
             } else if (state.current == null) {
-                state.current = clonePassFile(state.source);
+                states.set(passFileId, {
+                    source: state.source,
+                    current: clonePassFile(state.source),
+                });
             } else {
                 const clone = clonePassFile(state.source);
 
@@ -495,7 +498,10 @@ export function createPassFileContext<TContent>({
                     };
                 }
 
-                state.current = clone;
+                states.set(passFileId, {
+                    source: state.source,
+                    current: clone,
+                });
             }
         }
 

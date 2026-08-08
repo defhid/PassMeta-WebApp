@@ -16,11 +16,11 @@
         <div class="flex flex-wrap gap-5 align-start justify-center">
             <PmCard class="max-w-[420px]">
                 <template #title>
-                    <h4 class="text-center pb-1">Sync server</h4>
+                    <h4 class="text-center pb-2 leading-7">Sync server</h4>
                 </template>
 
                 <template #content>
-                    <span class="text-surface-400 text-wrap italic">
+                    <span class="text-surface-400 text-wrap italic leading-6">
                         Responsible for storing reference versions of password packages, accessing them, and backing
                         them up.
                     </span>
@@ -29,22 +29,23 @@
                         class="mt-4"
                         severity="contrast"
                         variant="outlined"
-                        icon="pi pi-github"
                         as="a"
                         href="https://github.com/defhid/PassMeta-Server"
                         target="_blank"
-                        label="PassMeta-Server"
-                    />
+                    >
+                        <i class="pi pi-github button-icon-lg" />
+                        PassMeta-Server
+                    </PmButton>
                 </template>
             </PmCard>
 
             <PmCard class="max-w-[420px]">
                 <template #title>
-                    <h4 class="text-center pb-1">Web client for browser</h4>
+                    <h4 class="text-center pb-2 leading-7">Web client for browser</h4>
                 </template>
 
                 <template #content>
-                    <span class="text-surface-400 text-wrap italic">
+                    <span class="text-surface-400 text-wrap italic leading-6">
                         Universal way to access your passwords and activity logs.
                     </span>
                     <br />
@@ -52,22 +53,23 @@
                         class="mt-4"
                         severity="contrast"
                         variant="outlined"
-                        icon="pi pi-github"
                         as="a"
                         href="https://github.com/defhid/PassMeta-WebApp"
                         target="_blank"
-                        label="PassMeta-WebApp"
-                    />
+                    >
+                        <i class="pi pi-github button-icon-lg" />
+                        PassMeta-WebApp
+                    </PmButton>
                 </template>
             </PmCard>
 
             <PmCard class="max-w-[420px]">
                 <template #title>
-                    <h4 class="text-center pb-1">Cross-platform applications for devices</h4>
+                    <h4 class="text-center pb-2 leading-7">Cross-platform applications for devices</h4>
                 </template>
 
                 <template #content>
-                    <span class="text-surface-400 text-wrap italic">
+                    <span class="text-surface-400 text-wrap italic leading-6">
                         Local password storages provide convenient access to your passfiles, support offline work and
                         synchronization, and additionally backup passfile versions.
                     </span>
@@ -76,30 +78,33 @@
                         class="mt-4"
                         severity="contrast"
                         variant="outlined"
-                        icon="pi pi-github"
                         as="a"
                         href="https://github.com/defhid/PassMeta-DesktopApp"
                         target="_blank"
-                        label="PassMeta-DesktopApp"
-                    />
+                    >
+                        <i class="pi pi-github button-icon-lg" />
+                        PassMeta-DesktopApp
+                    </PmButton>
                     <PmButton
-                        v-tooltip.bottom="$tooltip({ value: 'In future', showDelay: 100 })"
+                        v-tooltip.bottom="$tooltip({ value: 'В планах', showDelay: 100 })"
                         class="mt-4"
                         severity="contrast"
                         variant="outlined"
-                        icon="pi pi-github"
                         disabled
-                        label="PassMeta-IosApp"
-                    />
+                    >
+                        <i class="pi pi-github button-icon-lg" />
+                        PassMeta-IosApp
+                    </PmButton>
                     <PmButton
-                        v-tooltip.bottom="$tooltip({ value: 'In future', showDelay: 100 })"
+                        v-tooltip.bottom="$tooltip({ value: 'В планах', showDelay: 100 })"
                         class="mt-4"
                         severity="contrast"
                         variant="outlined"
-                        icon="pi pi-github"
                         disabled
-                        label="PassMeta-AndroidApp"
-                    />
+                    >
+                        <i class="pi pi-github button-icon-lg" />
+                        PassMeta-AndroidApp
+                    </PmButton>
                 </template>
             </PmCard>
         </div>
@@ -136,6 +141,6 @@
 <script setup lang="ts"></script>
 <style scoped>
 .pi-verified {
-    @apply text-3xl text-primary-400;
+    @apply text-4xl text-primary-400;
 }
 </style>

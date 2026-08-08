@@ -1,14 +1,14 @@
 import { Ask, Notify } from "~utils";
-import { t, useAppContext } from "~stores";
+import { t } from "~stores";
 import { type RouteLocationRaw, useRouter } from "vue-router";
 import { AuthApi } from "~entities/backend";
+import { usePassFileLocalStorage } from "~features/storage/utils/passFileLocalStorage";
 
 /**
  * Use session closing methods for current user.
  */
 export function useSessionClose() {
     const router = useRouter();
-    const { currentUser } = useAppContext();
 
     async function closeAllSessions() {
         if (!(await Ask.confirm(t("Account.ConfirmResetAllSessions")))) {
@@ -26,9 +26,10 @@ export function useSessionClose() {
         }
 
         await AuthApi.resetMe();
+        await usePassFileLocalStorage().truncate();
 
-        await router.push(redirectTo);
-        currentUser.value = undefined;
+        const location = router.resolve(redirectTo);
+        window.location.assign(location.href);
     }
 
     return {

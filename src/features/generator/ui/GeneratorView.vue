@@ -54,8 +54,8 @@ async function copyPassword() {
                         :input-id="fieldIds.length"
                         class="w-[135px]"
                         show-buttons
-                        increment-button-icon="pi pi-plus"
-                        decrement-button-icon="pi pi-minus"
+                        increment-icon="pi pi-plus"
+                        decrement-icon="pi pi-minus"
                         button-layout="horizontal"
                         :step="2"
                         :min="4"
@@ -81,15 +81,12 @@ async function copyPassword() {
             <PmInputText :model-value="currentGenerated" size="large" readonly />
 
             <div class="flex gap-5">
-                <PmButton icon="pi pi-clone" size="large" variant="outlined" rounded @click.stop="copyPassword" />
-                <PmButton
-                    icon="pi pi-refresh"
-                    size="large"
-                    variant="outlined"
-                    severity="secondary"
-                    rounded
-                    @click.stop="generate"
-                />
+                <PmButton icon-only size="large" variant="outlined" rounded @click.stop="copyPassword">
+                    <i class="pi pi-clone button-icon-lg" />
+                </PmButton>
+                <PmButton icon-only size="large" variant="outlined" severity="secondary" rounded @click.stop="generate">
+                    <i class="pi pi-refresh button-icon-lg" />
+                </PmButton>
             </div>
         </div>
     </div>

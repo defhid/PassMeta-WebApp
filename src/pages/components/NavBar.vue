@@ -60,39 +60,45 @@ const toggleProfileMenu = (event: Event) => profileMenu.value!.toggle(event);
                     <RouterLink v-if="isVisible(Routes.Storage)" :to="Routes.Storage.to()">
                         <PmButton
                             v-tooltip.bottom="$tooltip('Storage.Title')"
-                            icon="pi pi-lock"
+                            icon-only
                             rounded
                             size="large"
                             severity="secondary"
                             :variant="currentRoute.name === Routes.Storage.to.name ? undefined : 'text'"
-                        />
+                        >
+                            <i class="pi pi-lock button-icon-lg" />
+                        </PmButton>
                     </RouterLink>
                     <RouterLink v-if="isVisible(Routes.Generator)" :to="Routes.Generator.to()">
                         <PmButton
                             v-tooltip.bottom="$tooltip('Generator.Title')"
-                            icon="pi pi-lightbulb"
+                            icon-only
                             rounded
                             size="large"
                             severity="secondary"
                             :variant="currentRoute.name === Routes.Generator.to.name ? undefined : 'text'"
-                        />
+                        >
+                            <i class="pi pi-lightbulb button-icon-lg" />
+                        </PmButton>
                     </RouterLink>
                     <RouterLink v-if="isVisible(Routes.History)" :to="Routes.History.to()">
                         <PmButton
                             v-tooltip.bottom="$tooltip('History.Title')"
-                            icon="pi pi-history"
+                            icon-only
                             rounded
                             size="large"
                             severity="secondary"
                             :variant="currentRoute.name === Routes.History.to.name ? undefined : 'text'"
-                        />
+                        >
+                            <i class="pi pi-history button-icon-lg" />
+                        </PmButton>
                     </RouterLink>
                 </div>
 
                 <PmButton
                     v-tooltip.bottom="$tooltip('Account.Title')"
                     class="mr-2"
-                    icon="pi pi-user"
+                    icon-only
                     size="large"
                     rounded
                     raised
@@ -101,7 +107,9 @@ const toggleProfileMenu = (event: Event) => profileMenu.value!.toggle(event);
                     aria-haspopup="true"
                     aria-controls="overlay_menu"
                     @click="toggleProfileMenu"
-                />
+                >
+                    <i class="pi pi-user button-icon-xl" />
+                </PmButton>
                 <PmMenu id="overlay_menu" ref="profileMenu" :model="profileMenuItems" popup />
             </div>
         </template>

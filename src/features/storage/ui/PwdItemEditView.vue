@@ -20,7 +20,7 @@ const emit = defineEmits<{
     <div>
         <div class="flex items-center gap-2">
             <label class="text-primary">#</label>
-            <PmInputText v-model="item.remark" size="small" placeholder="#" />
+            <PmInputText v-model="item.remark" size="small" />
         </div>
 
         <div class="flex gap-4 pt-2 pb-3">
@@ -60,21 +60,15 @@ const emit = defineEmits<{
             </div>
 
             <div class="flex flex-col gap-2 justify-center">
-                <PmButton icon="pi pi-trash" severity="secondary" size="small" @click.stop="emit('delete')" />
-                <PmButton
-                    icon="pi pi-arrow-up"
-                    severity="secondary"
-                    size="small"
-                    :disabled="!canUp"
-                    @click.stop="emit('up')"
-                />
-                <PmButton
-                    icon="pi pi-arrow-down"
-                    severity="secondary"
-                    size="small"
-                    :disabled="!canDown"
-                    @click.stop="emit('down')"
-                />
+                <PmButton icon-only severity="danger" size="small" @click.stop="emit('delete')">
+                    <i class="pi pi-trash" />
+                </PmButton>
+                <PmButton icon-only severity="success" size="small" :disabled="!canUp" @click.stop="emit('up')">
+                    <i class="pi pi-arrow-up" />
+                </PmButton>
+                <PmButton icon-only severity="success" size="small" :disabled="!canDown" @click.stop="emit('down')">
+                    <i class="pi pi-arrow-down" />
+                </PmButton>
             </div>
         </div>
     </div>

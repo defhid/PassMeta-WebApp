@@ -1,6 +1,6 @@
 import { type App, type Plugin } from "vue";
 import "primeicons/primeicons.css";
-import Aura from "@primeuix/themes/aura";
+import AuraCompat from "@primeuix/themes/aura-compat";
 import {
     Config,
     ToastService,
@@ -9,7 +9,7 @@ import {
     type TooltipOptions,
     Select,
     Checkbox,
-    Password,
+    InputPassword,
     FloatLabel,
     InputText,
     Card,
@@ -26,12 +26,14 @@ import {
 } from "primevue";
 import { definePreset } from "@primeuix/themes";
 import type { PrimeVueConfiguration } from "@primevue/core/config";
-import { type LocaleMessage, t } from "~stores";
+import { type LocaleMessage, t, useAppConfig } from "~stores";
 
 const DEFAULT_TOOLTIP_DELAY = 500;
 
 const primeVuePlugin: Plugin = (app: App) => {
-    const preset = definePreset(Aura, {
+    const { primeuiLicense } = useAppConfig();
+
+    const preset = definePreset(AuraCompat, {
         semantic: {
             primary: {
                 50: "#5DE991",
@@ -99,6 +101,7 @@ const primeVuePlugin: Plugin = (app: App) => {
                 showDelay: 1000,
             },
         },
+        license: primeuiLicense,
     };
 
     app.use(Config, options);
@@ -111,7 +114,7 @@ const primeVuePlugin: Plugin = (app: App) => {
     app.component("PmCard", Card);
     app.component("PmInputText", InputText);
     app.component("PmInputNumber", InputNumber);
-    app.component("PmInputPassword", Password);
+    app.component("PmInputPassword", InputPassword);
     app.component("PmInputIcon", InputIcon);
     app.component("PmFloatLabel", FloatLabel);
     app.component("PmCheckbox", Checkbox);
@@ -144,7 +147,7 @@ declare module "vue" {
         PmInputNumber: typeof InputNumber;
         PmInputIcon: typeof InputIcon;
         PmFloatLabel: typeof FloatLabel;
-        PmInputPassword: typeof Password;
+        PmInputPassword: typeof InputPassword;
         PmCheckbox: typeof Checkbox;
         PmSelect: typeof Select;
         PmMessage: typeof Message;

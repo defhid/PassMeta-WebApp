@@ -30,7 +30,7 @@ const filteredSections = computed(() => {
                   x.name.toLowerCase().includes(text) ||
                   x.websiteUrl.toLowerCase().includes(text) ||
                   (textAsRemark && x.items.some((x) => x.remark.toLowerCase().startsWith(textAsRemark))) ||
-                  x.items.some((x) => x.password === textRaw),
+                  x.items.some((y) => y.password === textRaw || y.usernames.some((z) => z === textRaw)),
           )
         : [...props.sections];
 
@@ -43,14 +43,9 @@ const filteredSections = computed(() => {
         <div class="grid grid-rows-[auto_1fr] justify-items-stretch gap-2 h-full">
             <div class="flex gap-2 items-center">
                 <div class="md:hidden">
-                    <PmButton
-                        icon="pi pi-arrow-left"
-                        severity="secondary"
-                        size="large"
-                        rounded
-                        variant="outlined"
-                        @click="emit('back')"
-                    />
+                    <PmButton icon-only severity="secondary" rounded variant="outlined" @click="emit('back')">
+                        <i class="pi pi-arrow-left button-icon-lg" />
+                    </PmButton>
                 </div>
                 <PmInputText
                     v-model="searchText"
@@ -74,12 +69,9 @@ const filteredSections = computed(() => {
                 />
 
                 <div v-show="!disabled" class="absolute left-0 right-0 bottom-0 backdrop-blur-[2px]">
-                    <PmButton
-                        class="btn-add"
-                        icon="pi pi-plus"
-                        severity="secondary"
-                        @click.stop="emit('add-section')"
-                    />
+                    <PmButton class="btn-add" severity="secondary" @click.stop="emit('add-section')">
+                        <i class="pi pi-plus button-icon-lg" />
+                    </PmButton>
                 </div>
             </div>
         </div>

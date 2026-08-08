@@ -73,7 +73,7 @@ const config: UserConfigFnObject = ({ mode }) => {
         server: {
             proxy: {
                 "/api": {
-                    target: process.env.VITE_PASSMETA_API,
+                    target: process.env.VITE_PASSMETA_API_PROXY,
                     changeOrigin: true,
                     secure: false,
                     rewrite: (path) => path.replace(/^\/api/, ""),

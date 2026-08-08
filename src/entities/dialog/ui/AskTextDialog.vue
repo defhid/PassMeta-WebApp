@@ -17,6 +17,8 @@ const emit = defineEmits<{
 const { md } = useMobileFirstBreakpoints();
 const isFocused = ref(true);
 
+const isPasswordMasked = ref(true);
+
 const textValue = ref("");
 const inputId = useId();
 
@@ -40,19 +42,24 @@ onMounted(() =>
         <div v-focustrap class="w-[80vw] max-w-[500px] flex flex-col gap-2">
             <div class="flex flex-col gap-3 pb-2">
                 <label class="text-surface-300" :for="inputId">{{ props.question }}</label>
-                <PmInputPassword
-                    v-if="isPassword"
-                    v-model="textValue"
-                    :input-id="inputId"
-                    fluid
-                    autofocus
-                    toggle-mask
-                    :feedback="false"
-                    @keydown.enter="emit('answer', textValue ?? '')"
-                    @keydown.esc="emit('answer', null)"
-                    @focus="isFocused = true"
-                    @blur="isFocused = false"
-                />
+                <PmIconField v-if="isPassword">
+                    <PmInputPassword
+                        v-model="textValue"
+                        :input-id="inputId"
+                        fluid
+                        autofocus
+                        :mask="isPasswordMasked"
+                        @keydown.enter="emit('answer', textValue ?? '')"
+                        @keydown.esc="emit('answer', null)"
+                        @focus="isFocused = true"
+                        @blur="isFocused = false"
+                    />
+                    <PmInputIcon
+                        class="cursor-pointer pi"
+                        :class="isPasswordMasked ? 'pi-eye' : 'pi-eye-slash'"
+                        @click="isPasswordMasked = !isPasswordMasked"
+                    />
+                </PmIconField>
                 <PmInputText
                     v-else
                     :id="inputId"
@@ -67,13 +74,12 @@ onMounted(() =>
             </div>
 
             <div ref="footer" class="flex gap-2 justify-end">
-                <PmButton class="px-6" :label="t('Dialog.BtnOk')" @click.stop="emit('answer', textValue ?? '')" />
-                <PmButton
-                    class="px-4"
-                    severity="secondary"
-                    :label="t('Dialog.BtnCancel')"
-                    @click.stop="emit('answer', null)"
-                />
+                <PmButton class="px-6" @click.stop="emit('answer', textValue ?? '')">
+                    {{ t("Dialog.BtnOk") }}
+                </PmButton>
+                <PmButton class="px-4" severity="secondary" @click.stop="emit('answer', null)">
+                    {{ t("Dialog.BtnCancel") }}
+                </PmButton>
             </div>
         </div>
     </PmDialog>

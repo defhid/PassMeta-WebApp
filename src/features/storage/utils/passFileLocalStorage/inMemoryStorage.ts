@@ -60,6 +60,12 @@ export const usePassFileInMemoryLocalStorage = createGlobalState((): PassFileLoc
         return Promise.resolve(Result.success(versions));
     }
 
+    async function truncate(): Promise<IDetailedResult> {
+        storedContents.clear();
+        storedList.splice(0);
+        return Promise.resolve(Result.success());
+    }
+
     return {
         loadList,
         saveList,
@@ -67,5 +73,6 @@ export const usePassFileInMemoryLocalStorage = createGlobalState((): PassFileLoc
         saveEncryptedContent,
         deleteEncryptedContent,
         getVersions,
+        truncate,
     };
 });

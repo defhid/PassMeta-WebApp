@@ -3,8 +3,6 @@ services:
         container_name: passmeta-ui-builder
         build:
             context: ..
-            args:
-                VITE_PASSMETA_API: ${VITE_PASSMETA_API}
         volumes:
             - type: volume
               source: ui-statics

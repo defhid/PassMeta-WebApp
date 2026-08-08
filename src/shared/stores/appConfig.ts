@@ -13,6 +13,11 @@ export interface AppConfig {
      * URL for PassMeta backend.
      */
     readonly passmetaApi: string;
+
+    /**
+     * A license key for PrimeUI.
+     */
+    readonly primeuiLicense: string;
 }
 
 /**
@@ -20,11 +25,11 @@ export interface AppConfig {
  */
 export const useAppConfig = createGlobalState((): AppConfig => {
     const isDev = import.meta.env.DEV ?? false;
+    const primeuiLicense = import.meta.env.VITE_PRIMEUI_LICENSE ?? "";
 
-    const passmetaApi =
-        import.meta.env.VITE_PASSMETA_API_PROXY?.toLowerCase() === "true"
-            ? "/api"
-            : (import.meta.env.VITE_PASSMETA_API ?? "");
-
-    return { isDev, passmetaApi };
+    return {
+        isDev,
+        passmetaApi: "/api",
+        primeuiLicense,
+    };
 });

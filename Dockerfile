@@ -1,11 +1,8 @@
-FROM node:20 AS builder
-
-ARG VITE_PASSMETA_API
-ENV VITE_PASSMETA_API=$VITE_PASSMETA_API
+FROM node:22.23-slim AS builder
 
 WORKDIR /deploy
 CMD rm -r /deploy/dist
 COPY . .
 
-RUN yarn install
-CMD yarn build
+RUN npm ci
+CMD npm run build

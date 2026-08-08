@@ -29,15 +29,16 @@ html {
 .p-inputtext {
     min-width: 1px;
 }
-.p-password-input {
-    flex: 1;
-}
 
 .p-card-body {
     min-height: 0;
 }
 .p-card-content {
     min-height: 0;
+}
+
+.p-toast:not(:has(*)) {
+    pointer-events: none;
 }
 
 h1,
@@ -55,4 +56,14 @@ h6 {
     -moz-user-select: none; /* Old versions of Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.button-icon-lg.pi {
+    font-size: 1.2rem;
+}
+.button-icon-xl.pi {
+    font-size: 1.4rem;
+}
+.button-icon-2xl.pi {
+    font-size: 1.7rem;
 }

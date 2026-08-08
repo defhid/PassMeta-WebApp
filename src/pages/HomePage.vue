@@ -38,31 +38,37 @@ const { currentUser, uiVersion, serverId, serverVersion } = useAppContext();
                 <RouterLink :to="Routes.Settings.to()">
                     <PmButton
                         v-tooltip.bottom="$tooltip('Settings.Title')"
-                        icon="pi pi-cog"
+                        icon-only
                         size="large"
                         rounded
                         severity="secondary"
-                    />
+                    >
+                        <i class="pi pi-cog button-icon-lg" />
+                    </PmButton>
                 </RouterLink>
 
                 <RouterLink :to="Routes.About.to()">
                     <PmButton
                         v-tooltip.bottom="$tooltip('Home.BtnAbout')"
-                        icon="pi pi-info"
+                        icon-only
                         size="large"
                         severity="secondary"
                         rounded
-                    />
+                    >
+                        <i class="pi pi-info button-icon-2xl" />
+                    </PmButton>
                 </RouterLink>
 
                 <RouterLink :to="Routes.Auth.to()">
                     <PmButton
                         v-if="!currentUser"
                         v-tooltip.bottom="$tooltip('Home.BtnAuthorize')"
-                        icon="pi pi-sign-in"
+                        icon-only
                         size="large"
                         rounded
-                    />
+                    >
+                        <i class="pi pi-sign-in button-icon-lg" />
+                    </PmButton>
                 </RouterLink>
             </div>
         </div>

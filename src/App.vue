@@ -31,7 +31,12 @@ const { md } = useMobileFirstBreakpoints();
             </div>
         </div>
 
-        <Toast class="app-toast" :position="md ? 'top-right' : 'bottom-center'" close-icon="pi pi-times" />
+        <Toast
+            class="app-toast"
+            :position="md ? 'top-right' : 'bottom-center'"
+            mode="expanded"
+            close-icon="pi pi-times"
+        />
         <DialogsContainer />
     </main>
 </template>
@@ -62,7 +67,7 @@ const { md } = useMobileFirstBreakpoints();
 .app-toast {
     --p-toast-summary-font-size: 0.95rem;
     --p-toast-detail-font-size: 0.8rem;
-    --p-toast-text-gap: 0.1rem;
+    --p-toast-text-gap: 0.2rem;
     --p-toast-icon-size: 1.1rem;
     --p-toast-close-icon-size: 0.85rem;
     --p-toast-content-padding: 0.5rem;
@@ -74,15 +79,19 @@ const { md } = useMobileFirstBreakpoints();
     margin-top: -3px;
 }
 
+.p-toast-detail {
+    line-height: 1.25;
+}
+
 @media all and (width <= 500px) {
-    .app-toast {
-        --p-toast-width: calc(100vw - 1.5rem);
+    .app-toast.p-toast {
+        width: calc(100vw - 1.5rem);
     }
 }
 
 @media all and (width <= 768px) {
-    .app-toast {
-        margin-bottom: calc(0.65rem + clamp(0.5rem, env(safe-area-inset-bottom, 0.5rem), 2rem));
+    .app-toast.p-toast {
+        margin-bottom: calc(1.6rem + clamp(0.5rem, env(safe-area-inset-bottom, 0.5rem), 2rem));
     }
 }
 </style>

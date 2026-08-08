@@ -1,7 +1,6 @@
 interface ImportMetaEnv {
     readonly DEV?: boolean;
-    readonly VITE_PASSMETA_API?: string;
-    readonly VITE_PASSMETA_API_PROXY?: string;
+    readonly VITE_PRIMEUI_LICENSE?: string;
 }
 
 interface ImportMeta {

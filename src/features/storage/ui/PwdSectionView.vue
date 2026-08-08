@@ -102,10 +102,12 @@ function onFocusName(ev: FocusEvent) {
                 <PmInputText v-model="localSection.websiteUrl" placeholder="https://" fluid />
             </div>
 
-            <div v-else class="flex flex-wrap items-center pt-2 pb-1 md:px-3 gap-x-2 gap-y-3">
+            <div v-else class="flex flex-wrap items-center pb-1 md:px-3 gap-x-2 gap-y-3">
                 <div class="grid grid-cols-[auto_auto] items-center gap-3">
-                    <div class="md:hidden pl-2">
-                        <PmButton icon="pi pi-arrow-left" severity="secondary" rounded @click.stop="emit('back')" />
+                    <div class="md:hidden">
+                        <PmButton icon-only severity="secondary" rounded @click.stop="emit('back')">
+                            <i class="pi pi-arrow-left button-icon-lg" />
+                        </PmButton>
                     </div>
                     <h5 class="text-xl truncate">{{ localSection.name }}</h5>
                 </div>
@@ -115,11 +117,12 @@ function onFocusName(ev: FocusEvent) {
                     variant="outlined"
                     class="italic break-all leading-5"
                     size="small"
-                    :label="localSection.websiteUrl"
                     as="a"
                     :href="normalizeExternalUrl(localSection.websiteUrl)"
                     target="_blank"
-                />
+                >
+                    {{ localSection.websiteUrl }}
+                </PmButton>
             </div>
 
             <div class="h-full overflow-y-auto mt-2.5 px-2 md:mt-3 md:px-3 pb-20">
@@ -139,23 +142,27 @@ function onFocusName(ev: FocusEvent) {
                     <PwdItemView v-for="(item, i) in localSection.items" :key="i" :item="item" />
                 </div>
 
-                <PmButton v-if="editMode" icon="pi pi-plus" severity="success" @click.stop="addItem" />
+                <PmButton v-if="editMode" severity="success" icon-only size="large" @click.stop="addItem">
+                    <i class="pi pi-plus" />
+                </PmButton>
             </div>
 
             <div class="flex gap-2 absolute z-10 left-0 right-0 bottom-0 backdrop-blur-[2px]">
                 <template v-if="editMode">
-                    <PmButton class="btn-edit" icon="pi pi-check" severity="contrast" @click.stop="switchEdit" />
-                    <PmButton class="btn-edit" icon="pi pi-times" severity="contrast" @click.stop="rollback" />
-                    <PmButton
-                        v-if="!props.isNew"
-                        class="btn-edit"
-                        icon="pi pi-trash"
-                        severity="danger"
-                        @click.stop="emit('delete')"
-                    />
+                    <PmButton class="btn-edit" severity="contrast" @click.stop="switchEdit">
+                        <i class="pi pi-check button-icon-lg" />
+                    </PmButton>
+                    <PmButton class="btn-edit" severity="contrast" @click.stop="rollback">
+                        <i class="pi pi-times button-icon-xl" />
+                    </PmButton>
+                    <PmButton v-if="!props.isNew" class="btn-edit" severity="danger" @click.stop="emit('delete')">
+                        <i class="pi pi-trash button-icon-lg" />
+                    </PmButton>
                 </template>
                 <template v-else>
-                    <PmButton class="btn-edit" icon="pi pi-sliders-h" severity="secondary" @click.stop="switchEdit" />
+                    <PmButton class="btn-edit" severity="secondary" @click.stop="switchEdit">
+                        <i class="pi pi-sliders-h button-icon-lg" />
+                    </PmButton>
                 </template>
             </div>
         </div>

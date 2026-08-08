@@ -10,6 +10,7 @@ const { currentUser } = useAppContext();
 
 const login = ref("");
 const password = ref("");
+const isPasswordMasked = ref(true);
 
 async function signIn() {
     currentUser.value = await AuthApi.logIn({
@@ -54,15 +55,21 @@ const passwordInputId = useId();
                 </PmFloatLabel>
 
                 <PmFloatLabel variant="in">
-                    <PmInputPassword
-                        v-model="password"
-                        :input-id="passwordInputId"
-                        class="w-full"
-                        name="password"
-                        toggle-mask
-                        :feedback="false"
-                        @keydown.enter="signIn"
-                    />
+                    <PmIconField>
+                        <PmInputPassword
+                            v-model="password"
+                            :input-id="passwordInputId"
+                            class="w-full"
+                            name="password"
+                            :mask="isPasswordMasked"
+                            @keydown.enter="signIn"
+                        />
+                        <PmInputIcon
+                            class="cursor-pointer pi"
+                            :class="isPasswordMasked ? 'pi-eye' : 'pi-eye-slash'"
+                            @click="isPasswordMasked = !isPasswordMasked"
+                        />
+                    </PmIconField>
                     <label :for="passwordInputId">{{ t("Auth.PasswordLabel") }}</label>
                 </PmFloatLabel>
             </div>
@@ -70,15 +77,12 @@ const passwordInputId = useId();
 
         <template #footer>
             <div class="flex gap-2 pt-5">
-                <PmButton class="flex-1 px-6" :label="t('Auth.SignInButton')" raised @click.stop="signIn" />
-                <PmButton
-                    class="min-w-[50%] px-6"
-                    :label="t('Auth.SignUpButton')"
-                    severity="secondary"
-                    variant="outlined"
-                    raised
-                    @click.stop="signUp"
-                />
+                <PmButton class="flex-1 px-6" raised @click.stop="signIn">
+                    {{ t("Auth.SignInButton") }}
+                </PmButton>
+                <PmButton class="min-w-[50%] px-6" severity="secondary" variant="outlined" raised @click.stop="signUp">
+                    {{ t("Auth.SignUpButton") }}
+                </PmButton>
             </div>
         </template>
     </PmCard>

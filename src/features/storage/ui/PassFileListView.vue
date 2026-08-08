@@ -27,7 +27,7 @@ const emit = defineEmits<{
             <template #option="{ option }">
                 <div class="flex items-center gap-3">
                     <PmButton
-                        icon="pi pi-file"
+                        icon-only
                         size="small"
                         :style="{ color: option.color ? '#' + option.color : undefined }"
                         :disabled
@@ -35,14 +35,18 @@ const emit = defineEmits<{
                         raised
                         severity="secondary"
                         @click.stop="emit('open', option)"
-                    />
+                    >
+                        <i class="pi pi-file" />
+                    </PmButton>
                     <span class="font-black text-surface-300">{{ option.name }}</span>
                 </div>
             </template>
         </PmListbox>
 
         <div v-show="!disabled" class="absolute left-0 right-0 bottom-0 backdrop-blur-[2px]">
-            <PmButton class="btn-add" icon="pi pi-plus" severity="secondary" @click.stop="emit('add-passfile')" />
+            <PmButton class="btn-add" severity="secondary" @click.stop="emit('add-passfile')">
+                <i class="pi pi-plus button-icon-lg" />
+            </PmButton>
         </div>
     </div>
 </template>

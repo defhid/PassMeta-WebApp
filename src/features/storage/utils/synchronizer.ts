@@ -87,7 +87,7 @@ async function synchronizeInternal<TContent>(
             continue;
         }
 
-        if (remote.infoChangedOn !== local.infoChangedOn) {
+        if (remote.infoChangedOn.getTime() !== local.infoChangedOn.getTime()) {
             everythingOk = (await onInfoChanged(local, remote, context)) && everythingOk;
         }
 

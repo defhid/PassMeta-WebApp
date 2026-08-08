@@ -155,6 +155,38 @@ export const usePassFileIndexedDbLocalStorage = createGlobalState((): PassFileLo
         }
     }
 
+    async function truncate(): Promise<IDetailedResult> {
+        let transaction: IDBTransaction | null = null;
+        try {
+            transaction = (await db).transaction(DB_TABLE_VERSIONS, "readwrite");
+
+            const store = transaction.objectStore(DB_TABLE_VERSIONS);
+            await promiseRequest(store.clear());
+
+            transaction.commit();
+        } catch (err) {
+            console.error(`Failed to clear passfile versions from IndexedDB`, err);
+            transaction?.abort();
+            return Result.failure(t("PassStorage.Error"));
+        }
+
+        transaction = null;
+        try {
+            transaction = (await db).transaction(DB_TABLE_PASSFILES, "readwrite");
+
+            const store = transaction.objectStore(DB_TABLE_PASSFILES);
+            await promiseRequest(store.clear());
+
+            transaction.commit();
+        } catch (err) {
+            console.error(`Failed to clear passfiles from IndexedDB`, err);
+            transaction?.abort();
+            return Result.failure(t("PassStorage.Error"));
+        }
+
+        return Result.success();
+    }
+
     return {
         loadList,
         saveList,
@@ -162,6 +194,7 @@ export const usePassFileIndexedDbLocalStorage = createGlobalState((): PassFileLo
         saveEncryptedContent,
         deleteEncryptedContent,
         getVersions,
+        truncate,
     };
 });
 

@@ -51,12 +51,14 @@ const { otp } = useTotpCalculation(() => props.item.totp, 2);
                 </label>
                 <span class="break-words min-w-0 leading-5">{{ item.usernames.join(", ") }}</span>
                 <PmButton
-                    icon="pi pi-clone"
+                    icon-only
                     class="justify-self-end"
                     severity="secondary"
                     size="small"
                     @click.stop="copyUsername"
-                />
+                >
+                    <i class="pi pi-clone" />
+                </PmButton>
             </template>
 
             <template v-if="item.password">
@@ -73,13 +75,17 @@ const { otp } = useTotpCalculation(() => props.item.totp, 2);
                 <span v-else class="text-primary font-bold break-all leading-5">{{ item.password }}</span>
                 <div class="flex gap-3">
                     <PmButton
-                        :icon="hidePassword ? 'pi pi-eye-slash' : 'pi pi-eye'"
+                        icon-only
                         severity="secondary"
                         variant="outlined"
                         size="small"
                         @click.stop="hidePassword = !hidePassword"
-                    />
-                    <PmButton icon="pi pi-clone" severity="secondary" size="small" @click.stop="copyPassword" />
+                    >
+                        <i :class="hidePassword ? 'pi pi-eye-slash' : 'pi pi-eye'" />
+                    </PmButton>
+                    <PmButton icon-only severity="secondary" size="small" @click.stop="copyPassword">
+                        <i class="pi pi-clone" />
+                    </PmButton>
                 </div>
             </template>
 
@@ -91,13 +97,9 @@ const { otp } = useTotpCalculation(() => props.item.totp, 2);
                         <i class="pi pi-stopwatch ml-1" style="font-size: 0.8rem" /> {{ otp.lifetimeSeconds }}
                     </span>
                 </span>
-                <PmButton
-                    class="justify-self-end"
-                    icon="pi pi-clone"
-                    severity="secondary"
-                    size="small"
-                    @click.stop="copyOtp"
-                />
+                <PmButton class="justify-self-end" icon-only severity="secondary" size="small" @click.stop="copyOtp">
+                    <i class="pi pi-clone" />
+                </PmButton>
             </template>
         </div>
     </div>

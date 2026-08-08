@@ -43,6 +43,11 @@ export interface PassFileLocalStorage {
      * Get all locally saved versions of encrypted content by passfile id.
      */
     getVersions(passFileId: number): Promise<IDetailedResult<number[]>>;
+
+    /**
+     * Delete all data from the storage.
+     */
+    truncate(): Promise<IDetailedResult>;
 }
 
 /**

@@ -1,5 +1,8 @@
 node_modules
 typegen
-*.local
-**/.env
-**/.env.*
+docs
+dev-dist
+.idea
+.husky
+.gitignore
+README.md

@@ -16,7 +16,7 @@ unzip ./passmeta-ui-tmp/master.zip -d ./passmeta-ui-tmp || exit 1
 # prepare files
 mkdir ./passmeta-ui-new || exit 1
 cp -r ./passmeta-ui-tmp/PassMeta-WebApp-master/. ./passmeta-ui-new || exit 1
-cp ./passmeta-ui/deploy/.env.local ./passmeta-ui-new/deploy/.env.local || exit 1
+cp ./passmeta-ui/.env.local ./passmeta-ui-new/.env.local || exit 1
 rm -r ./passmeta-ui-tmp
 
 # stop services

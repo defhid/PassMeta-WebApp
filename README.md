@@ -57,7 +57,8 @@ yarn run build
     - `rm master.zip`
     - `mv PassMeta-WebApp-master /home/passmeta-ui`
 - **Configure:**
-    - `nano /home/passmeta-ui/deploy/.env.local`, enter `VITE_PRIMEUI_LICENSE` (from https://primeui.store).
+    - `cp /home/passmeta-ui/.env /home/passmeta-ui/.env.local`
+    - `nano /home/passmeta-ui/.env.local`, fill `VITE_PRIMEUI_LICENSE` from https://primeui.store
     - `cp /home/passmeta-ui/deploy/scripts/update.sh /home/passmeta-ui-update.sh`
 - **Build:** `sudo bash /home/passmeta-ui/deploy/scripts/rebuild.sh`
 - **Start:** `sudo bash /home/passmeta-ui/deploy/scripts/start.sh`
